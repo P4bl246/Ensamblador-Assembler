@@ -204,7 +204,7 @@ int analizar_instrucciones_A(const char* archivo) {
     printf("Se abrio el archivo '%s'\n", archivo);
     
     int numeroLinea;
-    int n, maximoD = 24576, i;
+    int n, i;
     char numeros[6]; // Aumentado a 6 para garantizar espacio para el \0
     int cantidad = cantidadDeLineas(copia);
     char n_lineas[cantidad]; //obtenemos la cantidad de lineas que hay para poder obtener los caracteres necesaciros para el numero de linea
@@ -246,7 +246,7 @@ int analizar_instrucciones_A(const char* archivo) {
                 numeros[n] = (char)actual;
                 n++;
                 // Leer más dígitos
-                while(n < 5) {
+                while(1) {
                     actual = fgetc(copia);
                     
                     if((char)actual == '\n' || actual == EOF) {
@@ -255,7 +255,7 @@ int analizar_instrucciones_A(const char* archivo) {
                     
                     if(!((char)actual >= '0' && (char)actual <= '9')) {
                         printf("ERROR en la linea %d\n", numeroLinea);
-                        printf("DETALLES: no se reconoce esta sintaxis, corrijala poniendo un numero de 0-24576 o coloque el caracter primero\nEJEMPLO: @1234 o @h1234. @1234h(no se reconoce)\n");
+                        printf("DETALLES: no se reconoce esta sintaxis, corrijala poniendo un numero de 0-n o coloque el caracter primero\nEJEMPLO: @1234 o @h1234. @1234h(no se reconoce)\n");
                         fclose(copia);
                         return 1;
                     }
@@ -266,35 +266,13 @@ int analizar_instrucciones_A(const char* archivo) {
                 
                 numeros[n] = '\0';
                 
-                // Verificar si hay más dígitos (excediendo el límite)
-                if(n == 5) {
-                    actual = fgetc(copia);
-                    if((char)actual != '\n' && actual != EOF && ((char)actual >= '0' && (char)actual <= '9')) {
-                        printf("ERROR en la linea %d\nDETALLES: Se llego a el maximo de digitos(5)\n", numeroLinea);
-                        fclose(copia);
-                        return 1;
-                    }
-                    	if((char)actual != '\n' && actual != EOF){
-                    		printf("ERROR en la linea %d\nDETALLES: No se reconoce esta sintaxis, despues de los digitos no se esperan mas datos\n", numeroLinea);
-                    		fclose(copia);
-                    		return 1;
-						}
-					}
-                }
-                
-                // Verificar rango del número
-                int numero2 = atoi(numeros);
-                if(numero2 > maximoD) {
-                    printf("ERROR en la linea %d\nDETALLES: La direccion a la que quieres acceder no existe, el rango es de 0-24576\n", numeroLinea);
-                    fclose(copia);
-                    return 1;
-                }
             }
         // Avanzar hasta el final de la línea
         while((char)actual != '\n' && actual != EOF) {
             actual = fgetc(copia);
         }
   }
+}
    printf("TERMINO EL ANALIZIS DE INSTRUCCIONES A\n");
     fclose(copia);
     return 0;
@@ -776,7 +754,10 @@ int instruccionCalculo(int actual, FILE *archivo, char* nlinea){
             if ((char)actual == 'M' || (char)actual == 'D' || (char)actual == 'A' || (char)actual == '1') {
                 actual = fgetc(archivo);
                 
-                if((char)actual == ';'){
+                if((char)actual == '\n' ||(char)actual == ' ' ||(char)actual == '\0' ||actual == EOF){
+                	return 0;
+				}
+                else if((char)actual == ';'){
                 	
                 	int h3=instruccionSalto(actual, archivo, nlinea);
                 	
@@ -1920,7 +1901,7 @@ int verificarVarYEtiq(){
     	fclose(var);
     	return 1;
 	}  
-    
+    char mostrar = 'Y';
     int actual = fgetc(var);//primer caracter
     while(actual != EOF){
     	
@@ -1950,9 +1931,9 @@ int verificarVarYEtiq(){
 		rewind(etiqe);//rebobinamos el arhcivo etiqeutas.txt para volverlo a leer desde el principio
 		char *c=etiq(nlineaEtiq, cadenaEtiq2, etiqe);//tomamos el numero de linea de la etiqueta y su cadena
 		//entra en un bucle para comparar la cadena de la variable con cada cadena de etiqueta
-		while(c != NULL){
+		while(mostrar == 'Y' && c != NULL){
 			//si la cadena es identica muestra la advertencia
-			if(strcmp(cadenaVar2,cadenaEtiq2) == 0){
+			if(mostrar == 'Y' && strcmp(cadenaVar2,cadenaEtiq2) == 0){
 				char escaneo;//caracter para recibir
 				printf("ADVERTENCIA: en la linea de la etiqueta %s\nNOMBRE: %s\n Linea de la variable: %s\n", nlineaEtiq, cadenaEtiq2, nlineaVar);
 				printf("DETALLEs: Puede haber problemas en la ejecucion si una etiqueta y una varaible tienen el mismo nombre, corrija esto\n");
@@ -1965,6 +1946,15 @@ int verificarVarYEtiq(){
 				scanf(" %c", &escaneo);	
 				}
 				if(escaneo == 'Y'){
+					printf("\nINGRESE SI DESEA SEGUIR VIENDO ESTOS MENSAJE(Y/N)\nSi seleccion N no volvera a ver estas advertencias y el programa continuara su ejecucion\n");
+					scanf(" %c", &mostrar);
+					while(mostrar != 'Y' && mostrar != 'N'){
+					printf("\nINGRESE SI DESEA SEGUIR VIENDO ESTOS MENSAJE(Y/N)\nSi seleccion N no volvera a ver estas advertencias y el programa continuara su ejecucion\n");
+					scanf(" %c", &mostrar);
+					}
+					if(mostrar == 'N'){
+						printf("\nESPERE...\n");
+					}
 					break;
 				}
 				else{
