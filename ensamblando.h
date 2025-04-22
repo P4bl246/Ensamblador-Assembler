@@ -52,14 +52,14 @@ int cantidadDeLineas(FILE *archivoLeer); //funcion que devuelve la cantidad de l
 int separaDigitosdeLetras(FILE* archivoLeer, char** poner_cadenas, char** poner_digitos, int n_lineas);//funcino para separar la cadena de digitos y la cadena de letras(funcion interna)
 int mas_simbolos(const char* archivo_de_datos);// funcion para agregar nuevos simbolos a la tabla de simbolos, integra las 2 fucniones anteriores
 //-----------------------------------------------------------------
+void excluir(FILE *archivoLeer, FILE *archivoEscribir); //funcion para encontrar y excluir variables predefinidas como R0...R15, SCREEN, y KBD
 void encontrarVariables(FILE* archivoLeer, FILE* archivoEscribir); // funcion para encontrar las variables y ponerlas en un archivo aparte(funcion interna)
 void eliminarDuplicados(FILE *archivoLeer, FILE* archivoEscribir); // funcion para eliminar los duplicados o lineas duplicadas en un archivo(funcion interna)
 int copiarValoresConVariables(FILE *archivoLeer, FILE *archivoEscribir);//funcion para asginar valores a las variables, o clave-valor, para luego usar la funcion 'mas_simbolos'(funcion interna)
-int separarVariables(const char* archivo);//integra las 4 funciones anteriores y 'mas_simbolos', y les da los argumentos, estos es para crear los simbolos de las variables
+int separarVariables(const char* archivo);//integra las 4 funciones anteriores y 'mas_simbolos', y les da los argumentos, estos es para crear los simbolos de las variables y 'vertificarVarYEtiq'
 //-----------------------------------------------------------------
-int tomarVariables(const char* archivo);//tomar las varaibles y su numero de linea
-char *etiq(char* poner_nlinea,char* cadena, FILE *etiq);//funcion para tomar cada cadena y numero de linea de etiquetas.txt
-int verificarVarYEtiq();//funcion que integra las 2 funciones anterirores y compara cada cadena de varialbles.txt con cada cadena de etiquetas.txt
+char *etiq(char* cadena, FILE *etiq);//funcion para tomar cada cadena y numero de linea de etiquetas.txt
+int verificarVarYEtiq(FILE* archivoLeer,FILE* archivoComparar, FILE* archivoEscribir);//funcion que integra la funcion anteriror y compara cada cadena de archivoLeer con cada cadena de archivoComaprar y pone las no repetidas en el archivoEscribir
 //-----------------------------------------------------------------
 int limpiartxtPr(const char* archivo);//funcion para limpiar el archivo .txt principal e las etiquetas
 //-----------------------------------------------------------------
@@ -1716,11 +1716,46 @@ int separarVariables(const char* archivo){
 	
 	eliminarDuplicados(temp2, var);
 	
-	FILE *var2 = fopen("variables.txt", "r");
-	if(var2 == NULL){
-		printf("No se encontro el archivo 'variables.txt'\n");
+	FILE *vart= fopen("variables.txt", "r");
+	if(vart == NULL){
+		printf("No se encontro el archivo 'tempVar.txt'\n");
 		return 1;
 	}
+	FILE *vart2 = fopen("tempVar3.txt", "w");
+	if(vart2 == NULL){
+		printf("No se creo el archivo 'tempVar3.txt'\n");
+		fclose(vart);
+		return 1;
+	}
+	
+	excluir(vart, vart2);
+	
+	FILE *etiq = fopen("etiquetas.txt", "r");
+	if(etiq == NULL){
+		printf("No se encontro el archivo 'etiquetas.txt'\n");
+		return 1;
+	}
+	FILE *var2 = fopen("tempVar3.txt", "r");
+	if(var2 == NULL){
+		printf("No se encontro el archivo 'tempVar3.txt'\n");
+		return 1;
+	}
+	
+	FILE *tempF1 = fopen("tempVar4.txt", "w");
+	if(tempF1 == NULL){
+		printf("ERROR a el crear el archivo 'tempVar.txt'\n");
+		fclose(var2);
+		return 1;
+	}
+	 int r =verificarVarYEtiq(var2, etiq, tempF1);
+	 if(r!= 0) return 1;
+	 printf("SE EXLUYERON LAS ETIQUETAS DE LAS VARIABLES\n");
+	 FILE *varF = fopen("tempVar4.txt", "r");
+	if(var2 == NULL){
+		printf("No se encontro el archivo 'tempVar4.txt'\n");
+		return 1;
+	}
+	
 	FILE *tempF = fopen("tempVar.txt", "w");
 	if(tempF == NULL){
 		printf("ERROR a el crear el archivo 'tempVar.txt'\n");
@@ -1730,6 +1765,16 @@ int separarVariables(const char* archivo){
 	
 	int result2 = copiarValoresConVariables(var2, tempF);
 	if(result2 != 0){
+		return 1;
+	}
+	
+	//si todo sale bien eleiminamos los temporales y "actualizamos" el archivo variables.txt y agregamos los nuevos simbolos
+	if(remove("tempVar3.txt")!= 0){
+		printf("No se pudo eliminar el archivo 'tempVar3.txt'\n");
+		return 1;
+	}
+	if(remove("tempVar4.txt")!= 0){
+		printf("No se pudo eliminar el archivo 'tempVar4.txt'\n");
 		return 1;
 	}
 	if(remove("variables.txt") != 0){
@@ -1744,37 +1789,58 @@ int separarVariables(const char* archivo){
 		printf("Se renombor el archivo 'tempVar.txt' a: 'variables.txt'\n");
 	}
 	  mas_simbolos("variables.txt");
+	
 	return 0;
 }
 //-----------------------------------------------------------------
-void encontrarVariables(FILE* archivoLeer, FILE* archivoEscribir){
-	int actual = fgetc(archivoLeer);
-   while(actual != EOF){
-   	char char_actual = (char)actual;
-   	  if(char_actual == '@'){
-   	  	    fputc(char_actual, archivoEscribir);
-   	  	     actual = fgetc(archivoLeer);
-   	  	     char_actual = (char)actual;
-   	  	    // Verifica si el carácter es una letra en mayúscula o minúscula
-             if( !(char_actual >= '0' && char_actual <= '9')){
-             	 while(actual != EOF && (char)actual != '\n' && (char)actual != '\0'){
-             	 	fputc(char_actual, archivoEscribir);
-             	 	actual = fgetc(archivoLeer);
-             	 	char_actual = (char)actual;
-				  }
-				  if(actual == EOF){
-				  	printf("Se llego a el final de el archivo\n"); //salir de la funcion
-				  	fclose(archivoLeer);
-				  	fclose(archivoEscribir);
-				  	return;
-				  }
-				  fputc('\n', archivoEscribir);
-			 }
-		 }
-		 actual = fgetc(archivoLeer);
-   }
-   fclose(archivoLeer);
-   fclose(archivoEscribir);
+void encontrarVariables(FILE* archivoLeer, FILE* archivoEscribir) {
+    char linea[1024];
+    int actual;
+    char buffer;
+    //mientra no se llegue a el final de el archivo
+    while(1){
+    	actual = fgetc(archivoLeer);
+    	if(actual == EOF) break;
+    	while((char)actual != ' '){
+    		actual = fgetc(archivoLeer);
+		}
+		actual = fgetc(archivoLeer); //saltar el numero de linea y el esapacio
+    	//si el caracter es @
+    	if((char)actual == '@'){
+            buffer = (char)actual;
+    		actual = fgetc(archivoLeer);//pasamos a le siguiente caracter despues de @
+    		//comprobamos qeu no sea un numero
+    		if(!((char)actual >= '0' && (char)actual <= '9')){
+    			//si no es numero agregamos toda la linea
+    			fputc(buffer, archivoEscribir);
+    			//entramos en un bucle para copiar toda la linea
+    			while(actual != EOF&&(char)actual != '\n'){
+    			fputc((char)actual, archivoEscribir);
+				actual = fgetc(archivoLeer);	
+				}
+				if(actual == EOF) break; //si es final de archivo salir de el bucle
+				fputc('\n', archivoEscribir);
+			}
+			//si es un numero ignoramos toda la linea
+			else{
+				while(actual != EOF &&(char)actual != '\n' && (char)actual != '\0' && (char)actual != ' '){
+				actual = fgetc(archivoLeer);	
+				}
+				if(actual == EOF) break; //si es final de archivo salir de el bucle
+			}
+			
+		}
+		//si no es @ ignoramos la linea;
+		else {
+		while(actual != EOF&&(char)actual != '\n' && (char)actual != '\0' && (char)actual != ' '){
+				actual = fgetc(archivoLeer);	
+				}
+				if(actual == EOF) break; //si es final de archivo salir de el bucle
+			}
+	}
+
+    fclose(archivoLeer);
+    fclose(archivoEscribir);
 }
 //-----------------------------------------------------------------
 void eliminarDuplicados(FILE *archivoLeer, FILE* archivoEscribir) {
@@ -1828,19 +1894,16 @@ int copiarValoresConVariables(FILE *archivoLeer, FILE *archivoEscribir){
    		fclose(archivoEscribir);
    		return 1;
 	   }
-   	char char_actual = (char)actual;
     sprintf(buffer, "%d", n);  // Convertir el entero 'n' a una cadena
-   	  if(char_actual == '@'){
-   	  	     actual = fgetc(archivoLeer);
-   	  	     char_actual = (char)actual;
-   	  	    // Verifica si el carácter es una letra en mayúscula o minúscula
-             if( (char_actual >= 'A' && char_actual <= 'Z') || (char_actual >= 'a' && char_actual <= 'z') ){
+   	  if((char)actual == '@'){
+   	  	     actual = fgetc(archivoLeer);//ir a el siguiente caracter despues de @
+   	  	    // Verifica si el carácter no es un numero
+             if( !((char)actual >= '0' && (char)actual <= '9')){
              	fputs(buffer, archivoEscribir);//poner el valor de la variable
              	fputc(' ', archivoEscribir);//separa el nombre de la variable
-             	 while(actual != EOF && (char)actual != '\n' && (char)actual != '\0'){
-             	 	fputc(char_actual, archivoEscribir);
+             	 while(actual != EOF && (char)actual != '\n' && (char)actual != '\0' && (char)actual != ' '){
+             	 	fputc((char)actual, archivoEscribir);
              	 	actual = fgetc(archivoLeer);
-             	 	char_actual = (char)actual;
 				  }
 				  if(actual == EOF){
 				  	printf("Se llego a el final de el archivo\n"); //salir de la funcion
@@ -1858,147 +1921,128 @@ int copiarValoresConVariables(FILE *archivoLeer, FILE *archivoEscribir){
    fclose(archivoEscribir);	
    return 0;
 }
-//**************************************************************
-
-//**************************************************************
 //-----------------------------------------------------------------
-int verificarVarYEtiq(){
-	FILE *txt = fopen("archivo.txt", "r");
-	if(txt ==NULL){
-		printf("No se encontro el archivo 'archivo.txt'\n");
-		return 1;
-	}
-	int cantidad =cantidadDeLineas(txt);//tomamos la cantidad de lineas que tiene el archivo
-	fclose(txt);
- 
-	if(tomarVariables("archivo.txt") != 0) return 1;
-	system("cls");//limpiamos la terminal
-	FILE *var = fopen("variables2.txt", "r");
-	if(var == NULL){
-		printf("No se encontro el archivo 'variables.txt'\n");
-		return 1;
-	}
-	printf("Se abrio el archivo 'variables2.txt'\n");
-	
-	FILE *etiqe = fopen("etiquetas.txt", "r");
-	if(etiqe == NULL){
-		printf("No se encontro el archivo 'etiquetas.txt'\n");
-		return 1;
-	}
-	printf("Se abrio el archivo 'etiquetas.txt'\n");
-	
-    char nlineaEtiq[cantidad]; //asignamos memoria para el numero de linea de las etiquetas
-    char nlineaVar[cantidad];//asginamos memoria para el numero de linea de las variables
+void excluir(FILE *archivoLeer, FILE *archivoEscribir) {
+    char linea[1024];
+    char subcadena[] = "R0 R1 R2 R3 R4 R5 R6 R7 R8 R9 R10 R11 R12 R13 R14 R15 SCREEN KBD SP LCL THIS THAT ARG";
+    char cadena[10];
+    
+    // Preprocesar las subcadenas válidas
+    char *variables[24];
+    int total_vars = 0;
+    char *token = strtok(subcadena, " ");
+    
+    while (token != NULL && total_vars < 24) {
+        variables[total_vars++] = token;
+        token = strtok(NULL, " ");
+    }
+    int i;
+    // Procesar cada línea
+    while (fgets(linea, sizeof(linea), archivoLeer) != NULL) {
+        if (linea[0] == '@') {
+            // Extraer cadena después del @
+            if (sscanf(linea + 1, "%9s", cadena) != 1) {
+                fputs(linea, archivoEscribir);
+                continue;
+            }
+            
+            // Verificar coincidencias
+            int coincidencia = 0;
+            
+            for (i = 0; i < total_vars; i++) {
+                if (strcmp(cadena, variables[i]) == 0) {
+                    coincidencia = 1;
+                    break;
+                }
+            }
+            
+            // Escribir solo si no hay coincidencia
+            if (!coincidencia) {
+                fputs(linea, archivoEscribir);
+            }
+        } else {
+            fputs(linea, archivoEscribir);
+        }
+    }
+
+    fclose(archivoLeer);
+    fclose(archivoEscribir);
+    printf("SE EXCLUYERON LAS VARIABLES PREDEFINIDAS\n");
+    return;
+}
+//-----------------------------------------------------------------
+int verificarVarYEtiq(FILE *archivoLeer, FILE* archivoComparar, FILE *archivoEscribir){ 
     char *cadenaVar2 = (char *)malloc(1024 * sizeof(char));//asginamos memoria dinamica para la cadena de las variables
     if(cadenaVar2 == NULL){
     	printf("ERROR a el asginar memoria para 'cadenaVar2'\n");
-    	fclose(var);
+    	fclose(archivoLeer);
+    	fclose(archivoEscribir);
     	return 1;
 	}
     char *cadenaEtiq2 = (char *)malloc(1024 * sizeof(char));//asginamos memoria dinamica para la cadena de las etiquetas
 	if(cadenaEtiq2 == NULL){
     	printf("ERROR a el asginar memoria para 'cadenaEtiq2'\n");
-    	fclose(var);
+    	fclose(archivoLeer);
+    	fclose(archivoEscribir);
     	return 1;
 	}  
-    char mostrar = 'Y';
-    int actual = fgetc(var);//primer caracter
+    int actual = fgetc(archivoLeer);//primer caracter
     while(actual != EOF){
-    	
-    	memset(nlineaVar, 0, sizeof(nlineaVar)); //resttablecer el arreglo a 0
     	memset(cadenaVar2, 0, sizeof(1024));//reestablecr el arreglo a 0
-    	memset(nlineaEtiq, 0, sizeof(nlineaEtiq));//reestablecer el arreglo a 0
     	memset(cadenaEtiq2, 0, sizeof(1024));//reestablecer el arreglo a 0
-    	int i = 0;
+    	int i = 0, r = 0;
     	
     	if(actual == EOF) break;//salir de el bucle
-    	//obtenemos el numero de linea de la variable
-    	while((char)actual != ' '){
-    		nlineaVar[i] = (char)actual;
-    		i++;
-    		actual = fgetc(var);
-		}
-		nlineaVar[i] = '\0';
-		actual = fgetc(var); //caracter despues de el espacio
+		actual = fgetc(archivoLeer); //caracter despues de el @
 	   //obtenemos el nombre de la variables
 	   int j= 0;
 		while(actual != EOF && (char)actual != '\n'){
 			cadenaVar2[j]= (char)actual;
 			j++;
-			actual = fgetc(var);
+			actual = fgetc(archivoLeer);
 		}
 		cadenaVar2[j]= '\0';
-		rewind(etiqe);//rebobinamos el arhcivo etiqeutas.txt para volverlo a leer desde el principio
-		char *c=etiq(nlineaEtiq, cadenaEtiq2, etiqe);//tomamos el numero de linea de la etiqueta y su cadena
+		rewind(archivoComparar);//rebobinamos el arhcivo etiqeutas.txt para volverlo a leer desde el principio
+		char *c=etiq( cadenaEtiq2, archivoComparar);//tomamos el numero de linea de la etiqueta y su cadena
 		//entra en un bucle para comparar la cadena de la variable con cada cadena de etiqueta
-		while(mostrar == 'Y' && c != NULL){
-			//si la cadena es identica muestra la advertencia
-			if(mostrar == 'Y' && strcmp(cadenaVar2,cadenaEtiq2) == 0){
-				char escaneo;//caracter para recibir
-				printf("ADVERTENCIA: en la linea de la etiqueta %s\nNOMBRE: %s\n Linea de la variable: %s\n", nlineaEtiq, cadenaEtiq2, nlineaVar);
-				printf("DETALLEs: Puede haber problemas en la ejecucion si una etiqueta y una varaible tienen el mismo nombre, corrija esto\n");
-				printf("MAS: La etiqueta se guardara pero la variable no, por lo que cualquier aparicion de esta sera tomada como etiqueta\n");
-				printf("INGRESE SI DESEA CONTINUAR CON LA EJECUCION DE EL PROGRAMA(Y/N)\nSi selecciona Y se hara la verficacion con la siguiente variable y se terminara la de la actual\n");
-				scanf(" %c", &escaneo);
-				while(escaneo != 'Y' && escaneo != 'N'){
-				printf("INGRESE SI DESEA CONTINUAR CON LA EJECUCION DE EL PROGRAMA(Y/N)\nSi selecciona Y se hara la verficacion con la siguiente variable y se terminara la de la actual\n");
-
-				scanf(" %c", &escaneo);	
-				}
-				if(escaneo == 'Y'){
-					printf("\nINGRESE SI DESEA SEGUIR VIENDO ESTOS MENSAJE(Y/N)\nSi seleccion N no volvera a ver estas advertencias y el programa continuara su ejecucion\n");
-					scanf(" %c", &mostrar);
-					while(mostrar != 'Y' && mostrar != 'N'){
-					printf("\nINGRESE SI DESEA SEGUIR VIENDO ESTOS MENSAJE(Y/N)\nSi seleccion N no volvera a ver estas advertencias y el programa continuara su ejecucion\n");
-					scanf(" %c", &mostrar);
-					}
-					if(mostrar == 'N'){
-						printf("\nESPERE...\n");
-					}
-					break;
-				}
-				else{
-					printf("Se detuvo la ejecucion de el programa\n");
-					fclose(var);
-					return 1;
-				}
-				
+		while(c != NULL){
+			//si la cadena es identica no se pone en archivoEscrbir
+			if(strcmp(cadenaVar2,cadenaEtiq2) == 0){
+				r = 1;
+				break;
 			}
 			memset(cadenaEtiq2, 0, sizeof(1024));//limpiamos la cadena de etiqueta
-		  c=etiq(nlineaEtiq,cadenaEtiq2, etiqe);//tomamos la cadena de la linea siguiente a la anterior y su numero de liena de la etiqueta
+		  c=etiq(cadenaEtiq2, archivoComparar);//tomamos la cadena de la linea siguiente a la anterior y su numero de liena de la etiqueta
 		}
+		if(r == 0){
+			fputc('@', archivoEscribir);
+			fputs(cadenaVar2, archivoEscribir);
+			fputc('\n', archivoEscribir);
+		} 
 		//cuando haya comparado la variable con todas las etiquetas va a la siguietn varaible para hacer lo mismo
-		actual = fgetc(var);
+		actual = fgetc(archivoLeer);
 	}
-	//cuando ya se comparo todas las variables
-	fclose(var);
+	//cuando ya se comparo todas las variables se cierran los archivos y se libera la memoria
+	fclose(archivoLeer);
+    fclose(archivoEscribir);
 	free(cadenaEtiq2);
 	free(cadenaVar2);
-	//eliminamos el archivo temporal variables2.txt
-	if(remove("variables2.txt") != 0){
-	  printf("No se elimino el archivo 'variables2.txt'\n");
-	  return 1;
-	}
 	return 0;
-    
 }
 //-----------------------------------------------------------------
-char *etiq(char* poner_nlinea, char *cadena, FILE *etiq){
+char *etiq(char *cadena, FILE *etiq){
 	int actual;
 	while(1){
 		actual = fgetc(etiq); //primer carater
 		if(actual == EOF) return NULL;
 		//obtener el numero de linea
 		while((char)actual != ' '){
-			*poner_nlinea = (char)actual;
-			poner_nlinea++;
 			actual = fgetc(etiq);
 		}
-		*poner_nlinea = '\0';//teriminar correctamente la cadena
 		actual = fgetc(etiq); //caracter despues de el espacio
 		int i = 0;
 		//obtener la cadena
-		while((char)actual != '\n' && actual != EOF){
+		while((char)actual != '\n' && actual != EOF && (char)actual != '\0' && (char)actual != ' '){
 			*cadena= (char)actual;
 			cadena++;
 			actual = fgetc(etiq);
@@ -2008,92 +2052,6 @@ char *etiq(char* poner_nlinea, char *cadena, FILE *etiq){
 	}
 	return cadena;
 	
-}
-//-----------------------------------------------------------------
-int tomarVariables(const char* archivo) {
-    // Abrimos el archivo de entrada
-    FILE *archivoP = fopen(archivo, "r");
-    if (archivoP == NULL) {
-        printf("No se encontro el archivo '%s'\n", archivo);
-        return 1;
-    }
-
-    // Abrimos el archivo de salida
-    FILE *var2 = fopen("variables2.txt", "w");
-    if (var2 == NULL) {
-        printf("ERROR al crear el archivo 'variables2.txt'\n");
-        fclose(archivoP); // Cerrar el archivo de entrada en caso de error
-        return 1;
-    }
-
-    char linea[1024]; // Buffer para leer cada línea
-    while (fgets(linea, sizeof(linea), archivoP) != NULL) {
-        // Buscar el primer espacio en la línea
-        char *ptrEspacio = strchr(linea, ' '); // Encontramos el primer espacio
-        if (ptrEspacio != NULL) {
-            // Verificamos que el siguiente carácter sea un '@'
-            if (*(ptrEspacio + 1) == '@') {
-                // Verificamos que el siguiente carácter después del '@' no sea un número
-                if (*(ptrEspacio + 2) != '\0' && !isdigit((unsigned char)(*(ptrEspacio + 2)))) {
-                    // Copiamos toda la línea al archivo var2
-                    fprintf(var2, "%s", linea);
-                }
-            }
-        }
-    }
-    // Cerramos los archivos
-    fclose(archivoP);
-    fclose(var2);
-    //reabrimo variables2.txt para editarlo
-    FILE *var3 = fopen("variables2.txt", "r");
-    if(var3 == NULL){
-    	printf("No se encontro el archivo 'variables2.txt'\n");
-    	return 1;
-	}
-	printf("Se abrio el archivo 'variables2.txt'\n");
-	//creamos un archivo temporal
-	FILE *temp = fopen("tempvar6.txt", "w");
-	if(temp ==NULL){
-		printf("ERROR a el crear el archivo 'tempvar6.txt'\n");
-		fclose(var3);
-		return 1;
-	}
-	printf("Se creo el archivo 'tempvar6.txt'\n");
-	int actual;
-	//entra en un bucle
-	while(1){
-		actual = fgetc(var3);//primer caracter
-		if(actual == EOF) break;//si es EOF salir de el bucle
-		//tomar el numero de linea
-		while((char)actual != ' '){
-			fputc((char)actual, temp);
-			actual = fgetc(var3);
-		}
-		fputc((char)actual, temp);//agregamos tambien el espacio
-		actual = fgetc(var3);//pasamos a el siguietne caracter
-		if((char)actual == '@') actual = fgetc(var3); //pasamos a el siguiente caracter despues de @ (ignoramos @)
-		while((char)actual != '\n' && actual != EOF){
-			fputc((char)actual, temp);
-			actual = fgetc(var3);
-		}
-		if(actual == EOF) break;
-		fputc('\n', temp);//agregar fin de linea
-		
-	}
-	fclose(temp);
-	fclose(var3);
-	if(remove("variables2.txt")!= 0){
-		printf("No se elimino el archivo 'variables2.txt'\n");
-		return 1;
-	}
-	else{
-		if(rename("tempvar6.txt", "variables2.txt") != 0){
-			printf("No se pudo renombrar el archivo 'tempvar6.txt' a: 'variables2.txt'\n");
-			return 1;
-		}
-		printf("Se renombro el arhcivo 'tempvar6.txt' a: 'variables2.txt'\n");
-	}
-    return 0;
 }
 //**************************************************************
 
