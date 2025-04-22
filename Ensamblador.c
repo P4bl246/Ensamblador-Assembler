@@ -14,6 +14,7 @@ int main(){
 		printf("ERROR en la funcion 'analisis_sintactio'\n");
 		return 1;
 	}
+	
 	//limpiamos el archivo .txt 
 	r=limpiarLineas("archivo.txt");
 	if(r != 0){
@@ -34,30 +35,35 @@ int main(){
 		printf("ERROR en la funcion 'tratarEtiquetas'\n");
 		return 1;
 	}
+	
 	//organizamos las variables y instrucciones @ en el archivo.txt
 	r = tratarVariables("archivo.txt");
 	if(r != 0){
 		printf("ERROR en la funcion 'tratarVariables'\n");
 		return 1;
 	}
+	
 	//numeramos las lineas
 	r = numerarLineas("archivo.txt");
 	if(r != 0){
 		printf("ERROR en la funcion 'numerarLineas'\n");
 		return 1;
 	}
+	
 	//extraemos las etiquetas para tratarlas
 	r = separarEtiquetas("archivo.txt");
 	if(r != 0){
 		printf("ERROR en la funcion 'separarEtiquetas'\n");
 		return 1;
 	}
+	
 	//agruegamos mas simbolos si hay en 'tabla.txt'
 	r = mas_simbolos("etiquetas.txt");
 	if(r != 0){
 		printf("ERROR en la funcion 'mas_simbolos'\n");
 		return 1;
 	}
+	
 	//identificamos las variables y las separamos para tratarlas(incluye mas_simbolos)
 	r = separarVariables("archivo.txt");
 	if(r != 0){
@@ -71,13 +77,9 @@ int main(){
 		printf("ERROR en la funcion 'limpiar_tabla'\n");
 		return 1;
 	}
-	//verificamos que no halla conflictos entre varaibles y etiquetas
-	r = verificarVarYEtiq();
-	if(r!= 0){
-		printf("ERROR en la funcion 'verificarVarYEtiq'\n");
-		return 1;
-	}
+	
 	system("cls");//limpiamos la terminal
+	//limpiamos el archivo txt principal de las etiquetas
     r = limpiartxtPr("archivo.txt");
 	if(r != 0){
 		printf("ERROR en la funcino 'limpiartxtPr'\n");
