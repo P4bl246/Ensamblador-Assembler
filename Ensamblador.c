@@ -50,6 +50,11 @@ int main(){
 		return 1;
 	}
 	
+	r= tratarVariables2("archivo.txt");
+	if(r != 0){
+		printf("ERROR en la funcion 'tratarVariables2'\n");
+		return 1;
+	}
 	//extraemos las etiquetas para tratarlas
 	r = separarEtiquetas("archivo.txt");
 	if(r != 0){
@@ -82,14 +87,19 @@ int main(){
 	//limpiamos el archivo txt principal de las etiquetas
     r = limpiartxtPr("archivo.txt");
 	if(r != 0){
-		printf("ERROR en la funcino 'limpiartxtPr'\n");
+		printf("ERROR en la funcion 'limpiartxtPr'\n");
 		return 1;
 	}	
 	
 //---------------------------------------------------------------------------
 
-	
-    	
+	system("cls");
+	//ensamblamos el codigo, es decir, lo pasamos a codigo de maquina
+	r = ensamblar("archivo.txt");
+    if(r != 0){
+    	printf("ERROR en la funcion 'ensamblar'\n");
+    	return 1;
+	}	
 	
 	
 	return 0;
