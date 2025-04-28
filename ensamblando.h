@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <ctype.h> 
+
 
 //FUNCIONES DE ANALISIS SINTACTICO ANTES DE SEGUIR-----------------------------------------------
 int copia_archivo(const char* archivo); //funcion para copiar el archivo original .txt en otro archivo(funcion interna)
@@ -42,6 +42,10 @@ int tratarEtiquetas(const char *nombre_de_archivo); // integra la funcino anteri
 int encontrarvar(FILE* archivoLeer, FILE* archivoEscribir);//idetneficar las variabeles y organizarlas(funcion interna)
 int tratarVariables(const char *nombre_de_archivo);//integra la funcion anterior
 //-----------------------------------------------------------------
+//se ponen a parte porque la primera sirver para mostrar la advertencia y si decide continuar se ejecutan estas funciones
+int encontrarvar2(FILE* archivoLeer, FILE* archivoEscribir);//idetneficar las variabeles y organizarlas solo tomando los primeros 5 digitos numericos(funcion interna)
+int tratarVariables2(const char *nombre_de_archivo);//integra la funcion anterior
+//-----------------------------------------------------------------
 int numerarLineas(const char* archivoLeer);// funcion para numerar las lineas de el 1 a las que haya 1...n incluyendo las estiquetas
 //-----------------------------------------------------------------
 void copiarLineasConEtiqueta(FILE *archivoLeer, FILE *archivoEscribir); // funcion que solo escribe las lineas de etiquetas en el archivo etiquetas.txt(funcion interna)
@@ -69,40 +73,75 @@ int limpiar_tabla(); //funcion para limpiar la tabla de simbolos eliando simbolo
 //AQUI TERMINAN LAS FUNCIONES DE LIMPIEZA Y PREPARACION-----------------------------------------------------------------
 
 //FUNCIONES DE ENSAMBLAJE DE INSTRUCCIONES-----------------------------------------------------------------------
-
+int tomarInstruccionesAyC (const char* archivo, int cantidad);//toma las instrucciones A y C de el archivo y su numero de linea para luego pasarlo a binario(funcion interna)
+//-----------------------------------------------------------------
+int buscarValor(FILE* tabla,char *cadena, int cantidad);//funcion para obtener el valor de la tabla (funcion interna)
+char *EnteroABin(int valor_entero);//convierte el valor entero a binario y lo devuelve en una cadena(funcion interna)
+int ensamblarA(const char *Ains, int cantidad);//funcion que integra las 2 funciones anteriores y les da los parametros para ensamblar linea por linea (pasarlo a binario)(funcion interna)
+//-----------------------------------------------------------------
+char *bitsDestino(char *destino);//vuelve el destino a su forma binaria(funcion interna)
+char *destino(int actual, FILE *archivoLeer);//trata la parte de destino en una instruccionC si hay, integra la funcion anterior(funcion interna)
+//-----------------------------------------------------------------
+char* salto(int actual, FILE* leer);//trata la parte de salto de una instruccion C (funcion interna)
+//-----------------------------------------------------------------
+//estructura que almacena los bits de esa linea que se le asignaron a la aprte de dest=comp;jmp
+typedef struct {
+	char *destino;
+	char* comp;
+	char* jump;
+	char M;
+}Cins;
+//-----------------------------------------------------------------
+char *tomarlos6(char *punt);//toma los 6 bits que queremos que son los primeros y ignora los otros 10 que devuelve 'EnteroABin'(funcion interna)
+char* operandoA(int actual, FILE* leer);//trata el operandoA o la parte A de un calculo que simpre es D porque en la entrada X de la ALU siempre es D integra la funcion de enteroAbinario(funcion interna)
+int constante(int actual, char anterior, FILE*leer);//trata la constante 1 y sus diferentes casos(funcion interna)
+int operador(int actual, char anterior, FILE *leer);//trata la parte de los "calculos" si hay operador, es decir la parte A operador B (A+B, A-B y otras(esto lo trata), A(no lo trata) -A...(lo trata))(funcion interna) 
+char* calculo(int actual, FILE*leer);//integra las funciones anteriroes y destino y salto y trata la parte de calculo integrando las funcones anteriores, y de ensamblarFinal(funcion interna)
+//-----------------------------------------------------------------
+char* ensamblarFinal(Cins completo);//toma la estructura y sus valores que son los que devolvieron las funciones principales anteriores y los une en una cadena(funcion interna)
+//-----------------------------------------------------------------
+void IdentificarInstruccion(FILE *insC, FILE *EscribirEnsamblado);//integra la funcion pricipal que integra todas las anterioeres que es calculo y le da los parametros
+int ensamblarC(const char* Cins);//integra la funcion anteriores;
+//-----------------------------------------------------------------
+int ensamblar(const char* archivo);// integra las funciones principales anteriores como ensamblarC y ensmblarA y las organiza
+ 
 //AQUI TERMINAN LAS FUNCIONES DE ENSAMBLAJE DE INSTRUCCIONES--------------------------------------------------------
 
 
 //AQUI SE HACE EL PROCESO DE ANALISIS SINTACTICO-------------------------------------
 //**************************************************************
 int analisis_sintactico(const char* archivo){
-	int n, n2, n3, n4, n5, n6, n7, n8, n9, n10;
+	int n;
 	n =copia_archivo(archivo);
 	if(n != 0) return 1;
 	
-	n2 = limpiarLineas("copia.txt");
-	if(n2 != 0) return 1;
+	n = limpiarLineas("copia.txt");
+	if(n != 0) return 1;
 	
-	n4 = tratarEtiquetas("copia.txt");
-	if(n4 != 0) return 1;
+	n = tratarEtiquetas("copia.txt");
+	if(n != 0) return 1;
 	
-	n5 = tratarVariables("copia.txt");
-	if(n5 != 0) return 1;
+	n = tratarVariables("copia.txt");
+	if(n != 0) return 1;
 	
-	n6 = numerarLineas("copia.txt");
-	if(n6 != 0) return 1;
+	n = numerarLineas("copia.txt");
+	if(n != 0) return 1;
 	system("cls");
-	n7 = analizar_etiquetas("copia.txt");
-	if(n7 != 0) return 1;
+	n = analizar_etiquetas("copia.txt");
+	if(n != 0) return 1;
 	
-	n8 =analizar_instrucciones_A("copia.txt");
-	if(n8 != 0) return 1;
+	n =analizar_instrucciones_A("copia.txt");
+	if(n != 0) return 1;
 	
-	n9 = analizar_instrucciones_C("copia.txt");
-	if(n9 != 0) return 1;
+	n = tratarVariables2("copia.txt");
+	if(n != 0) return 1;
 	
-	n10 = eliminarArchivos();
-	if(n10 != 0) return 1;
+	n = analizar_instrucciones_C("copia.txt");
+	if(n != 0) return 1;
+	
+	n = eliminarArchivos();
+	if(n != 0) return 1;
+	
 	system("cls");
 	printf("ANALISIS SINTACTICO COMPLETADO\n\n");
 	return 0;
@@ -169,8 +208,8 @@ int analizar_etiquetas(const char* archivo){
         // Procesar instrucción si es una etiqueta
         if(actual == '(') {
             actual = fgetc(copia);
-            
-            if(actual == EOF) {
+            //si no hay nada mostrar un error
+            if(actual == EOF || (char)actual == '\0' ||(char)actual == '\n' ||(char)actual == ' ') {
                 printf("ERROR en la linea %d\n", numeroLinea);
                 printf("DETALLES: Se esperan caracteres despues de el '('\n");
                 fclose(copia);
@@ -203,17 +242,18 @@ int analizar_instrucciones_A(const char* archivo) {
     }
     printf("Se abrio el archivo '%s'\n", archivo);
     
-    int numeroLinea;
     int n, i;
     char numeros[6]; // Aumentado a 6 para garantizar espacio para el \0
     int cantidad = cantidadDeLineas(copia);
-    char n_lineas[cantidad]; //obtenemos la cantidad de lineas que hay para poder obtener los caracteres necesaciros para el numero de linea
-    int actual;
-    rewind(copia);
+    char *n_lineas = (char*)malloc(cantidad); //obtenemos la cantidad de lineas que hay para poder obtener los caracteres necesaciros para el numero de linea
+    int actual;//caracter actual
+    char continuar;//si hay advertencias saber si se desea continuar con la ejecucion
+    rewind(copia);//rebobinar el archivo debido a que ya lo leimos hasta el finlas a el tomar la cantidad de lienas
+    int advertencia = 0;//si hay advertencias
     // Procesamos línea por línea
     while(1) { 
         // Limpiar los buffers
-        memset(n_lineas, 0, sizeof(n_lineas));
+        memset(n_lineas, 0, sizeof(cantidad));
         memset(numeros, 0, sizeof(numeros));
         actual = fgetc(copia);
         if(actual == EOF) break;
@@ -224,8 +264,6 @@ int analizar_instrucciones_A(const char* archivo) {
             actual = fgetc(copia);
         }
         n_lineas[i] = '\0';
-        
-        numeroLinea = atoi(n_lineas);
         // Leer el siguiente carácter (después del espacio)
         actual = fgetc(copia);
         
@@ -234,9 +272,10 @@ int analizar_instrucciones_A(const char* archivo) {
             actual = fgetc(copia);
             
             if(actual == EOF || (char)actual == '\n' || (char)actual == ' ' || (char)actual == '\0') {
-                printf("ERROR en la linea %d\n", numeroLinea);
+                printf("ERROR en la linea %s\n", n_lineas);
                 printf("DETALLES: Se esperan argumentos despues de el '@'\n");
                 fclose(copia);
+                free(n_lineas);
                 return 1;
             }
             
@@ -245,36 +284,75 @@ int analizar_instrucciones_A(const char* archivo) {
             if((char)actual >= '0' && (char)actual <= '9') {
                 numeros[n] = (char)actual;
                 n++;
-                // Leer más dígitos
+                // si hay mas digitos
                 while(1) {
-                    actual = fgetc(copia);
-                    
-                    if((char)actual == '\n' || actual == EOF) {
+                    actual = fgetc(copia);//vamos a el siguietne caracter
+                    //si es fin de linea
+                    if((char)actual == '\n' || actual == EOF ) {
                         break;
                     }
-                    
+                    //si se alcanzo el maximo de digitos numericos esperados
+                    if(n == 5){
+                    	//comprobar si no hay mas digitos o si hay mas mostrar advertencia
+                    	if(actual != EOF && (char)actual != '\n'){
+                    		printf("ADVENTERNCIA: en la linea %s\n", n_lineas);
+                    		printf("DETALLES: No se esperan mas de 5 digitos numericos debido a que solo hay 15 bits entonces el numero maximo es 32767 que es de 5 bits\ny no se tendran en cuenta(se ignoraran)despues de los 5 digitos\n");
+                    		advertencia = 1;
+						}
+						break;//salimos de el bucle y ignoramos los otros caracteres
+					}
+					//si no se alcanzo el numero comprobar que no haya letras despues de digitos numericos
                     if(!((char)actual >= '0' && (char)actual <= '9')) {
-                        printf("ERROR en la linea %d\n", numeroLinea);
+                        printf("ERROR en la linea %s\n", n_lineas);
                         printf("DETALLES: no se reconoce esta sintaxis, corrijala poniendo un numero de 0-n o coloque el caracter primero\nEJEMPLO: @1234 o @h1234. @1234h(no se reconoce)\n");
                         fclose(copia);
+                        free(n_lineas);
                         return 1;
                     }
-                    
+                    //si es un digito y no se a alcanzado el numero maximo de digitos leer los digitos
                     numeros[n] = (char)actual;
                     n++;
                 }
                 
                 numeros[n] = '\0';
-                
             }
+            int contenido = atoi(numeros);//convertimos la cadena a entero
+            //comprobar si el numero es mayor a 32767
+            if(contenido > 32767){
+            	printf("ADVERTENCIA: en la linea %s\n", n_lineas);
+            	printf("DETALLES: El numero de la instruccion A no debe ser mayor a 32767 de lo contrario\n podria haber eventos inseperados duranto el ensamblaje de al instruccion debido a que son solo 15 bits\n");
+            	advertencia = 1;
+			}
         // Avanzar hasta el final de la línea
         while((char)actual != '\n' && actual != EOF) {
             actual = fgetc(copia);
         }
   }
 }
+   if(advertencia != 0){
+   	printf("\n¿DESEA CONTINUAR CON LA EJECUCION DE EL PROGRAMA?(Y/N)\n");
+   scanf(" %c", &continuar);
+   while(continuar != 'Y' && continuar != 'N'){
+    printf("¿DESEA CONTINUAR CON LA EJECUCION DE EL PROGRAMA?(Y/N)\n");
+    scanf(" %c", &continuar);
+	}
+	//si es N parar la ejecucion
+	if(continuar == 'N'){
+		printf("SE INTERRUMPIO LA EJECUCION DE EL PROGRAMA\n");
+		fclose(copia);
+		free(n_lineas);
+		return 1;
+	}
+	//si no es decir si es Y continuar
+	printf("TERMINO EL ANALIZIS DE INSTRUCCIONES A\n");
+    fclose(copia);
+    free(n_lineas);
+    return 0;
+   }
+   //si no hubieron advertencias
    printf("TERMINO EL ANALIZIS DE INSTRUCCIONES A\n");
     fclose(copia);
+    free(n_lineas);
     return 0;
 }
 //-----------------------------------------------------------------
@@ -443,22 +521,43 @@ int organizar_instrucciones(const char* archivoC, int cantidad) {
 //-----------------------------------------------------------------
 int tipoDeInstruccion(int actual, FILE* soloC, char* nlinea) {
 	char buffer;
+	char buffer2[3];
+	memset(buffer2, 0, 3);
 	actual = fgetc(soloC);
     if ((char)actual != '\n') {
         // Si comienza con D, M, A, 1 o 0
         if ((char)actual == 'D' || (char)actual == 'M' || (char)actual == 'A'||(char)actual == '1'||(char)actual == '0') {
         	buffer= (char)actual;
+        	buffer2[0] = (char)actual;//guradamos el caracter actual 
             actual = fgetc(soloC); // siguiente carácter
              //comprobamos que el siguietne caracter se +, -, | o &
             if ((char)actual == '+' || (char)actual == '-' || (char)actual == '|' || (char)actual == '&') {
                 actual = fgetc(soloC); // siguiente carácter
-                
+                buffer2[1] = (char)actual;
+                buffer2[2] = '\0';//cerramos correctamente
                 //comprobamos que el siguiente caracter sea A, M, D, 1 o 0
                 if ((char)actual == 'A' || (char)actual == 'D' || (char)actual == 'M' || (char)actual == '1' || (char)actual == '0') {
                     actual = fgetc(soloC); // siguiente carácter
-                    
+                   
+				   	//excepciones como que A y M no se pueden calcular
+				   	if(buffer2[0] == 'A' && buffer2[1] == 'M' || buffer2[0] == 'M' && buffer2[1] == 'A'){
+				   		printf("ERROR en la linea %s\n", nlinea);
+				   		printf("DETALLES: No se pueden calcular A con M debido a la arquitectura de la CPU\n");
+				   		fclose(soloC);
+				   		memset(buffer2, 0, 3);
+				   		return 1;
+					   }
+					 //si son iguales los operandos
+				   	 else if(buffer2[0] == buffer2[1]){
+				   	 	printf("ERROR en la linea %s\n", nlinea);
+				   	 	printf("DETALLES: No se puede operar con la misma letra\n");
+				   	 	fclose(soloC);
+				   	 	memset(buffer2, 0, 3);
+				   	 	return 1;
+						}
+				    
                    //comprobamos que el siguiente caracter sea ; o fin de linea
-                    if ((char)actual == '\n' || actual == EOF) {
+                    else if ((char)actual == '\n' || actual == EOF) {
                     	
                         return 0; // Solo cálculo
                     } else {
@@ -679,22 +778,39 @@ int instruccionSalto(int actual, FILE* archivo, char* nlinea){
 }
 //-----------------------------------------------------------------
 int instruccionCalculo(int actual, FILE *archivo, char* nlinea){
-	
+	char buffer2[3];//buffer para ver que los operandos no sean iguales o excepciones
+	buffer2[2] = '\0';
+	memset(buffer2, 0, 3);
 	// Si comienza con D, M, A, 1 o 0
         if ((char)actual == 'D' || (char)actual == 'M' || (char)actual == 'A'||(char)actual == '1'||(char)actual == '0') {
-        	
+        	buffer2[0] = (char)actual;
             actual = fgetc(archivo); // siguiente carácter
             
             //comprobamos que el siguiente caracter se +, -, | o &
             if ((char)actual == '+' || (char)actual == '-' || (char)actual == '|' || (char)actual == '&') {
                 actual = fgetc(archivo); // siguiente carácter
-                
+                buffer2[1] = (char)actual;
                  //comprobamos que el siguiente caracter sea A, D, M, 1 o 0
                 if ((char)actual == 'A' || (char)actual == 'D' || (char)actual == 'M' || (char)actual == '1' || (char)actual == '0') {
                     actual = fgetc(archivo); // siguiente carácter
                     
+				   	//excepciones como que A y M no se pueden calcular
+				   	if(buffer2[0] == 'A' && buffer2[1] == 'M' || buffer2[0] == 'M' && buffer2[1] == 'A'){
+				   		printf("ERROR en la linea %s\n", nlinea);
+				   		printf("DETALLES: No se pueden calcular A con M debido a la arquitectura de la CPU\n");
+				   		fclose(archivo);
+				   		return 1;
+					   }
+					 //si son iguales los operandos
+				   	 else if(buffer2[0] == buffer2[1]){
+				   	 	printf("ERROR en la linea %s\n", nlinea);
+				   	 	printf("DETALLES: No se puede operar con la misma letra\n");
+				   	 	fclose(archivo);
+				   	 	return 1;
+						}
+				   
                     //vemos si es final de linea
-                    if ((char)actual == '\n' || actual == EOF) {
+                    else if ((char)actual == '\n' || actual == EOF) {
                     	
                         return 0; // Solo cálculo
                     }
@@ -725,7 +841,7 @@ int instruccionCalculo(int actual, FILE *archivo, char* nlinea){
                 }
             }
             //si no hay operador pero hay un final de linea
-            else if((char)actual == '\n'){
+            else if(actual == EOF || (char)actual == '\n' || (char)actual == ' ' || (char)actual == '\0'){
             	
 				return 0;
 			}
@@ -814,7 +930,139 @@ int eliminarArchivos(){
 
 //**************************************************************
 //-----------------------------------------------------------------
-int tratarVariables(const char *nombre_de_archivo) {
+int tratarVariables2(const char *nombre_de_archivo) {
+	FILE *archivoP = fopen(nombre_de_archivo, "r");
+	if(archivoP == NULL){
+		printf("No se encontro el archivo '%s'\n", nombre_de_archivo);
+		return 1;
+	}
+	printf("Se abrio el archivo '%s'\n", nombre_de_archivo);
+	
+	FILE* tempoEtiquetas = fopen("var2.txt", "w");
+	if(tempoEtiquetas == NULL){
+		printf("ERROR a el crear el archivo 'var2.txt'\n");
+		fclose(archivoP);
+		return 1;
+	}
+	printf("Se creo el archivo 'var2.txt'\n");
+	
+	int result = encontrarvar2(archivoP, tempoEtiquetas);
+	if(result != 0){
+		fclose(archivoP);
+		fclose(tempoEtiquetas);
+		return 1;
+	}
+	fclose(archivoP);
+	fclose(tempoEtiquetas);
+	if(remove(nombre_de_archivo) != 0){
+		printf("ERROR a el elminar el archivo '%s'\n", nombre_de_archivo);
+		return 1;
+	}
+	else{
+		if(rename("var2.txt", nombre_de_archivo) != 0){
+			printf("No se puedo reenombrar el archivo 'etiquetas2.txt'\n");
+			return 1;
+		}
+		printf("Se renombro el archivo 'var2.txt' a: '%s'\n", nombre_de_archivo);
+	}	
+	
+	char linea[1024];
+	FILE *limpiar = fopen(nombre_de_archivo, "r");
+    if(limpiar == NULL){
+    	printf("No se encontro el archivo '%s'\n", nombre_de_archivo);
+    	return 1;
+	}
+	printf("Se abiro el archivo '%s'\n", nombre_de_archivo);
+	FILE *tempoE = fopen("tempoE.txt", "w");
+	if(tempoE == NULL){
+		printf("ERROR  a el crear el archivo 'tempoE.txt'\n");
+		fclose(limpiar);
+		return 1;
+	} 
+	printf("Se creo exitosamente el archivo 'tempoE.txt'\n");
+	
+	while(fgets(linea, sizeof(linea), limpiar) != NULL){
+		char *linea3 = eliminarLineas_vacias(linea);
+		if(linea3[0] != '\0'){
+			fputs(linea3, tempoE);
+		}
+	}
+	fclose(limpiar);
+	fclose(tempoE);
+	if(remove(nombre_de_archivo) != 0){
+		printf("ERROR a el elminar el archivo '%s'\n", nombre_de_archivo);
+		return 1;
+	}
+	else{
+		if(rename("tempoE.txt", nombre_de_archivo) != 0){
+			printf("No se puedo reenombrar el archivo 'tempoE.txt'\n");
+			return 1;
+		}
+		printf("Se renombro el archivo 'tempoE.txt' a: '%s'\n", nombre_de_archivo);
+	}
+	return 0;
+	
+}
+//-----------------------------------------------------------------
+int encontrarvar2(FILE* archivoLeer, FILE* archivoEscribir){
+	int actual = 0; //caracter actual(fgetc devuelve entero entonces para leer el caracter tenemos que pasarlo a caracter con '(char)actual')
+	while((actual = fgetc(archivoLeer)) !=  EOF){
+		  while((char)actual != ' '){
+		  	fputc((char)actual, archivoEscribir);
+		  	actual = fgetc(archivoLeer);
+		  }
+          fputc((char)actual, archivoEscribir);//agregamos el espacio
+		  actual = fgetc(archivoLeer);//caracter despues de el espacio
+	    	if((char)actual == '@'){
+	    		fputc((char)actual, archivoEscribir); //ponemos el inicio de la variable para uso posterior
+	    		actual = fgetc(archivoLeer);
+	    		while(actual != EOF && (char)actual != '\n'){
+	    			//si es una cadena de digitos 
+	    			if((char)actual >= '0' && (char)actual <= '9'){
+	    				int n = 0;
+	    				//solo copiamos los primeros 5
+	    				while(actual != EOF && (char)actual!= '\n' && n <5){
+	    					fputc((char)actual, archivoEscribir);
+	                        n++;
+	    					actual = fgetc(archivoLeer);
+						}
+					   fputc('\n', archivoEscribir);
+						if(actual == EOF) break;
+						//si se alcanzo el maximo de caracteres y hay mas los ignoramos
+						if(n == 5){
+							while(actual != EOF && (char)actual != '\n'){
+								actual = fgetc(archivoLeer);
+							}
+							if((char)actual == '\n') fputc('\n', archivoEscribir);
+						}
+						break;
+					}
+					//escribir el contenido de la variable completo si no empieza con digito numerico
+					else{
+					while(actual != EOF && (char)actual != '\n'){
+					fputc((char)actual, archivoEscribir);
+					actual = fgetc(archivoLeer);
+				   }
+				   if(actual == '\n') fputc('\n', archivoEscribir);
+				   //si es eof salimos de el bucle
+				   else break;
+				}				
+			}
+	}
+	else{
+	   while(actual != EOF && (char)actual != '\n'){
+			fputc((char)actual, archivoEscribir);
+			actual = fgetc(archivoLeer);
+			}
+			if(actual == '\n') fputc('\n', archivoEscribir);
+			else break;
+	   }
+ }
+	return 0;
+}
+//**************************************************************
+
+int tratarVariables(const char *nombre_de_archivo){
 	FILE *archivoP = fopen(nombre_de_archivo, "r");
 	if(archivoP == NULL){
 		printf("No se encontro el archivo '%s'\n", nombre_de_archivo);
@@ -887,18 +1135,17 @@ int tratarVariables(const char *nombre_de_archivo) {
 	return 0;
 	
 }
-//-----------------------------------------------------------------
 int encontrarvar(FILE* archivoLeer, FILE* archivoEscribir){
-	int actual = fgetc(archivoLeer); //caracter actual(fgetc devuelve entero entonces para leer el caracter tenemos que pasarlo a caracter con '(char)actual')
+			int actual = fgetc(archivoLeer); //caracter actual(fgetc devuelve entero entonces para leer el caracter tenemos que pasarlo a caracter con '(char)actual')
 	while(actual !=  EOF){
 		  char char_actual =(char)actual;
 	    	if(char_actual == '@'){
 	    		fputc('\n', archivoEscribir);
-	    		fputc(char_actual, archivoEscribir); //ponemos el inicio de la etiqueta para uso posterior
+	    		fputc(char_actual, archivoEscribir); //ponemos el inicio de la varible para uso posterior
 	    		actual = fgetc(archivoLeer);
 	    		while(actual != EOF && (char)actual != '\n'){
 	    			char_actual = (char)actual;
-	    			fputc(char_actual, archivoEscribir); //escribir el contenido de la etiqueta.
+	    			fputc(char_actual, archivoEscribir); //escribir el contenido de la variable.
 	    			actual = fgetc(archivoLeer);
 				}				
 				char_actual = '\n';
@@ -909,8 +1156,6 @@ int encontrarvar(FILE* archivoLeer, FILE* archivoEscribir){
 	}
 	return 0;
 }
-//**************************************************************
-
 //AQUI TERMINA EL PROCESO DE ANALISIS SINTACTICO---------------------------------------
 
 
@@ -2209,7 +2454,811 @@ void eliminarDuplicadosTabla(FILE *archivoLeer, FILE *archivoEscribir){
 //AQUI TERMINA TODA LA LIMPIEZA Y PROCESOS DE "PREPARACION"-----------------------------------------------------------------
 
 //COMIENZA EL PROCESO DE ENSAMBLAJE DE INSTRUCCIONES-----------------------------------------------------------------------
+int ensamblar(const char* archivo){
+	FILE *archivoP = fopen(archivo, "r");
+	if(archivoP == NULL){
+		printf("No se encontro el archivo '%s'\n",archivo);
+		return 1;
+	}
+	int cantidad = cantidadDeLineas(archivoP);//tomamos la cantidad de lineas de el archivo orginal
+	fclose(archivoP);
+	int n; 
+	n=tomarInstruccionesAyC(archivo, cantidad);
+	if(n != 0) return 1;
+	
+	n = ensamblarA("Ainstrucciones.txt", cantidad);
+	if(n!= 0) return 1;
+	
+	n = ensamblarC("Cinstrucciones.txt");
+	if(n!= 0) return 1;
+	return 0;
 
-void instruccionesA (const char* archivo){
+}
+//-----------------------------------------------------------------
+int tomarInstruccionesAyC (const char* archivo, int cantidad){
+	printf("OBTENIENDO INSTRUCCIONES A y C...\n");
+	FILE *archivoP = fopen(archivo, "r");
+	if(archivoP == NULL){
+		printf("No se encontro el archivo '%s'\n", archivo);
+		return 1;
+	}
+	printf("Se abrio el archivo '%s'\n", archivo);
+	
+	FILE *insA = fopen("Ainstrucciones.txt", "w");
+	if(insA == NULL){
+		printf("ERROR a el crear el archivo 'Ainstrucciones.txt'\n");
+		fclose(archivoP);
+		return 1;
+	} 
+	printf("Se creo el archivo 'Ainstrucciones.txt'\n"); 
+	
+	FILE* insC = fopen("Cinstrucciones.txt", "w");
+	if(insC == NULL){
+		printf("ERROR a el crear el archivo 'Cinstrucciones.txt'\n");
+		fclose(archivoP);
+		fclose(insA);
+		return 1;
+	}
+	printf("Se creo el archivo 'Cinstrucciones.txt'\n");
+	//mientras no se llegue a el final de la linea
+	char linea[cantidad+1024]; //almacena la linea completa
+	while(fgets(linea, sizeof(linea), archivoP) != NULL){
+		char *c = strchr(linea, '@');//buscamos el @ en la linea que indica que es una instruccion A
+		if(c!= NULL){
+			fputs(linea, insA);//poner la linea completa en el nuevo archivo de instrucciones A
+		}
+		else{
+		fputs(linea, insC);//poner la linea completa en el archivo de instrrucciones C
+	   }
+	}
+   //despues de recorrer todo el archivo
+   fclose(archivoP);
+   fclose(insA);
+   fclose(insC);
+   printf("SE OBTUVIERON LAS INSTRUCCIONES A y C\n");
+   return 0;
+}
+//-----------------------------------------------------------------
+int ensamblarA (const char* Ains, int cantidad){
+	printf("\nENSAMBLANDO INSTRUCCIONES A...\n");
+	FILE *Af = fopen(Ains, "r");
+	if(Af == NULL){
+		printf("No se encontro el archivo '%s'\n", Ains);
+		return 1;
+	}
+	printf("Se abrio el archivo '%s'\n", Ains);
+	FILE *ensam = fopen("Aensamblado.txt", "w");
+	if(ensam == NULL){
+		printf("ERROR a el crear el archivo 'Aensamblado.txt'\n");
+		fclose(Af);
+		return 1;
+	}
+	printf("Se creo el archivo 'Aensamblado.txt'\n");
+	FILE *tabla = fopen("tabla.txt", "r");
+	if(tabla == NULL){
+		printf("No se encontro el archivo 'tabla.txt'\n");
+		return 1;
+	}
+	printf("Se abrio el archivo 'tabla.txt'\n");
+	int actual = 0;
+	char *cadena=(char*)malloc(1024);//almacena la cadena leida
+	int valor = 0;//almacena el valor actual como entero
+	//mientras no se llegue a el final de el archivo
+	while((actual=fgetc(Af)) != EOF){
+		memset(cadena, 0,sizeof(cadena));
+		char *bin2 = NULL;//almacena la cadena binaria 
+		if(actual == EOF){
+			fclose(Af);
+			fclose(ensam);
+			free(cadena);
+			break;//salimos de el bucle
+		}
+		while((char)actual != ' '){
+			fputc((char)actual, ensam);//ponemos el numero de linea en el nuevo archvio
+			actual = fgetc(Af);//vamos a el siguiente caracter
+		}
+		fputc((char)actual, ensam);//incluir el espacio
+		actual = fgetc(Af);//vamos a el siguiente caracter despues de el espacio
+		actual = fgetc(Af);//saltamos el @
+		int i = 0;
+		//mientras no se llegue a el final de linea
+		while(actual != EOF && (char)actual != '\n'){
+			cadena[i] = (char)actual;
+			i++;
+			actual = fgetc(Af);
+		}
+		cadena[i] = '\0';
+		//si es un numero en lugar de una cadena lo convertimos directamente
+		if(cadena[0] >= '0' && cadena[0] <= '9'){
+			valor = atoi(cadena);
+			bin2 = EnteroABin(valor);
+			fputc('0', ensam);
+			fputs(bin2, ensam);
+			fputc('\n', ensam);    
+			free(bin2);
+		}
+		 else{
+	    valor = buscarValor(tabla, cadena, cantidad);
+		bin2 = EnteroABin(valor);
+		fputc('0', ensam);//convencion para instrucciones el bit 16 siempre es el opcode(bit que indica que instrucción es si A o C) y para instrucciones A siempre es 0 los otros 15 son de valor
+		fputs(bin2, ensam);//poner el binario
+		fputc('\n', ensam);        // Aquí se añade el salto de línea
+		free(bin2);//liberar la memoria utilizada en la funcion EnteroABin
+	   }
+	}
+	fclose(Af);
+	fclose(ensam);
+	if(remove("Ainstrucciones.txt") != 0){
+		printf("No se elimino el archivo 'Ainstrucciones.txt'\n");
+	    return 1;
+	}
+	printf("Se elimino el archivo 'Ainstrucciones.txt'\n");
+	printf("INSTRUCCIONES A ENSAMBLADAS\n");
+	return 0;
+}
+//-----------------------------------------------------------------
+int buscarValor(FILE *tabla, char *cadena, int cantidad){
+	rewind(tabla);
+	char *cdtabla= (char*)malloc(1024);//almacena la cadena obtenidad de la tabla
+	char valor[cantidad+1024];//almacenamos el valor
+	int actual = 0;
+	while(!feof(tabla)){
+		memset(cdtabla, 0, sizeof(1024));
+		memset(valor,0, sizeof(valor));
+		
+		actual = fgetc(tabla);
+		int i = 0;
+		//obtener la cadena que simpre va antes de el espacio
+		while((char)actual != ' '){
+			cdtabla[i]=(char)actual;
+			i++;
+			actual = fgetc(tabla);
+		}
+		cdtabla[i] = '\0';	
+		actual = fgetc(tabla);//caracter despues de el espacio
+		//obtener el valor 
+		int j = 0;
+		while(actual != EOF && (char)actual != '\n' && (char)actual !='\0' && (char)actual !=' '){
+			valor[j] = (char)actual;
+			j++;
+			actual = fgetc(tabla);//vamos a el siguiente caracter
+		}
+		valor[j] = '\0';
+		if(strcmp(cadena, cdtabla) == 0){
+			int valorint= atoi(valor);
+			free(cdtabla);
+		 return valorint;//devolvemos el valor como entero
+	     }
+	     continue;
+	}
+	free(cdtabla);
+	return 0;//esto nunca va a salir
+}
+//-----------------------------------------------------------------
+char *EnteroABin(int valor_entero) {
+    char *bin = (char*)malloc(16); // 15 bits + 1 para '\0'
+    memset(bin, 0, 16);
+    if (bin == NULL) return NULL; // por seguridad para poder devolver la cadena sin problemas
+    int i;
+    for (i = 14; i >= 0; i--) {
+        bin[14 - i] = ((valor_entero >> i) & 1) ? '1' : '0';//guardamos cada bit, y el bit mas significativo esta a la izquierda (bin[0])
+    }
+
+    bin[15] = '\0';
+    return bin;
+}
+//-----------------------------------------------------------------
+int ensamblarC(const char* Cins){
+	printf("\nENSAMBLANDO INSTRUCCIONES C...\n");
+	FILE *Cf = fopen(Cins, "r");
+	if(Cf == NULL){
+		printf("No se encontro el archivo '%s'\n", Cins);
+		return 1;
+	}
+	printf("Se abrio el archivo '%s'\n", Cins);
+	FILE *ensam = fopen("Censamblado.txt", "w");
+	if(ensam == NULL){
+		printf("ERROR a el crear el archivo 'Censamblado.txt'\n");
+		fclose(Cf);
+		return 1;
+	}
+    printf("Se creo el archivo 'Censamblado.txt'\n");
+    
+    IdentificarInstruccion(Cf, ensam);
+    printf("INSTRUCCIONES C ENSAMBLADAS\n");
+    return 0;
 	
 }
+//-----------------------------------------------------------------
+void IdentificarInstruccion(FILE *insC, FILE *EscribirEnsamblado){
+   int actual;
+   char* s =NULL;
+   //mientras no se llegue a el final de linea
+   while((actual = fgetc(insC)) != EOF){
+   	 //ponemos el numero de linea en el archivo de instrucciones C ensambladas
+   	while((char)actual != ' '){
+   		fputc((char)actual, EscribirEnsamblado);
+   		actual = fgetc(insC);
+	   }
+	   fputc((char)actual, EscribirEnsamblado);//agregamos el espacio
+	   actual = fgetc(insC);//vamos a el siguiente caracter despues de el espacio
+	   
+   	     s=calculo(actual, insC);//todas las intrucciones C tienen que tener un calculo y esta funcion integra las otras de destino y salto entonces por eso solo llamamos a calculo y obtenemos la cadena de este
+		fputs(s, EscribirEnsamblado);
+		fputc('\n', EscribirEnsamblado);
+		free(s);  // también liberas el string ensamblado
+		s= NULL;
+   }
+   return;
+}
+//es una estructura de valores constantes asignados a cada parte de un calculo para luego utilizarlos en una "formula" que da el comp esperado
+typedef struct {
+	//valores para operadores 
+	int menos;//19
+	int mas;// 2
+	int negar;//1
+	int AND;//0
+	int OR;// 21
+	//valores para constantes
+	int uno;//63
+	int cero;//42
+	//valores para variables (entradas de la ALU)
+	int x;//12
+	int y;//48
+}patron;
+//variable tipo estructura y definimos los valores
+patron valores={
+    .menos=19,
+    .mas=2,
+    .negar=1,
+    .AND=0,
+    .OR=21,
+    .uno=63,
+    .cero=42,
+    .x=12,
+    .y=48,
+};
+//-----------------------------------------------------------------
+char *destino(int actual, FILE *archivoLeer){
+	int destino = 0;//para saber si hay o no destino
+	char *cadena=(char*)malloc(4);//puntero a cadena de caracteres para transformar a bits 3 + 1('\0')
+	 char* bits= NULL;
+	memset(cadena, 0, 4);//restablecemos la cadena a 0
+	int i = 0;
+	cadena[i] = (char)actual;//primer caracter
+	i++;
+	if((char)actual == 'M' || (char)actual =='A' || (char)actual == 'D'){
+		cadena[i] = (char)actual;//segundo caracter si hay
+		i++;
+		actual = fgetc(archivoLeer);//pasamos a el siguidente caracter
+		//vemos si es A, D, o M
+		if((char)actual == 'A' || (char)actual == 'M'|| (char)actual == 'D'){
+			cadena[i] = (char)actual;//tercer caracter si hay
+		    i++;
+			actual = fgetc(archivoLeer); //pasamos a el siguiente caracter que debe ser =
+			if((char)actual == '='){
+				cadena[i] = '\0';//cerramos correctamente el arreglo a el final de la cadena con '\0'
+				destino = 1;
+				actual = fgetc(archivoLeer);//pasamos a el siguietne caracter despues de =
+				bits = bitsDestino(cadena); //convertirmos a bits el destino
+				int i= 0;
+			    char *copiaBits = (char*)malloc(4); //3+1 para '\0'
+			    char *n = bits;//porque luego nececita liberar la memoria asginada a bitsDestino, y como recorremos bits, este ya no apuntara a el principio de esta
+			   //guardamos la cadena de bits para poder liberar la memoria dinamica
+			    while(*bits != '\0'){
+				copiaBits[i] = *bits;
+				bits++;
+				i++;
+			}
+			copiaBits[i] = '\0';
+			    free(cadena);//liberamos la memoria reservada para cadena
+			    free(n);//libermaos la memoria asginada para bin en bitsDestino
+			    bits = NULL;//ponemos a el puntero para que no apunte a nada
+			    n = NULL;
+				return copiaBits;
+			}
+		}
+		else if((char)actual == '='){
+		   cadena[i] = '\0';
+			destino = 1;
+			actual = fgetc(archivoLeer);//pasamos despues de el =
+			bits = bitsDestino(cadena);
+			int i= 0;
+			char *copiaBits = (char*)malloc(4); //3+1 para '\0'
+			char *n = bits;
+			//guardamos la cadena de bits para poder liberar la memoria dinamica
+			while(*bits != '\0'){
+				copiaBits[i] = *bits;
+				bits++;
+				i++;
+			}
+			copiaBits[i] = '\0';
+			free(cadena);//liberamos la memoria reservada para cadena
+			free(n);
+			bits = NULL;
+			n = NULL;
+		    return copiaBits;
+		}
+	}
+	//si es igual
+	else if((char)actual == '='){
+		cadena[i] = '\0';
+		actual = fgetc(archivoLeer);//pasamos a el siguiente caracter
+		destino = 1;
+	    bits = bitsDestino(cadena);
+		int i= 0;
+		char *n = bits;
+		char *copiaBits = (char*)malloc(4); //3+1 para '\0'
+			//guardamos la cadena de bits para poder liberar la memoria dinamica
+			while(*bits != '\0'){
+				copiaBits[i] = *bits;
+				bits++;
+				i++;
+			}
+			copiaBits[i] = '\0';
+			free(cadena);//liberamos la memoria reservada para cadena
+			free(n);
+			bits = NULL;
+			n = NULL;
+		    return copiaBits;
+	}
+	//si no es un destino simplemente se devuelve null o 000
+	else{
+		ungetc(actual, archivoLeer);//devolvemos el caracter que se leyo es decir volvemos a el primrer caracter despues de el espacio
+		memset(cadena, 0, 4);//si no es un destino restablecemos la cadena a 0 para limpiarla de basura o caracter previamente leidos como a el principio de la funcion
+		bits = bitsDestino(cadena); // que va a ser NULL o 000
+		int i= 0;
+			char *copiaBits = (char*)malloc(4); //3+1 para '\0'
+			char *n = bits;
+			//guardamos la cadena de bits para poder liberar la memoria dinamica
+			while(*bits != '\0'){
+				copiaBits[i] = *bits;
+				bits++;
+				i++;
+		  }
+	copiaBits[i] = '\0';
+	free(cadena);//liberamos la memoria reservada para cadena
+	free(n);
+	bits = NULL;
+	n = NULL;
+	return copiaBits;
+	}
+}
+//-----------------------------------------------------------------
+char* bitsDestino(char *destino) {
+    if (destino == NULL){
+        char *bin = (char *)malloc(4);
+        if (bin == NULL) return NULL;
+        strcpy(bin, "000");
+        return bin;
+    }
+
+    int bits = 0;
+    if (strchr(destino, 'A')) bits |= 4;
+    if (strchr(destino, 'D')) bits |= 2;
+    if (strchr(destino, 'M')) bits |= 1;
+
+    char *bin = (char *)malloc(4);
+    if (bin == NULL) return NULL;
+
+    bin[0] = (bits & 4) ? '1' : '0';
+    bin[1] = (bits & 2) ? '1' : '0';
+    bin[2] = (bits & 1) ? '1' : '0';
+    bin[3] = '\0';
+    return bin;
+}
+//-----------------------------------------------------------------
+char* calculo(int actual, FILE* leer) {
+    Cins completo = {0}; // inicializa todo a NULL o 0
+    if ((char)actual == 'M' || (char)actual == 'A' || (char)actual == 'D') {
+        completo.destino = destino(actual, leer); // ya devuelve malloc
+    }
+        if ((char)actual == 'M') completo.M = '1';
+        else completo.M = '0';
+
+        completo.comp = operandoA(actual, leer); // ya devuelve malloc
+    
+        completo.jump = salto(actual, leer); // ya devuelve malloc
+        
+    char *h = ensamblarFinal(completo);
+    return h;
+}
+//-----------------------------------------------------------------
+char* operandoA(int actual, FILE* leer){
+	char anterior; //buffer que guarada el valor anterior
+	//si es M o A corresponde a la entrada Y de la ALU
+	if((char)actual == 'M'||(char)actual== 'A'|| (char)actual == 'D' || (char)actual == '1' || (char)actual == '0' ){
+		anterior = (char)actual;
+		actual = fgetc(leer);//pasamos a el siguiente caracter
+		//si es final de linea o ; indica que termino la parte de el calculo
+		if((char)actual == '\n' || actual == EOF || (char)actual == ';' || (char)actual == ' ' || (char)actual == '\0'){
+			if(anterior == 'M' || anterior == 'A'){
+				char *h = EnteroABin(valores.y);
+				return tomarlos6(h);
+			}
+			else if(anterior == 'D'){
+				char *x = EnteroABin(valores.x);
+				return tomarlos6(x);
+			}
+			else if(anterior == '0'){
+				char *h = EnteroABin(valores.y);
+				return tomarlos6(h);
+			}
+			else {
+				char *uno = EnteroABin(valores.uno);
+				return tomarlos6(uno);
+			}
+		}
+		//si es -,+, & o | llamamos a operador 
+		else if((char)actual == '-' || (char)actual == '+'|| (char)actual== '&' || (char)actual== '|'){
+			 int n =operador(actual, anterior, leer);//porque dentro de esta funcion se hacen todos los "calculos" necesarios para el siguiente y anterior operando y operador
+			 char *h = EnteroABin(n);
+			 return tomarlos6(h);
+		}
+	}
+	else if((char)actual == '-' || (char)actual == '!'){
+		anterior = (char)actual;
+	    actual = fgetc(leer);
+	    int n = operador(actual, anterior, leer);
+	    char *s = EnteroABin(n);
+	    return tomarlos6(s);
+	}
+	return NULL;//esto nunca va a suceder o no deberia
+}
+//-----------------------------------------------------------------
+char *tomarlos6(char *punt){
+	char *n = punt;
+	char *bin = (char*)malloc(7);// 6 + 1 para el '\0'
+	int i;
+	//saltamos los ultimos 10 bits debido a que no nos interesan solo nececitamos los primeros 6 bits
+	for(i = 0; i < 10; i++){
+		punt++;
+	}
+	//tomamos los 6 bits restantes
+	for(i = 0; *punt != '\0'; i++){
+		bin[i] = *punt;
+		punt++;
+	}
+	bin[i] = '\0';
+	free(n);//liberamos la memoria que almacenaba los 16 bits
+	punt = NULL;//apunte a nada
+	n = NULL;//apunte a nada
+	return bin;
+}
+
+int operador(int actual, char anterior, FILE *leer){
+      //si es un operador como + 
+      if((char)actual == '+'){
+    	int n = valores.mas+ 6;//valor de y que es 2(2 porque a el final y+ o x+ es 2 (000010) + 6(que es un arreglo)
+
+      	//vemos si el anterior es Y o X
+      	if(anterior == 'A' || anterior == 'M'){
+      		 actual = fgetc(leer); //pasamos a el siguiente caracter desues de el signo +
+      		 if((char)actual == '1'){
+      		 	 return valores.uno - n;//luego le restamos el valor de el operandoB con n y tenemos el entero que luego pasaremos a binario (63-8=55)
+			   }
+			   else if((char)actual == 'D'){
+			   	return valores.mas;//porque no alteramos ni X ni Y solo sumamos(000010) qu es lo mismo que decir (y+ + 8 - x = 2)
+			   }
+			   else if((char)actual == '0'){
+			   	return 34; //porque pasamos X a 0 y Y lo dejamos igual (que es lo mismo que decir (y+ + 8 - 0 = 34)
+			   }
+		  }
+		  //si es X (D)
+		   else if(anterior == 'D'){
+      		 actual = fgetc(leer); //pasamos a el siguiente caracter desues de el signo +
+      		 if((char)actual == '1'){
+      		 	 return valores.uno - (valores.mas+30);//caso "especial" en el que ponemos 30 porque es un arreglo porque 2 + 30 = 32 y 63 - 32 = 31
+			   }
+			   else if((char)actual == 'A' || (char)actual == 'M'){
+			   	return valores.mas;//porque no se altera X ni Y
+			   }
+			   else if((char)actual == '0'){
+			   	return 10; //porque pasamos Y a 0 y X lo dejamos igual( que es lo mismo que decir (x+ + 8 = 10)(001010)
+			   }
+		  }
+		  //si es 0, es decir 0+D o 0+X
+		  else if(anterior == '0'){
+		  	actual = fgetc(leer);
+		  	if((char)actual == '1'){
+		  		return valores.uno;
+			  }
+			  else if((char)actual == 'A'|| (char)actual == 'M'){
+			  	return valores.y;
+			  }
+			  //si es D (0+D)
+			  else{
+			  	return valores.x;
+			  }
+		  }
+	  }
+	  // si es -
+	  else if((char)actual== '-'){
+	  	int n = valores.menos + 6;//porque - + 6 = 25 (y- y x- = 19)(010011) 
+
+      	//vemos si el anterior es Y o X
+      	if(anterior == 'A' || anterior == 'M'){
+      		 actual = fgetc(leer); //pasamos a el siguiente caracter desues de el signo - 
+      		 if((char)actual == '1'){
+      		 	 return n+n;//luego le restamos el valor de el operandoB con n y tenemos el entero que luego pasaremos a binario (n+n = 50) (110010= y-1)
+			   }
+			   else if((char)actual == 'D'){
+			   	return n-valores.x;//porque alteramos a negativo X lo susamos con Y (000111) que es lo mismo que decir (y- - x = 7)
+			   }
+			   else if((char)actual == '0'){
+			   	return 34; //porque pasamos X a 0 y Y lo dejamos igual (que es lo mismo que decir (0+y = 34))(100010)
+			   }
+		  }
+		  //si es X (D)
+		   else if(anterior == 'D'){
+      		 actual = fgetc(leer); //pasamos a el siguiente caracter desues de el signo - 
+      		 if((char)actual == '1'){
+      		 	 return valores.menos-6;//caso "especial" en el que ponemos -6 porque es un arreglo porque 19 - 6 = 14 (001110=x-1)
+			   }
+			   else if((char)actual == 'A' || (char)actual == 'M'){
+			   	return valores.menos;//porque no se altera X ni Y
+			   }
+			   else if((char)actual == '0'){
+			   	return 10; //porque pasamos Y a 0 y X lo dejamos igual( que es lo mismo que decir (x-0 = x+0 = 10)
+			   }
+		  }
+		  //si es 0, es decir 0-x o 0-y = -x o -y
+		  else if(anterior == '0'){
+		  	actual = fgetc(leer);
+		  	if((char)actual == 'A' || (char)actual == 'M'){
+	  		return valores.y + 3;//porque en binario e 110011(es lo mismo que 51 que es 48+3 = 51)
+		  }
+		  else if((char)actual == 'D'){
+		  	return valores.x + 3; //porque en binario es 001111 = 15 (es lo mismo que decir que 12 + 3 = 15)
+		  }
+		  //si es 1
+		  else{
+		  	return valores.uno + 5;//porque es -1 (58)
+		  }
+		  }
+	  }
+	  //si es un operador como & o |
+	  else if((char)actual == '&'){
+	  	if(anterior == 'D'){
+	  	   actual = fgetc(leer);//Pasamos a el siguiente caracter
+	  	   if((char)actual == 'A' || (char)actual == 'M'){
+	  		    return 0;//porque no se altera ningun bit de control
+		     }
+		     else if((char)actual == '1'){
+		     	return valores.x;//porque a el final solo pasamos a 1 Y y X lo dejamos igual 
+			 }
+			 else if((char)actual == '0'){
+			 	return 8; //estos son casos especiales porque solo pasamos a 0 el Y y X lo dejamos igual
+			 }
+		
+		  }
+		  //si es Y
+		else if(anterior == 'A' || anterior == 'M'){
+			actual = fgetc(leer);//Pasamos a el siguiente caracter
+	  	   if((char)actual == 'D'){
+	  		    return 0;//porque no se altera ningun bit de control
+		     }
+		     else if((char)actual == '1'){
+		     	return valores.y;//porque a el final solo pasamos a 1 X y Y lo dejamos igual 
+			 }
+			 else if((char)actual == '0'){
+			 	return 32; //estos son casos especiales porque solo pasamos a 0 el X y Y lo dejamos igual
+			 }
+		}
+		
+		else if(anterior == '0'){
+			actual =fgetc(leer);
+		  if((char)actual == '1'){
+		  	return 44;//porque pasamos a alguno a 0 y alguno a 1(101100 = 44)
+		  }
+		  else if((char)actual == 'A' || (char)actual == 'M'){
+		  	return 8;//porque ponemos a X a 0 (001000 = 8)
+		  }
+		  else{
+		  	return 32;//porque ponemos a Y a 0 (100000 = 32)
+		  }
+		}
+	  }
+	  //si es | que es operador OR
+	  else if((char)actual == '|'){
+	  	if(anterior == 'D'){
+	  		actual = fgetc(leer);//Pasamos a el siguiente caracter
+	  	   if((char)actual == 'A' || (char)actual == 'M'){
+	  		    return valores.OR;//porque solo se niegan X y Y y el resultado final de &( X | Y = 010101 = 21)
+		     }
+		     else if((char)actual == '1'){
+		     	return valores.uno;//porque a el final solo pasamos a 1 (111111)(X|1 = 1)
+			 }
+			 else if((char)actual == '0'){
+			 	return 8; //porque a el finla solo pasamos a 1 a Y(001000)(X | 0 = X)
+			 }
+		  }
+		  else if(anterior == 'A' || anterior == 'M'){
+		  	actual = fgetc(leer);//Pasamos a el siguiente caracter
+	  	   if((char)actual == 'D'){
+	  		    return valores.OR;//porque solo se niegan X y Y y el resultado final de &
+		     }
+		     else if((char)actual == '1'){
+		     	return valores.uno;//porque a el final la salida de OR con 1 simpre es 1 (Y| 1 = 1)(111111)
+			 }
+			 else if((char)actual == '0'){
+			 	return 32; //porque a el finla solo pasamos a 0 X y comparamos con Y (Y|0 = Y)
+			 }
+		  }
+		  else if(anterior == '0'){
+		  	  if((char)actual == '1'){
+		  	  	return valores.uno;
+				}
+				else if((char)actual == 'M' || (char)actual == 'D'){
+					return 32;
+				}
+				else if((char)actual == 'D'){
+					return 8;
+				}
+		  }
+	  }
+	  //si es -X o -Y
+	  else if(anterior == '-'){
+	  	if((char)actual == 'A' || (char)actual == 'M'){
+	  		return valores.y + 3;//porque en binario e 110011(es lo mismo que 51 que es 48+3 = 51)
+		  }
+		  else if((char)actual == 'D'){
+		  	return valores.x + 3; //porque en binario es 001111 = 15 (es lo mismo que decir que 12 + 3 = 15)
+		  }
+	  }
+	  //si es !X o !Y
+	  else if(anterior == '!'){
+	  	if((char)actual == 'A' || (char)actual == 'M'){
+                return valores.y + valores.negar;//que es binario es 00101 = 49 (es lo mismo que decir que 48 + 1 = 49)
+		  }
+		  else if((char)actual == 'D'){
+		  	return valores.x + valores.negar;//que es binario es 001101 = 13 (es lo mismo que decir que 12+1=13)
+		  }
+	  }
+	  //si no es ninguno de estos casos llamamos a constante 
+	  int result = constante(actual, anterior, leer);
+	  return result;
+}
+//-----------------------------------------------------------------
+int constante(int actual, char anterior, FILE*leer){
+	
+	if(anterior == '-'){
+		if((char)actual == '1'){
+			return valores.uno - 5; // porque n binario es 111010 = 58(que es lo mismo que decir 63-5= 58)
+		}
+	}
+	else if(anterior == '!'){
+		if((char)actual == '1'){
+			return valores.cero;//porque !1 = 0
+		}
+	}
+	else if(anterior == '1'){
+		if((char)actual == '-'){
+			actual = fgetc(leer);//pasamos a el siguiente caracter
+			if((char)actual == 'M' || (char)actual == 'A'){
+				return 1+(~valores.y+1);//porque negamos el decimal de Y,y le sumamos 1 que da como resultado -y y le sumamos 1 que es 1-y(porque 1 es positvo, es lo mismo qeu decir -y+1)(complemento a 2 de y +1)
+			}
+			else if((char)actual == 'D'){
+				return 1+(~valores.x+1); //porque negamos el decimal de X,y le sumamos 1 que da como resultado -x y le sumamos 1 que es 1-x(porque 1 es positvo, es lo mismo qeu decir -x+1)(complemento a 2 de x + 1)
+			}
+			else if((char)actual == '0'){
+				 return valores.cero + 3; //porque en binarioes 101110=46(qeu es lo mismo que decir 42+3=46)
+			}
+		}
+		else if((char)actual == '+'){
+			actual = fgetc(leer);//pasamos a el siguiente caracter
+			if((char)actual == 'M' || (char)actual == 'A'){
+				return valores.uno-8;//porque en binario es 110111 = 55(que es lo mismo que decir 63-8=55)
+			}
+			else if((char)actual == 'D'){
+				return (valores.uno-9)-23; //porque en binairo es 011111=31(que es lo mismo qeu decir 63-23-9 = 31)
+			}
+			else if((char)actual == '0'){
+				 return valores.cero + 3; //porque en binarioes 101110=46(qeu es lo mismo que decir 42+3=46)
+			}
+		}
+		else if((char)actual == '|'){
+			//simpre se retorna 1 porque cualuqiero OR con 1 es 1 
+			actual = fgetc(leer);//pasamos a el siguiente caracter
+			if((char)actual == 'M' || (char)actual == 'A'){
+				return valores.uno;
+			}
+			else if((char)actual == 'D'){
+				return valores.uno; 
+			}
+			else if((char)actual == '0'){
+				 return valores.uno; 
+			}
+			
+		}
+		else if((char)actual == '&'){
+			actual = fgetc(leer);//pasamos a el siguiente caracter
+			if((char)actual == 'M' || (char)actual == 'A'){
+				return valores.y;//porque en binario es 110000 = 48(que es lo mismo que decir 1&Y=48)
+			}
+			else if((char)actual == 'D'){
+				return valores.x; //porque en binairo es 001100=12(que es lo mismo qeu decir 1&D = 12)
+			}
+			else if((char)actual == '0'){
+				 return valores.cero; //porque en binarioes 10101=42(que es lo mismo que decir 1&0 = 0)
+			}
+		}
+	}
+	//si no es -1 o calculo con 1 devuelve 1
+	return valores.uno;
+}
+//-----------------------------------------------------------------
+char* salto(int actual, FILE* leer) {
+    char *jump = (char*)malloc(4); // 3 bits + '\0'
+    if (jump == NULL) return NULL;
+    memset(jump, 0, 4);
+
+    if ((char)actual != ';') {
+        strcpy(jump, "000"); // sin salto
+        return jump;
+    }
+
+    actual = fgetc(leer); // saltamos el ';'
+    char buffer[4] = {0};
+    int i = 0;
+
+    // Leer hasta 3 letras
+    while (i < 3 && actual != EOF && actual != '\n') {
+        buffer[i++] = (char)actual;
+        actual = fgetc(leer);
+    }
+    buffer[i] = '\0';
+
+    int valor = 0;
+
+    if (strcmp(buffer, "JGT") == 0) valor = 1;
+    else if (strcmp(buffer, "JEQ") == 0) valor = 2;
+    else if (strcmp(buffer, "JGE") == 0) valor = 3;
+    else if (strcmp(buffer, "JLT") == 0) valor = 4;
+    else if (strcmp(buffer, "JNE") == 0) valor = 5;
+    else if (strcmp(buffer, "JLE") == 0) valor = 6;
+    else if (strcmp(buffer, "JMP") == 0) valor = 7;
+    else valor = 0; // sin salto válido
+
+    // Convertir valor a binario de 3 bits
+    jump[0] = (valor & 4) ? '1' : '0';
+    jump[1] = (valor & 2) ? '1' : '0';
+    jump[2] = (valor & 1) ? '1' : '0';
+    jump[3] = '\0';
+
+    return jump;
+}
+
+char* ensamblarFinal(Cins completo) {
+    // Reservamos memoria para "111" + comp (6) + dest (3) + jump (3) + '\0'
+    char* instruccion = (char*)malloc(17); // 3 + 6 + 3 + 3 + '\0'
+    memset(instruccion, 0, 17);
+    if (!instruccion) return NULL;
+    if (!completo.M || !completo.comp || !completo.destino || !completo.jump) {
+    free(instruccion);
+    return NULL;
+    }
+    // El patrón es: 111accccccdddjjj
+    sprintf(instruccion, "111%c%s%s%s", completo.M, completo.comp, completo.destino, completo.jump);
+    //liberamos la memoria asginada en las funcionciones dentor de calculo
+    free(completo.comp);
+    free(completo.destino);
+    free(completo.jump);
+	completo.comp = NULL;
+    completo.destino = NULL;
+    completo.jump = NULL;
+    completo.M='0';
+    return instruccion;
+}
+
+
+
+
+
+
+
+
+
+
+
+
