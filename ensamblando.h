@@ -3010,7 +3010,7 @@ int operador(char *actual, char**actualizado, char anterior, char* conM){
       		 	 return n+n;//luego le restamos el valor de el operandoB con n y tenemos el entero que luego pasaremos a binario (n+n = 50) (110010= y-1)
 			   }
 			   else if(*actual == 'D'){
-			   	return n-valores.x;//porque alteramos a negativo X lo susamos con Y (000111) que es lo mismo que decir (y- - x = 7)
+			   	return n-valores.x-6;//porque alteramos a negativo X lo susamos con Y (000111) que es lo mismo que decir (y- - x-6 = 7)
 			   }
 			   else if(*actual == '0'){
 			   	return 34; //porque pasamos X a 0 y Y lo dejamos igual (que es lo mismo que decir (0+y = 34))(100010)
@@ -3021,7 +3021,7 @@ int operador(char *actual, char**actualizado, char anterior, char* conM){
       		 actual++; //pasamos a el siguiente caracter desues de el signo - 
       		 *actualizado = actual;
       		 if(*actual == '1'){
-      		 	 return valores.menos-6;//caso "especial" en el que ponemos -6 porque es un arreglo porque 19 - 6 = 14 (001110=x-1)
+      		 	 return valores.menos-5;//caso "especial" en el que ponemos -6 porque es un arreglo porque 19 - 5 = 14 (001110=x-1)
 			   }
 			   else if(*actual == 'A' || *actual == 'M'){
 			   	if(*actual == 'M') *conM = '1';
@@ -3044,7 +3044,7 @@ int operador(char *actual, char**actualizado, char anterior, char* conM){
 		  }
 		  //si es 1
 		  else{
-		  	return valores.uno + 5;//porque es -1 (58)
+		  	return valores.uno - 5;//porque es -1 (58)
 		  }
 		  }
 	  }
@@ -3383,7 +3383,6 @@ int archivoHack(const char* ensamblado) {
     }
     printf("Se creó el archivo 'archivoHack.hack'\n");
     char linea[1024];
-    fputc('\n', hack);
     while (fgets(linea, sizeof(linea), ensam)) {
         // Buscar el primer espacio
         char *despuesDelEspacio = strchr(linea, ' ');
