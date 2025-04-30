@@ -58,6 +58,8 @@ A=D
 
  ------------------------------------------------
 * Este programa fue diseñado para ser ejecutado en un entorno de *Windows* por eso utiliza comandos de sistema como **CLS** por **CLEAR**, si se quiere utilizar para *MacOs* debe adaptar algunas partes de el código donde este *system.cls*
+  
+* ***Si por alguna razón hay algún error a el crear o abrir un archivo revise la seguridad de windows y desactive el analisis en tiempo real o permita a el compilador manipular archivos***
 
 * Antes de revisar el codigo (de la libreria `Ensambalndo.h` principalmente), se recomienda tener **concimiento de la arquitectura de la *CPU* y la *ALU*** para entender ciertos fragmentos de el codigo como la parte de **ENSAMBLAJE**, esto estara en el **README Arquitectura.md** (*donde también se explicara porque hay ciertas operaciones y restriccioens y como podrian integrarse más operaciones*).
 
