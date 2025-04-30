@@ -61,7 +61,7 @@ A=D
   
 * ***Si por alguna razón hay algún error a el crear o abrir un archivo revise la seguridad de windows y desactive el analisis en tiempo real o permita a el compilador manipular archivos***
 
-* Antes de revisar el codigo (de la libreria `Ensambalndo.h` principalmente), se recomienda tener **concimiento de la arquitectura de la *CPU* y la *ALU*** para entender ciertos fragmentos de el codigo como la parte de **ENSAMBLAJE**, esto estara en el **README Arquitectura.md** (*donde también se explicara porque hay ciertas operaciones y restriccioens y como podrian integrarse más operaciones*).
+* Antes de revisar el codigo (de la libreria `Ensambalndo.h` principalmente), se recomienda tener **concimiento de la arquitectura de la *CPU* y la *ALU*** para entender ciertos fragmentos de el codigo como la parte de **ENSAMBLAJE**, esto estara en el **ARQUITECTURA.md** (*donde también se explicara porque hay ciertas operaciones y restriccioens y como podrian integrarse más operaciones*).
 
 * El diseño y creación de este programa se centra en la funcionalidad y escalabilidad y no tanto en la optimización (aunque se utilizan buenas practicas), esto es abierto a quien quiera mejorar el codigo optimizandolo de muchas maneras.
 
