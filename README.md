@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>README - Ensamblador Hack en C</title>
+README - Ensamblador Hack en C
 </head>
 <body>
   <h1>Compilador/Ensamblador Hack en C</h1>
