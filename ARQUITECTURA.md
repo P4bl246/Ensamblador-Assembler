@@ -18,6 +18,6 @@ Estos *registros* se dividen en 3:
 
 ## Arquitectura ROM
 la **ROM** esta compuesta de:
-*32767 Registros
+* 32767 Registros
 
 ***NOTA:*** En la ROM es donde se carga el *lenguaje ensamblador* (HACK) o el *binario directamente*
