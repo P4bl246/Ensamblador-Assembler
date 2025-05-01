@@ -61,7 +61,9 @@ A=D
 * Este programa **no** tiene las *mismas restricciones* que NAND2TETRIS en cuanto a la parte de *ensamblaje* de **COMP**(cálculo de las instrucciones C), debido a que puede agregar operaciones como 0+D o D+0, o otras recíprocas, debido a que luego esto se ajusta a el binario con su representación binaria.
 
   **EJEMPLO:**
+  
   D+1 = 001111
+  
   1+D = 001111
 
 ## Recomendaciones, Observaciones y Consideraciones
