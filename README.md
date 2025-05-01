@@ -75,7 +75,7 @@ A=D
 
   **NOTA:** Si su sistema operativo no es alguno que soporta, debe eidtar las partes de código `system("comando_para_limpiar_consola_de_su_sistemaOperativo");`
 
-* ***Asegurese de que el nombre de el archivo, y de sus variables y etiquetas no exeda los 1023 caracteres debido a que podrian perderse datos, y haber eventos inesperados durante la ejecución de el programa, como reemplzar variables, debido a que solo lee hasta 1023 caracteres***.
+* ***Asegurese de que el nombre de el archivo, y de sus variables y etiquetas no exceda los 1023 caracteres debido a que podrian perderse datos, y haber eventos inesperados durante la ejecución de el programa, como reemplzar variables, debido a que solo lee hasta 1023 caracteres***.
   
 * ***Si por alguna razón hay algún error a el crear o abrir un archivo revise la seguridad de windows y desactive el análisis en tiempo real o permita a el compilador manipular archivos***
 
