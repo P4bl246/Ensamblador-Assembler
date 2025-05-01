@@ -3185,13 +3185,13 @@ int constante(char *actual, char**actualizado, char anterior, char* conM){
 			*actualizado = actual;
 			if(*actual == 'M' || *actual == 'A'){
 				if(*actual == 'M') *conM = '1';
-				return 1+(~valores.y+1);//porque negamos el decimal de Y,y le sumamos 1 que da como resultado -y y le sumamos 1 que es 1-y(porque 1 es positvo, es lo mismo qeu decir -y+1)(complemento a 2 de y +1)
+				return 25+25;//luego le restamos el valor de el operandoB con n y tenemos el entero que luego pasaremos a binario (n+n = 50) (110010= y-1) se refactoriza a Y-1 porque 1-Y no lo acpeta el eumaldor de NAND2Tetris
 			}
 			else if(*actual == 'D'){
-				return 1+(~valores.x+1); //porque negamos el decimal de X,y le sumamos 1 que da como resultado -x y le sumamos 1 que es 1-x(porque 1 es positvo, es lo mismo qeu decir -x+1)(complemento a 2 de x + 1)
+				return valores.menos-5; //porque se refactoriza a X-1 porque no se puede operar 1-X en el emulador de NAND2TETRIS
 			}
 			else if(*actual == '0'){
-				 return valores.cero + 3; //porque en binarioes 101110=46(qeu es lo mismo que decir 42+3=46)
+				 return valores.uno; //porque en binarioes 111111 porque 1-0 = 1 porque -0 no extiste
 			}
 		}
 		else if(*actual == '+'){
