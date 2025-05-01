@@ -84,3 +84,4 @@ Entendiendo esto ahora puedes entender como agruegar *nuevos operadores* definie
   
 * Se recomienda hacer el curso de ***NAND2TETRIS parte 1*** para *entender completamente* y a fondo cada parte de la **CPU** y la **ALU**, este se encuentra en coursera
 
+[CURSO NAND2TETRIS PARTE 1](https://www.coursera.org/learn/build-a-computer)
