@@ -57,7 +57,7 @@ A=D
 ## Recomendaciones, Observaciones y Consideraciones
 
  ------------------------------------------------
-* Este programa fue diseñado para ser ejecutado en un entorno de *Windows* por eso utiliza comandos de sistema como **CLS** por **CLEAR**, si se quiere utilizar para *MacOs* debe adaptar algunas partes de el código donde este *system.cls*
+* Este programa fue diseñado para ser ejecutado en un entorno de *Windows* por eso utiliza comandos de sistema como **CLS**, si se quiere utilizar para *MacOs* debe adaptar algunas partes de el código donde este *system("CLS")* por **CLEAR**
   
 * ***Si por alguna razón hay algún error a el crear o abrir un archivo revise la seguridad de windows y desactive el analisis en tiempo real o permita a el compilador manipular archivos***
 
