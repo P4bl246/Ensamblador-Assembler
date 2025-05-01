@@ -54,6 +54,10 @@ A=D
 
 * Dentro de la libreria las etiquetadas en sus comentarios como **Funcion interna**, quieren decir que son **funciones pensadas para utilizar en la propia librería y no para uso fuera de esta**, pero si lo desea puede usararlas fuera de esta
 
+* Si hay algún **error** para ver en donde fue el **error** con su numero de línea debe abrir el archivo ***copia.txt***
+
+* Si quiere ver la ***tabla de símbolos*** abra el archivo **tabla.txt**
+
 ## Recomendaciones, Observaciones y Consideraciones
 
  ------------------------------------------------
