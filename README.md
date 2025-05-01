@@ -10,7 +10,7 @@
  ## Dependencias
 
  ------------------------------------------------------
- Debe tener intalado *Dev C++/C* version 4.9 o posteriores, o un *compilador de C moderno*.
+ Debe tener instalado *Dev C++/C* version 4.9 o posteriores, o un *compilador de C moderno*.
  
  [Instale Dev C++/C](https://sourceforge.net/projects/dev-cpp/)
 
@@ -19,14 +19,14 @@
   * `stdlib.h` 
   * `string.h` 
  
- (no nesecita instalarlas si ya tiene *Dev C++/C* o un compilador moderno ya que normalmente estan integradas.)
+ (no necesita instalarlas si ya tiene *Dev C++/C* o un compilador moderno ya que normalmente estan integradas.)
  
 ## Instalación
 
 ------------------------------------------------------
 1. Descargue la libreria `ensamblando.h` y el *ejecutable* `ensamblador.c` en la **misma carpeta** o **ruta** que la de el *compilador*.
 
-2. Abra el ejecutable, y ingrese el nombre completo de su archivo .asm como argumento de la función `archivoA_txt` (el archivo debe de estar también en la *misma ruta*)
+2. Abra el ejecutable, y ingrese el ***nombre completo de su archivo .asm*** como argumento de la función `archivoA_txt` (el archivo debe de estar también en la *misma ruta*)
    
 3. Ejecute el codigo y abra el archivo `archivoHack.hack` donde se encuentra el binario.
 
@@ -34,14 +34,14 @@
 
 **Recomendaciones de intalación**
 
-* Cree una carpeta aparte para el *compildor* donde también va a poner la libreria `ensamblando.h` y su ejecutable `ensamblador.c`.
+* Cree una carpeta aparte para el *compilador* donde también va a poner la libreria `ensamblando.h` y su ejecutable `ensamblador.c`.
  
-* Asegurese de **no** tener en la *misma ruta* (carpeta) otros *archivos* ***.txt*** debido a que podrian tener le *mismo nombre* que otros *archivos temporales* de el *ensamblador* y podria *eliminar su contenido* o haber *erroes en la ejecucion de el programa*
+* Asegurese de **no** tener en la *misma ruta* (carpeta) otros *archivos* ***.txt*** debido a que podrian tener le *mismo nombre* que otros *archivos temporales* de el *ensamblador* y podria *eliminar su contenido* o haber *errores en la ejecución de el programa*
 
 ## Uso
 
 ------------------------------------------------------
-Este programa esta *diseñado* para ensamblar lengueaje ensamblador HACK, o uno similar
+Este programa esta *diseñado* para ensamblar lenguaje ensamblador HACK, o uno similar
 
 **Ejemplo:**
 ~~~
@@ -52,13 +52,13 @@ A=D
 0;JMP
 ~~~
 
-* Dentro de la libreria las etiquetadas en sus comentarios como **Funcion interna**, quieren decir que son **funciones pensadas para utilizar en la propia librería y no para uso fuera de esta**, pero si lo desea puede usararlas fuera de esta
+* Dentro de la libreria, las funciones etiquetadas en sus comentarios como **Funcion interna**, quieren decir que son **funciones pensadas para utilizar en la propia librería y no para uso fuera de esta**, pero si lo desea puede usarlas fuera de esta.
 
 * Si hay algún **error** para ver en donde fue el **error** con su numero de línea debe abrir el archivo ***copia.txt***
 
 * Si quiere ver la ***tabla de símbolos*** abra el archivo **tabla.txt**
 
-* Este programa **no** tiene las *mismas restricciones* que NAND2TETRIS en cuanto a la parte de *ensamblaje* de **COMP**(cálculo de las instrucciones C), debido a que puede agregar operaciones como 0+D o D+0, o otras recíprocas, debido a que luego esto se ajusta a el binario con su representación binaria.
+* Este programa **no** tiene las *mismas restricciones* que NAND2TETRIS en cuanto a la parte de *ensamblaje* de **COMP**(cálculo de las instrucciones C), debido a que puede agregar operaciones como 0+D o D+0, o otras operaciones recíprocas, debido a que luego esto se ajusta a el binario con su representación binaria.
 
   **EJEMPLO:**
   
@@ -66,14 +66,14 @@ A=D
   
   1+D = 001111
   
-**NOTA IMPORTANTE:** El emulador de *NAND2TETRIS* no acepta 1-M que en realiad seria -M+1 pero como no acepta esta representación binario (1+(!Y +1) (***la ALU si lo puede procesar pero el emulador no lo reconoce***)) entonces ser refactoriza a M-1 (*no es correcto pero es lo que acepta el emulador entonces cada vez que se ponga algo como 1-M o 1-D o 1-A se refactoriza a M-1, A-1, D-1*) 
+**NOTA IMPORTANTE:** El emulador de *NAND2TETRIS* no acepta 1-M que en realidad seria -M+1 pero como no acepta esta representación binaria (1+(!Y +1) (***la ALU si lo puede procesar pero el emulador no lo reconoce***)) entonces ser refactoriza a M-1 (*no es correcto pero es lo que acepta el emulador entonces cada vez que se ponga algo como 1-M o 1-D o 1-A se refactoriza a M-1, A-1, D-1*) 
 
 ## Recomendaciones, Observaciones y Consideraciones
 
  ------------------------------------------------
-* Este programa fue diseñado para ser ejecutado en un entorno de *Windows* por eso utiliza comandos de sistema como **CLS**, si se quiere utilizar para *MacOs* debe adaptar algunas partes de el código donde este *system("CLS")* por **CLEAR**
+* Este programa fue diseñado para ser ejecutado en un entorno de *Windows* por eso utiliza comandos de sistema como **CLS**, si se quiere utilizar para *MacOs* debe adaptar las partes de el código donde este `system("CLS")` por **CLEAR** (`system("CLEAR");`)
   
-* ***Si por alguna razón hay algún error a el crear o abrir un archivo revise la seguridad de windows y desactive el analisis en tiempo real o permita a el compilador manipular archivos***
+* ***Si por alguna razón hay algún error a el crear o abrir un archivo revise la seguridad de windows y desactive el análisis en tiempo real o permita a el compilador manipular archivos***
 
 * Antes de revisar el codigo (de la libreria `ensamblando.h` principalmente), se recomienda tener **concimiento de la arquitectura de la *CPU* y la *ALU*** para entender ciertos fragmentos de el codigo como la parte de **ENSAMBLAJE**, esto estara en el [ARQUITECTURA.md](https://github.com/P4bl246/Ensamblador/blob/e50e91bbd4e8a84b83cbad30191bdc36ba5f4548/ARQUITECTURA.md) (*donde también se explicara porque hay ciertas operaciones y restricciones y como podrian integrarse más operaciones*).
 
