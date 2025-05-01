@@ -66,7 +66,7 @@ A=D
 * El diseño y creación de este programa se centra en la funcionalidad y escalabilidad y no tanto en la optimización (aunque se utilizan buenas practicas), esto es abierto a quien quiera mejorar el codigo optimizandolo de muchas maneras.
 
    **Ejemplos:**
-    * Se podria mejorar la busque de valores en la tabla de simbolos por medio de *tablas hash*, en lugar de *busqueda lineal*.
+    * Se podria mejorar la busqueda de valores en la tabla de simbolos por medio de *tablas hash*, en lugar de *busqueda lineal*.
     * Se podrian modular muchos bloques de código repetido como a el tomar el numero de linea.
  
 * Este prgrama fue creado como proyecto final de la primera parte de el curso ***NAND2TETRIS*** por lo que para *ejecutar* el archivo *.hack* debe instalar el software de *NAND2TETRIS*
