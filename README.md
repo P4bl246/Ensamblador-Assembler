@@ -71,7 +71,9 @@ A=D
 ## Recomendaciones, Observaciones y Consideraciones
 
  ------------------------------------------------
-* Asegurese de poner su sistema operativo correcto para evitar problemas en la ejecución de el programa (***soporta Windows y MacOs***)
+* Asegurese de poner su sistema operativo correcto para evitar problemas en la ejecución de el programa (***soporta Windows, MacOs y Unix/Linux***)
+
+  **NOTA:** Si su sistema operativo no es alguno que soporta, debe eidtar las partes de código `system("comando_para_limpiar_consola_de_su_sistemaOperativo");`
     
 * ***Si por alguna razón hay algún error a el crear o abrir un archivo revise la seguridad de windows y desactive el análisis en tiempo real o permita a el compilador manipular archivos***
 
