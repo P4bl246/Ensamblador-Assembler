@@ -26,7 +26,7 @@
 ------------------------------------------------------
 1. Descargue la libreria `ensamblando.h` y el *ejecutable* `ensamblador.c` en la **misma carpeta** o **ruta** que la de el *compilador*.
 
-2. Abra el ejecutable, y ingrese el ***nombre completo de su archivo .asm*** como argumento de la función `archivoA_txt` (el archivo debe de estar también en la *misma ruta*)
+2. Ejecute el *jecutable*, y ingrese el ***nombre completo de su archivo .asm*** para pasarlo como argumento a la función `archivoA_txt` (el archivo debe de estar también en la *misma ruta*)
    
 3. Ejecute el codigo y abra el archivo `archivoHack.hack` donde se encuentra el binario.
 
