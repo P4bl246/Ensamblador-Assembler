@@ -1,13 +1,17 @@
 #include <stdio.h>
 #include "ensamblando.h"
-int main(){
+int main(){  
+   char *h = ident(h);
+   int so2 = so(so2);
+   
 	int r;
 	//convertimos el archivo .asm a .txt para poder tratarlo
-	r = ArchivoA_txt("archivo.asm");
+	r = ArchivoA_txt(h);
 	if(r != 0){
 		printf("ERROR en la funcion 'ArchivoA_txt'\n");
 		return 1;
 	}
+	free(h);
 	//primero verficamos la sintaxist
  	r = analisis_sintactico("archivo.txt");
 	if(r != 0){
@@ -83,7 +87,8 @@ int main(){
 		return 1;
 	}
 	
-	system("cls");//limpiamos la terminal
+	if(so2 == 1) system("cls");//limpiamos la terminal
+	else system("clear");//para MacOs
 	//limpiamos el archivo txt principal de las etiquetas
     r = limpiartxtPr("archivo.txt");
 	if(r != 0){
@@ -93,7 +98,8 @@ int main(){
 	
 //---------------------------------------------------------------------------
 
-	system("cls");
+	if(so2 == 1) system("cls");//limpiamos la terminal
+	else system("clear");//para MacOs
 	//ensamblamos el codigo, es decir, lo pasamos a codigo de maquina
 	r = ensamblar("archivo.txt");
     if(r != 0){
