@@ -66,7 +66,7 @@ A=D
   
   1+D = 001111
   
-**NOTA IMPORTANTE:** El emulador de *NAND2TETRIS* no acepta 1-M que en realiad seria -M+1 pero como no acepta esta representación binario (1+(!Y +1)) entonces ser refactoriza a M-1 (*no es correcto pero es lo que acepta el emulador entonces cada vez que se ponga algo como 1-M o 1-D o 1-A se refactoriza a M-1, A-1, D-1*) (***la ALU si lo puede procesar pero el emulador no lo reconoce***)
+**NOTA IMPORTANTE:** El emulador de *NAND2TETRIS* no acepta 1-M que en realiad seria -M+1 pero como no acepta esta representación binario (1+(!Y +1) (***la ALU si lo puede procesar pero el emulador no lo reconoce***)) entonces ser refactoriza a M-1 (*no es correcto pero es lo que acepta el emulador entonces cada vez que se ponga algo como 1-M o 1-D o 1-A se refactoriza a M-1, A-1, D-1*) 
 
 ## Recomendaciones, Observaciones y Consideraciones
 
