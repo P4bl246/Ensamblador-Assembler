@@ -79,22 +79,28 @@ Entendiendo esto ahora puedes entender como agruegar *nuevos operadores* definie
 
 **EJEMPLO:**
 
-Si quisiera agregar el operador NAND primero buscaria su representación binaria
+1. Si quisiera agregar el operador NAND primero buscaria su representación binaria
+   
 
 `NAND = 010100` (porque hacemos !(X & Y) = !X & !Y)
 
+
 2. Busco su representación en decimal
+   
 
    `010100 = 20`
+   
 
-3. Agrego esta a la tabla
+4. Agrego esta a la tabla
 
-  NAND;
+  `NAND;`
 
   En `valores` agrego
 
   `.NAND = 20;`
+  
 4. Vamos a el ultimo caso de la `función operdaor` y ponemos nuestro nuevo operador con sus posibles combinaciones (donde vamos a representar esta con el simbolo `$`)
+
   ~~~
 if(anterior == '$'){
    if(*actual == 'M' || *actual == 'A'){
@@ -104,7 +110,7 @@ else if(*actual == 'D'){
 ...
 }
   ~~~
-Y listo eso en caso de ser antes en donde solo se debe utilizar este operador y tendriamos que agregar la condicion nueva a `analisis sintáctico` para evitar que es escriba algo como A$D (*no se puede porque yo lo puse que solo sea un operador antes de el operando*)
+Y listo, en este caso como es antes en donde solo se debe utilizar este operador y tendriamos que agregar la condicion nueva a `analisis sintáctico` para evitar que es escriba algo como A$D (*no se puede porque yo lo puse que solo sea un operador antes de el operando*)
 
 ## RECOMENDACIONES Y CONSIDERACIONES
 
