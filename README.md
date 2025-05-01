@@ -4,7 +4,7 @@
   
   **Proyecto:** Ensamblador Hack
   
-  **Repositorio:**  [https://github.com/P4bl246/Ensamblador.git]
+  **Repositorio:**  [https://github.com/P4bl246]
   
   ------------------------------------------------------
  ## Dependencias
