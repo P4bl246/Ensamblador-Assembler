@@ -71,8 +71,8 @@ A=D
 ## Recomendaciones, Observaciones y Consideraciones
 
  ------------------------------------------------
-* Este programa fue diseñado para ser ejecutado en un entorno de *Windows* por eso utiliza comandos de sistema como **CLS**, si se quiere utilizar para *MacOs* debe adaptar las partes de el código donde este `system("CLS")` por **CLEAR** (`system("CLEAR");`)
-  
+* Asegurese de poner su sistema operativo correcto para evitar problemas en la ejecución de el programa (***soporta Windows y MacOs***)
+    
 * ***Si por alguna razón hay algún error a el crear o abrir un archivo revise la seguridad de windows y desactive el análisis en tiempo real o permita a el compilador manipular archivos***
 
 * Antes de revisar el codigo (de la libreria `ensamblando.h` principalmente), se recomienda tener **concimiento de la arquitectura de la *CPU* y la *ALU*** para entender ciertos fragmentos de el codigo como la parte de **ENSAMBLAJE**, esto estara en el [ARQUITECTURA.md](https://github.com/P4bl246/Ensamblador/blob/e50e91bbd4e8a84b83cbad30191bdc36ba5f4548/ARQUITECTURA.md) (*donde también se explicara porque hay ciertas operaciones y restricciones y como podrian integrarse más operaciones*).
