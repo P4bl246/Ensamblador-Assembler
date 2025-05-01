@@ -19,7 +19,7 @@
   * `stdlib.h` 
   * `string.h` 
  
- (no nececita instalarlas si ya tiene *Dev C++/C* o un compilador moderno ya que normalmente estan integradas.)
+ (no nesecita instalarlas si ya tiene *Dev C++/C* o un compilador moderno ya que normalmente estan integradas.)
  
 ## Instalación
 
