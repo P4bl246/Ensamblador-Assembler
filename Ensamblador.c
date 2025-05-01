@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include "ensamblando.h"
+
 int main(){  
    char *h = ident(h);
-   int so2 = so(so2);
+  const char* comando = NULL;
+   int so2 = so(&comando);
    
 	int r;
 	//convertimos el archivo .asm a .txt para poder tratarlo
@@ -87,8 +89,9 @@ int main(){
 		return 1;
 	}
 	
-	if(so2 == 1) system("cls");//limpiamos la terminal
-	else system("clear");//para MacOs
+	if(soG == 1) system("cls");//limpiamos la terminal
+	else if(soG == 2) system("clear");//para MacOs("cls")
+	else system(comando);
 	//limpiamos el archivo txt principal de las etiquetas
     r = limpiartxtPr("archivo.txt");
 	if(r != 0){
@@ -98,8 +101,10 @@ int main(){
 	
 //---------------------------------------------------------------------------
 
-	if(so2 == 1) system("cls");//limpiamos la terminal
-	else system("clear");//para MacOs
+	if(soG == 1) system("cls");//limpiamos la terminal
+	else if(soG == 2) system("clear");//para MacOs("cls")
+	else system(comando);
+	comando = NULL;
 	//ensamblamos el codigo, es decir, lo pasamos a codigo de maquina
 	r = ensamblar("archivo.txt");
     if(r != 0){
