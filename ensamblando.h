@@ -131,7 +131,7 @@ int soG;//globla
 int so(){
 	int so1;
 	int result;
-	printf("INGRESE QUE SISTEMA OPERATIVO UTILIZA: \n1(Windows)\n2(MacOs)\n");
+	printf("INGRESE QUE SISTEMA OPERATIVO UTILIZA: \n1(Windows)\n2(MacOs o Unix/Linux)\n");
 	scanf(" %d", &so1);
 	  while (so1 != 1 && so1 != 2) {
         if (result != 1) {
