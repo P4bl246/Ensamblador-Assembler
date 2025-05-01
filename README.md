@@ -24,7 +24,7 @@
 ## Instalación
 
 ------------------------------------------------------
-1. Descargue la libreria `Ensamblando.h` y el *ejecutable* `ensambaldo.c` en la **misma carpeta** o **ruta** que la de el *compiladr*.
+1. Descargue la libreria `ensamblando.h` y el *ejecutable* `ensamblador.c` en la **misma carpeta** o **ruta** que la de el *compilador*.
 
 2. Abra el ejecutable, y ingrese el nombre completo de su archivo .asm como argumento de la función `archivoA_txt` (el archivo debe de estar también en la *misma ruta*)
    
@@ -34,7 +34,7 @@
 
 **Recomendaciones de intalación**
 
-* Cree una carpeta aparte para el *compildor* donde también va a poner la libreria `Ensamblando.h` y su ejecutable `ensambaldor.c`.
+* Cree una carpeta aparte para el *compildor* donde también va a poner la libreria `ensamblando.h` y su ejecutable `ensamblador.c`.
  
 * Asegurese de **no** tener en la *misma ruta* (carpeta) otros *archivos* ***.txt*** debido a que podrian tener le *mismo nombre* que otros *archivos temporales* de el *ensamblador* y podria *eliminar su contenido* o haber *erroes en la ejecucion de el programa*
 
@@ -61,7 +61,7 @@ A=D
   
 * ***Si por alguna razón hay algún error a el crear o abrir un archivo revise la seguridad de windows y desactive el analisis en tiempo real o permita a el compilador manipular archivos***
 
-* Antes de revisar el codigo (de la libreria `Ensambalndo.h` principalmente), se recomienda tener **concimiento de la arquitectura de la *CPU* y la *ALU*** para entender ciertos fragmentos de el codigo como la parte de **ENSAMBLAJE**, esto estara en el [ARQUITECTURA.md](https://github.com/P4bl246/Ensamblador/blob/e50e91bbd4e8a84b83cbad30191bdc36ba5f4548/ARQUITECTURA.md) (*donde también se explicara porque hay ciertas operaciones y restricciones y como podrian integrarse más operaciones*).
+* Antes de revisar el codigo (de la libreria `ensamblando.h` principalmente), se recomienda tener **concimiento de la arquitectura de la *CPU* y la *ALU*** para entender ciertos fragmentos de el codigo como la parte de **ENSAMBLAJE**, esto estara en el [ARQUITECTURA.md](https://github.com/P4bl246/Ensamblador/blob/e50e91bbd4e8a84b83cbad30191bdc36ba5f4548/ARQUITECTURA.md) (*donde también se explicara porque hay ciertas operaciones y restricciones y como podrian integrarse más operaciones*).
 
 * El diseño y creación de este programa se centra en la funcionalidad y escalabilidad y no tanto en la optimización (aunque se utilizan buenas practicas), esto es abierto a quien quiera mejorar el codigo optimizandolo de muchas maneras.
 
