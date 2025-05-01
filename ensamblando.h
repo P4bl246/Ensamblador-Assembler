@@ -11,6 +11,7 @@
 
 char* ident();//antes de comenzar el proceso para obtener el nombre de el archivo
 int so(const char** comando_salida);//para obtener el tipo de sistema operativo
+
 //FUNCIONES DE ANALISIS SINTACTICO ANTES DE SEGUIR-----------------------------------------------
 
 int copia_archivo(const char* archivo); //funcion para copiar el archivo original .txt en otro archivo(funcion interna)
@@ -121,11 +122,34 @@ int ensamblar(const char* archivo);// integra las funciones principales anterior
  
 //AQUI TERMINAN LAS FUNCIONES DE ENSAMBLAJE DE INSTRUCCIONES--------------------------------------------------------
 
-char* ident(){
-	char *h = (char*)malloc(1024);
-	printf("INGRESE EL NOMBRE COMPLETO DE EL ARCHIVO '.asm'\n");
-	scanf(" %s", h);
-	return h;
+char* ident() {
+    char *h = (char*)malloc(1024);
+    if (h == NULL) {
+        fprintf(stderr, "Error al asignar memoria.\n");
+        return NULL;
+    }
+
+    printf("INGRESE EL NOMBRE COMPLETO DEL ARCHIVO '.asm'\n");
+    scanf(" %1023s", h); // Evita desbordamiento
+
+    const char *ext = ".asm";
+
+    // Buscar el primer punto en el nombre del archivo
+    char *punto = strchr(h, '.');
+    if (punto == NULL) {
+        fprintf(stderr, "ERROR: El nombre del archivo no contiene una extension '.asm'\n");
+        free(h);
+        return NULL;
+    }
+
+    // Comparar lo que sigue desde el punto con ".asm"
+    if (strcmp(punto, ext) != 0) {
+        fprintf(stderr, "ERROR: La extensión del archivo debe ser exactamente '.asm'\n");
+        free(h);
+        return NULL;
+    }
+
+    return h;
 }
 //--------------------------------
 char* comando2 = NULL;  // Declarar puntero global, inicializado a NULL
