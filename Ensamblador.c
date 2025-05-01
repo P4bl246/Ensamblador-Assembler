@@ -3,6 +3,7 @@
 
 int main(){  
    char *h = ident(h);
+   if (h == NULL) return 1;
   const char* comando = NULL;
    int so2 = so(&comando);
    
