@@ -75,12 +75,12 @@ Estas son las razones por las que en los valores de *patron* puestos en *valores
 ## AGREGAR NUEVOS OPERADORES
 
 --------------------------------------------------------------
-Entendiendo esto ahora puedes entender como agruegar *nuevos operadores* definiendo cual es su binario y poner este en entero en la *estructura patron* y su valor en *valores*, y luego agregarlo a el final de **función operador** con que se suma ese valor o que entero retornar y listo asi podrian agreguar nuevos operadores.
+Entendiendo esto ahora puedes entender como agruegar *nuevos operadores* definiendo cual es su binario y poner este en entero en la *estructura patron* y su valor en *valores*, y luego agregarlo a el final de `función operador` con que se suma ese valor o que entero retornar y con sus diferenes casos posibles en el que el operador va antes y depues y en el caso de la constantes (todos los casos posibles y su representacion en entero) y listo asi podrian agreguar nuevos operadores.
 
 ## RECOMENDACIONES Y CONSIDERACIONES
 
 ------------------------------------------------------------
-* Para mejorar la compresión de porque hay algunas partes en la *función operador" como ~(A+1) debe entender que es el **complemento a 2, y complemento a 1**, para binario y como se resta en binario
+* Para mejorar la compresión de porque hay algunas partes en la `función operador` como ~(A+1) debe entender que es el **complemento a 2, y complemento a 1**, para binario y como se resta en binario
   
 * Se recomienda hacer el curso de ***NAND2TETRIS parte 1*** para *entender completamente* y a fondo cada parte de la **CPU** y la **ALU**, este se encuentra en coursera
 
