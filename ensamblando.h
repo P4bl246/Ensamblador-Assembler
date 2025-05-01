@@ -8,7 +8,11 @@
 // Fecha: 2025-04-29
 // Enlace GITHUB: https://github.com/P4bl246/Ensamblador.git
 // =============================
+
+char* ident();//antes de comenzar el proceso para obtener el nombre de el archivo
+int so();//para obtener el tipo de sistema operativo
 //FUNCIONES DE ANALISIS SINTACTICO ANTES DE SEGUIR-----------------------------------------------
+
 int copia_archivo(const char* archivo); //funcion para copiar el archivo original .txt en otro archivo(funcion interna)
 //-----------------------------------------------------------------
 int analizar_etiquetas(const char* archivo); //funcion para extraer las etiquetas y las anzaliza
@@ -117,7 +121,35 @@ int ensamblar(const char* archivo);// integra las funciones principales anterior
  
 //AQUI TERMINAN LAS FUNCIONES DE ENSAMBLAJE DE INSTRUCCIONES--------------------------------------------------------
 
+char* ident(){
+	char *h = (char*)malloc(1024);
+	printf("INGRESE EL NOMBRE COMPLETO DE EL ARCHIVO '.asm'\n");
+	scanf(" %s", h);
+	return h;
+}
+int soG;//globla
+int so(){
+	int so1;
+	int result;
+	printf("INGRESE QUE SISTEMA OPERATIVO UTILIZA: \n1(Windows)\n2(MacOs)\n");
+	scanf(" %d", &so1);
+	  while (so1 != 1 && so1 != 2) {
+        if (result != 1) {
+            // Entrada inválida, limpiar buffer
+            printf("Entrada invalida. Por favor ingrese 1 o 2.\n");
+            int c;
+            while ((c = getchar()) != '\n' && c != EOF);  // limpiar buffer
+        } else {
+            printf("Opcion no valida. Por favor ingrese 1 o 2.\n");
+        }
 
+        printf("INGRESE QUE SISTEMA OPERATIVO UTILIZA: \n1(Windows)\n2(MacOs)\n");
+        result = scanf(" %d", &so1);
+    }
+    soG = so1;
+    return so1;
+    
+}
 //AQUI SE HACE EL PROCESO DE ANALISIS SINTACTICO-------------------------------------
 //**************************************************************
 int analisis_sintactico(const char* archivo){
@@ -136,7 +168,8 @@ int analisis_sintactico(const char* archivo){
 	
 	n = numerarLineas("copia.txt");
 	if(n != 0) return 1;
-	system("cls");
+	if(soG == 1) system("cls");//limpiamos la terminal
+	else system("clear");//para MacOs
 	n = analizar_etiquetas("copia.txt");
 	if(n != 0) return 1;
 	
@@ -152,7 +185,8 @@ int analisis_sintactico(const char* archivo){
 	n = eliminarArchivos();
 	if(n != 0) return 1;
 	
-	system("cls");
+	if(soG == 1) system("cls");//limpiamos la terminal
+	else system("clear");//para MacOs
 	printf("ANALISIS SINTACTICO COMPLETADO\n\n");
 	return 0;
 }
@@ -2411,7 +2445,8 @@ int limpiar_tabla(){
 		}
 		printf("Se renombro el archivo 'temporalta.txt' a: 'tabla.txt'\n");
 	}
-	system("cls");
+	if(soG == 1) system("cls");//limpiamos la terminal
+	else system("clear");//para MacOs("cls");
 	printf("PROCESO DE PREPARACION TERMINADO EXITOSAMENTE\n");
 	return 0;
 }
@@ -2481,7 +2516,8 @@ int ensamblar(const char* archivo){
 	int n; 
 	n=tomarInstruccionesAyC(archivo, cantidad);
 	if(n != 0) return 1;
-	system("cls");//limpiar consola
+	if(soG == 1) system("cls");//limpiamos la terminal
+	else system("clear");//para MacOs
 	n = ensamblarA("Ainstrucciones.txt", cantidad);
 	if(n!= 0) return 1;
 	
@@ -2520,7 +2556,8 @@ int ensamblar(const char* archivo){
 	}
 	n = archivoHack("ensamblado.txt");
 	if(n!= 0) return 1;
-	system("cls");
+	if(soG == 1) system("cls");//limpiamos la terminal
+	else system("clear");//para MacOs
 	printf("\nSE ENSAMBLO EL CODIGO CORRECTAMENTE\n");
 	return 0;
 
