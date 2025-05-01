@@ -2962,7 +2962,7 @@ int operador(char *actual, char**actualizado, char anterior, char* conM){
 			   	return valores.mas;//porque no alteramos ni X ni Y solo sumamos(000010) qu es lo mismo que decir (y+ + 8 - x = 2)
 			   }
 			   else if(*actual == '0'){
-			   	return 34; //porque pasamos X a 0 y Y lo dejamos igual (que es lo mismo que decir (y+ + 8 - 0 = 34)
+			   	return valores.cero-n; //porque pasamos X a 0 y Y lo dejamos igual (que es lo mismo que decir (y+ - 0 = 34)
 			   }
 		  }
 		  //si es X (D)
@@ -2977,10 +2977,11 @@ int operador(char *actual, char**actualizado, char anterior, char* conM){
 			   	return valores.mas;//porque no se altera X ni Y
 			   }
 			   else if(*actual == '0'){
-			   	return 10; //porque pasamos Y a 0 y X lo dejamos igual( que es lo mismo que decir (x+ + 8 = 10)(001010)
+			   	return n+valores.mas; //porque pasamos Y a 0 y X lo dejamos igual( que es lo mismo que decir (x+ + + = 10)(001010)
 			   }
 		  }
 		  //si es 0, es decir 0+D o 0+X
+		  //ponemos su segundo operando porque es lo mismo que decir X o Y o 1 porque cualquier suma por 0 simpre es el que tiene valor
 		  else if(anterior == '0'){
 		  	actual++;
 		  	*actualizado = actual;
@@ -3013,7 +3014,7 @@ int operador(char *actual, char**actualizado, char anterior, char* conM){
 			   	return n-valores.x-6;//porque alteramos a negativo X lo susamos con Y (000111) que es lo mismo que decir (y- - x-6 = 7)
 			   }
 			   else if(*actual == '0'){
-			   	return 34; //porque pasamos X a 0 y Y lo dejamos igual (que es lo mismo que decir (0+y = 34))(100010)
+			   	return 34; //porque pasamos X a 0 y Y lo dejamos igual (que es lo mismo que decir (Y-0 = 34))(100010)(porque no existe -0 entonces se corrige a Y+0)
 			   }
 		  }
 		  //si es X (D)
@@ -3037,7 +3038,7 @@ int operador(char *actual, char**actualizado, char anterior, char* conM){
 		  	*actualizado = actual;
 		  	if(*actual == 'A' || *actual == 'M'){
 		  		if(*actual == 'M') *conM = '1';
-	  		return valores.y + 3;//porque en binario e 110011(es lo mismo que 51 que es 48+3 = 51)
+	  		return valores.y + 3;//porque en binario e 110011(es lo mismo que 51 que es 48+3 = 51) (porque 0-Y = -Y)
 		  }
 		  else if(*actual == 'D'){
 		  	return valores.x + 3; //porque en binario es 001111 = 15 (es lo mismo que decir que 12 + 3 = 15)
@@ -3204,7 +3205,7 @@ int constante(char *actual, char**actualizado, char anterior, char* conM){
 				return (valores.uno-9)-23; //porque en binairo es 011111=31(que es lo mismo qeu decir 63-23-9 = 31)
 			}
 			else if(*actual == '0'){
-				 return valores.cero + 3; //porque en binarioes 101110=46(qeu es lo mismo que decir 42+3=46)
+				 return valores.cero + 4; //porque en binarioes 101110=46(qeu es lo mismo que decir 42+4=46)
 			}
 		}
 		else if(*actual == '|'){
