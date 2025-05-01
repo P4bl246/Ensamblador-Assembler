@@ -74,7 +74,9 @@ A=D
 * Asegurese de poner su sistema operativo correcto para evitar problemas en la ejecución de el programa (***soporta Windows, MacOs y Unix/Linux***)
 
   **NOTA:** Si su sistema operativo no es alguno que soporta, debe eidtar las partes de código `system("comando_para_limpiar_consola_de_su_sistemaOperativo");`
-    
+
+* ***Asegurese de que el nombre de el archivo, y de sus variables y etiquetas no exceda los 1023 caracteres debido a que podrian perderse datos, y haber eventos inesperados duranto la ejecución de el programa, como reemplzar variables, debido a que solo lee hasta 1023 caracteres***.
+  
 * ***Si por alguna razón hay algún error a el crear o abrir un archivo revise la seguridad de windows y desactive el análisis en tiempo real o permita a el compilador manipular archivos***
 
 * Antes de revisar el codigo (de la libreria `ensamblando.h` principalmente), se recomienda tener **concimiento de la arquitectura de la *CPU* y la *ALU*** para entender ciertos fragmentos de el codigo como la parte de **ENSAMBLAJE**, esto estara en el [ARQUITECTURA.md](https://github.com/P4bl246/Ensamblador/blob/e50e91bbd4e8a84b83cbad30191bdc36ba5f4548/ARQUITECTURA.md) (*donde también se explicara porque hay ciertas operaciones y restricciones y como podrian integrarse más operaciones*).
