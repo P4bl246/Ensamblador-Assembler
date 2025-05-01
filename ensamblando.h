@@ -10,7 +10,7 @@
 // =============================
 
 char* ident();//antes de comenzar el proceso para obtener el nombre de el archivo
-int so();//para obtener el tipo de sistema operativo
+int so(const char** comando_salida);//para obtener el tipo de sistema operativo
 //FUNCIONES DE ANALISIS SINTACTICO ANTES DE SEGUIR-----------------------------------------------
 
 int copia_archivo(const char* archivo); //funcion para copiar el archivo original .txt en otro archivo(funcion interna)
@@ -127,28 +127,57 @@ char* ident(){
 	scanf(" %s", h);
 	return h;
 }
-int soG;//globla
-int so(){
-	int so1;
-	int result;
-	printf("INGRESE QUE SISTEMA OPERATIVO UTILIZA: \n1(Windows)\n2(MacOs o Unix/Linux)\n");
-	scanf(" %d", &so1);
-	  while (so1 != 1 && so1 != 2) {
+//--------------------------------
+char* comando2 = NULL;  // Declarar puntero global, inicializado a NULL
+int soG;
+
+int so(const char** comando_salida) {
+    int so1 = 0;
+    int result = 0;
+
+    // Pedir la opción inicial
+    printf("INGRESE QUE SISTEMA OPERATIVO UTILIZA: \n1(Windows)\n2(MacOs o Unix/Linux)\n3(OTRO)\n");
+    result = scanf(" %d", &so1);
+
+    // Validar entrada
+    while (so1 != 1 && so1 != 2 && so1 != 3) {
         if (result != 1) {
             // Entrada inválida, limpiar buffer
-            printf("Entrada invalida. Por favor ingrese 1 o 2.\n");
+            printf("Entrada invalida. Por favor ingrese 1, 2 o 3.\n");
             int c;
             while ((c = getchar()) != '\n' && c != EOF);  // limpiar buffer
         } else {
-            printf("Opcion no valida. Por favor ingrese 1 o 2.\n");
+            printf("Opcion no valida. Por favor ingrese 1, 2 o 3.\n");
         }
 
-        printf("INGRESE QUE SISTEMA OPERATIVO UTILIZA: \n1(Windows)\n2(MacOs)\n");
+        printf("INGRESE QUE SISTEMA OPERATIVO UTILIZA: \n1(Windows)\n2(MacOs o Unix/Linux)\n3(OTRO)\n");
         result = scanf(" %d", &so1);
     }
+
+    // Si elige "OTRO", pedir comando para limpiar consola
+    if (so1 == 3) {
+        // Reservar memoria para comando2 si no está reservada
+        if (comando2 == NULL) {
+            comando2 = (char*)malloc(1024 * sizeof(char));
+            if (comando2 == NULL) {
+                fprintf(stderr, "Error: No se pudo asignar memoria para el comando.\n");
+                exit(EXIT_FAILURE);
+            }
+        }
+
+        printf("Ingrese el comando para limpiar la consola de su sistema operativo:\n");
+        // Leer cadena con límite para evitar overflow
+        scanf(" %1023s", comando2);
+
+        // Asignar el puntero para salida
+        *comando_salida = comando2;
+    } else {
+        // Para opciones 1 y 2, no hay comando personalizado
+        *comando_salida = NULL;
+    }
+
     soG = so1;
     return so1;
-    
 }
 //AQUI SE HACE EL PROCESO DE ANALISIS SINTACTICO-------------------------------------
 //**************************************************************
@@ -2446,7 +2475,8 @@ int limpiar_tabla(){
 		printf("Se renombro el archivo 'temporalta.txt' a: 'tabla.txt'\n");
 	}
 	if(soG == 1) system("cls");//limpiamos la terminal
-	else system("clear");//para MacOs("cls");
+	else if(soG == 2) system("clear");//para MacOs("cls")
+	else system(comando2);
 	printf("PROCESO DE PREPARACION TERMINADO EXITOSAMENTE\n");
 	return 0;
 }
@@ -2517,7 +2547,8 @@ int ensamblar(const char* archivo){
 	n=tomarInstruccionesAyC(archivo, cantidad);
 	if(n != 0) return 1;
 	if(soG == 1) system("cls");//limpiamos la terminal
-	else system("clear");//para MacOs
+	else if(soG == 2) system("clear");//para MacOs("cls")
+	else system(comando2);
 	n = ensamblarA("Ainstrucciones.txt", cantidad);
 	if(n!= 0) return 1;
 	
@@ -2557,7 +2588,10 @@ int ensamblar(const char* archivo){
 	n = archivoHack("ensamblado.txt");
 	if(n!= 0) return 1;
 	if(soG == 1) system("cls");//limpiamos la terminal
-	else system("clear");//para MacOs
+	else if(soG == 2) system("clear");//para MacOs("cls")
+	else system(comando2);
+	free(comando2);
+	comando2 = NULL;
 	printf("\nSE ENSAMBLO EL CODIGO CORRECTAMENTE\n");
 	return 0;
 
