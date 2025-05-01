@@ -115,7 +115,6 @@ Y listo, en este caso como es antes en donde solo se debe utilizar este operador
 ## RECOMENDACIONES Y CONSIDERACIONES
 
 ------------------------------------------------------------
-* Para mejorar la compresión de porque hay algunas partes en la `función operador` como ~(A+1) debe entender que es el **complemento a 2, y complemento a 1**, para binario y como se resta en binario
   
 * Se recomienda hacer el curso de ***NAND2TETRIS parte 1*** para *entender completamente* y a fondo cada parte de la **CPU** y la **ALU**, este se encuentra en coursera
 
