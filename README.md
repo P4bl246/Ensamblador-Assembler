@@ -10,9 +10,9 @@
  ## Dependencias
 
  ------------------------------------------------------
- Debe tener instalado *Dev C++/C* version 4.9 o posteriores, o un *compilador de C moderno*.
+ Debe tener instalado *Dev C++/C* version 5.11 o posteriores, o un *compilador de C moderno*.
  
- [Instale Dev C++/C](https://sourceforge.net/projects/dev-cpp/)
+ [Instale Dev C++/C](https://sourceforge.net/projects/orwelldevcpp/)
 
  Librerias externas requeridas: 
   * `stdio.h` 
@@ -26,7 +26,7 @@
 ------------------------------------------------------
 1. Descargue la libreria `ensamblando.h` y el *ejecutable* `ensamblador.c` en la **misma carpeta** o **ruta** que la de el *compilador*.
 
-2. Ejecute el *jecutable*, y ingrese el ***nombre completo de su archivo .asm*** para pasarlo como argumento a la función `archivoA_txt` (el archivo debe de estar también en la *misma ruta*)
+2. Ejecute el *ejecutable*, y ingrese el ***nombre completo de su archivo .asm*** para pasarlo como argumento a la función `archivoA_txt` (el archivo debe de estar también en la *misma ruta*)
    
 3. Ejecute el codigo y abra el archivo `archivoHack.hack` donde se encuentra el binario.
 
@@ -113,6 +113,12 @@ A=D
      
      ![image](https://github.com/user-attachments/assets/49a07fc2-2d1d-4054-a7f1-43fb40156316)
 
+
 **NOTA:** Para MacOs es lo mismo solo que ingresas a **_MACOSX** en lugar de **nand2Tetris**
+
+* Si utiliza el **IDE de NAND2TETRIS ONLINE** ingrese a el ***CPU Emulator** y cargue el *.hack* dando en el ícono de carpeta
+  
+   ![image](https://github.com/user-attachments/assets/9b18f438-43f0-4db7-8735-98b1a8ef9f93)
+
 
 -------------------------------------------------
