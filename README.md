@@ -116,7 +116,7 @@ A=D
 
 **NOTA:** Para MacOs es lo mismo solo que ingresas a **_MACOSX** en lugar de **nand2Tetris**
 
-* Si utiliza el **IDE de NAND2TETRIS ONLINE** ingrese a el ***CPU Emulator** y cargue el *.hack* dando en el ícono de carpeta
+* Si utiliza el **IDE de NAND2TETRIS ONLINE** ingrese a el **CPU Emulator** y cargue el *.hack* dando en el ícono de carpeta
   
    ![image](https://github.com/user-attachments/assets/9b18f438-43f0-4db7-8735-98b1a8ef9f93)
 
