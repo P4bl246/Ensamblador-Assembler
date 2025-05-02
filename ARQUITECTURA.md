@@ -37,7 +37,7 @@ ROM->CPU->RAM
 
 ![image](https://github.com/user-attachments/assets/1b1d242e-1812-4baa-af41-4f233b039d01)
 
-[AQUI PUEDEN VER LA ARQUITECTURA DETALLADA DE *NAND2TERIS*](https://drive.google.com/file/d/1Z_fxYmmRNXTkAzmZ6YMoX9NXZIRVCKiw/view)
+[AQUI PUEDEN VER LA ARQUITECTURA DETALLADA DE *NAND2TETRIS*](https://drive.google.com/file/d/1Z_fxYmmRNXTkAzmZ6YMoX9NXZIRVCKiw/view)
 
 ## ALU
 ----------------------------------------------------
@@ -53,6 +53,7 @@ La ALU tiene 6 bits de control que dependiendo de su estado (0 o 1) se activa un
 * ny = !y (*negar Y*)
 * f = +(si es 1) & (si es 0)
 * no = !f (es decir niega lo que sale de f)
+  
 **NOTA:**En el ensamblador no vamos a utilizar *zr* ni *ng* entonces no lo presento aqui
 
 ### Explicación
