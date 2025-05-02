@@ -90,7 +90,7 @@ A=D
     * Se podria mejorar la busqueda de valores en la tabla de simbolos por medio de *tablas hash*, en lugar de *busqueda lineal*.
     * Se podrian modular muchos bloques de código repetido como a el tomar el numero de linea.
  
-* Este prgrama fue creado como proyecto final de la primera parte de el curso ***NAND2TETRIS*** por lo que para *ejecutar* el archivo *.hack* debe instalar el software de *NAND2TETRIS*
+* Este prgrama fue creado como proyecto final de la primera parte de el curso ***NAND2TETRIS*** por lo que para *ejecutar* el archivo *.hack* debe instalar el software de *NAND2TETRIS* o utilizar su *IDE ONLINE*
    [SOFTWARE DE NAND2TETRIS](https://www.nand2tetris.org/software)
   
    * Pasos para ejecutarlo en **Windows**
