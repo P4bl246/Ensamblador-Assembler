@@ -54,7 +54,7 @@ La ALU tiene 6 bits de control que dependiendo de su estado (0 o 1) se activa un
 * f = +(si es 1) & (si es 0)
 * no = !f (es decir niega lo que sale de f)
   
-**NOTA:**En el ensamblador no vamos a utilizar *zr* ni *ng* entonces no lo presento aqui
+**NOTA:** En el ensamblador no vamos a utilizar *zr* ni *ng* entonces no lo presento aqui
 
 ### Explicación
 Entonces vemos que en la arquitectura las entradas de el ALU son X y Y, y podemos observar que la entrada *X* en la CPU siempre es el **registro D** y la *Y* son los **registros M o A** (***M es el valor de la dirección actual, es decir el valor de la direccion de memoria actual o lo que almacena en la RAM***)
