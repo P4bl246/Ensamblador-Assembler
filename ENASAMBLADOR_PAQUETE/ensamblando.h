@@ -28,7 +28,7 @@ int instruccionCalculo(int actual, FILE *archivo, char* nlinea);//funcion para v
 int tipoDeInstruccion(int actual, FILE* soloC, char* nlinea);//funcion que integra las 3 funciones anteriroes y verifica la parte de calculo y otros casos 
 //-----------------------------------------------------------------
 int organizar_instrucciones(const char* archivoC, int cantidad);//funcino que integra la funcion anteriror
-int verficar_Formato_lineas(const char* archivo, int cantidad_Lineas_copia_completa);//funcion para verficar que el tamño de las instrucciones C sea el correcto
+int verficar_Formato_lineas(const char* archivo, int cantidad_Lineas_copia_completa);//funcion para verficar que el tamÃ±o de las instrucciones C sea el correcto
 int analizar_instrucciones_C(const char* archivo);//funcion que integra las 2 funiones anteriroes
 //-----------------------------------------------------------------
 int eliminarArchivos();//funcion para eliminar los archivos creados durante el analisis sintactico
@@ -114,7 +114,7 @@ void IdentificarInstruccion(FILE *insC, FILE *EscribirEnsamblado);//integra la f
 int ensamblarC(const char* Cins, int cantidad);//integra la funcion anteriores;
 //-----------------------------------------------------------------
 int leerNumero(const char* linea, int cantidad);//obtiene el numero de linea (funcion no utilizada en ninguna otra funcion (posible mejora))
-int leerYOrdenarYEscribir(FILE* archivo1,  FILE* archivo2, FILE* archivoEscribir, int cantidad);//organiza las instrucciones ya ensambladas según su numero de linea, y integra la funcino anterior (funcion interna)
+int leerYOrdenarYEscribir(FILE* archivo1,  FILE* archivo2, FILE* archivoEscribir, int cantidad);//organiza las instrucciones ya ensambladas segÃºn su numero de linea, y integra la funcino anterior (funcion interna)
 //-----------------------------------------------------------------
 int archivoHack(const char* ensamblado);//ultima funcion de ensamblar para crear el archivo final que es el archivo .hack
 //-----------------------------------------------------------------
@@ -144,7 +144,7 @@ char* ident() {
 
     // Comparar lo que sigue desde el punto con ".asm"
     if (strcmp(punto, ext) != 0) {
-        fprintf(stderr, "ERROR: La extensión del archivo debe ser exactamente '.asm'\n");
+        fprintf(stderr, "ERROR: La extensiÃ³n del archivo debe ser exactamente '.asm'\n");
         free(h);
         return NULL;
     }
@@ -159,14 +159,14 @@ int so(const char** comando_salida) {
     int so1 = 0;
     int result = 0;
 
-    // Pedir la opción inicial
+    // Pedir la opciÃ³n inicial
     printf("INGRESE QUE SISTEMA OPERATIVO UTILIZA: \n1(Windows)\n2(MacOs o Unix/Linux)\n3(OTRO)\n");
     result = scanf(" %d", &so1);
 
     // Validar entrada
     while (so1 != 1 && so1 != 2 && so1 != 3) {
         if (result != 1) {
-            // Entrada inválida, limpiar buffer
+            // Entrada invÃ¡lida, limpiar buffer
             printf("Entrada invalida. Por favor ingrese 1, 2 o 3.\n");
             int c;
             while ((c = getchar()) != '\n' && c != EOF);  // limpiar buffer
@@ -180,7 +180,7 @@ int so(const char** comando_salida) {
 
     // Si elige "OTRO", pedir comando para limpiar consola
     if (so1 == 3) {
-        // Reservar memoria para comando2 si no está reservada
+        // Reservar memoria para comando2 si no estÃ¡ reservada
         if (comando2 == NULL) {
             comando2 = (char*)malloc(1024 * sizeof(char));
             if (comando2 == NULL) {
@@ -190,7 +190,7 @@ int so(const char** comando_salida) {
         }
 
         printf("Ingrese el comando para limpiar la consola de su sistema operativo:\n");
-        // Leer cadena con límite para evitar overflow
+        // Leer cadena con lÃ­mite para evitar overflow
         scanf(" %1023s", comando2);
 
         // Asignar el puntero para salida
@@ -284,7 +284,7 @@ int analizar_etiquetas(const char* archivo){
     char n_lineas[cantidad]; //obtenemos la cantidad de lineas que hay para poder obtener los caracteres necesaciros para el numero de linea
     int actual;
     rewind(copia);
-    // Procesamos línea por línea
+    // Procesamos lÃ­nea por lÃ­nea
     while(!feof(copia)) {
         // Limpiar los buffers
         memset(n_lineas, 0, sizeof(n_lineas));
@@ -299,10 +299,10 @@ int analizar_etiquetas(const char* archivo){
         n_lineas[i] = '\0';
         
         numeroLinea = atoi(n_lineas);
-        // Leer el siguiente carácter (después del espacio)
+        // Leer el siguiente carÃ¡cter (despuÃ©s del espacio)
         actual = fgetc(copia);
         
-        // Procesar instrucción si es una etiqueta
+        // Procesar instrucciÃ³n si es una etiqueta
         if(actual == '(') {
             actual = fgetc(copia);
             //si no hay nada mostrar un error
@@ -347,7 +347,7 @@ int analizar_instrucciones_A(const char* archivo) {
     char continuar;//si hay advertencias saber si se desea continuar con la ejecucion
     rewind(copia);//rebobinar el archivo debido a que ya lo leimos hasta el finlas a el tomar la cantidad de lienas
     int advertencia = 0;//si hay advertencias
-    // Procesamos línea por línea
+    // Procesamos lÃ­nea por lÃ­nea
     while(1) { 
         // Limpiar los buffers
         memset(n_lineas, 0, sizeof(cantidad));
@@ -361,10 +361,10 @@ int analizar_instrucciones_A(const char* archivo) {
             actual = fgetc(copia);
         }
         n_lineas[i] = '\0';
-        // Leer el siguiente carácter (después del espacio)
+        // Leer el siguiente carÃ¡cter (despuÃ©s del espacio)
         actual = fgetc(copia);
         
-        // Procesar instrucción si es de tipo @
+        // Procesar instrucciÃ³n si es de tipo @
         if(actual == '@') {
             actual = fgetc(copia);
             
@@ -376,7 +376,7 @@ int analizar_instrucciones_A(const char* archivo) {
                 return 1;
             }
             
-            // Leer número después de @
+            // Leer nÃºmero despuÃ©s de @
             n = 0;
             if((char)actual >= '0' && (char)actual <= '9') {
                 numeros[n] = (char)actual;
@@ -420,17 +420,17 @@ int analizar_instrucciones_A(const char* archivo) {
             	printf("DETALLES: El numero de la instruccion A no debe ser mayor a 32767 de lo contrario\n podria haber eventos inseperados duranto el ensamblaje de al instruccion debido a que son solo 15 bits\n");
             	advertencia = 1;
 			}
-        // Avanzar hasta el final de la línea
+        // Avanzar hasta el final de la lÃ­nea
         while((char)actual != '\n' && actual != EOF) {
             actual = fgetc(copia);
         }
   }
 }
    if(advertencia != 0){
-   	printf("\n¿DESEA CONTINUAR CON LA EJECUCION DE EL PROGRAMA?(Y/N)\n");
+   	printf("\nÂ¿DESEA CONTINUAR CON LA EJECUCION DE EL PROGRAMA?(Y/N)\n");
    scanf(" %c", &continuar);
    while(continuar != 'Y' && continuar != 'N'){
-    printf("¿DESEA CONTINUAR CON LA EJECUCION DE EL PROGRAMA?(Y/N)\n");
+    printf("Â¿DESEA CONTINUAR CON LA EJECUCION DE EL PROGRAMA?(Y/N)\n");
     scanf(" %c", &continuar);
 	}
 	//si es N parar la ejecucion
@@ -498,18 +498,18 @@ int extraer_instrucciones_C(const char* archivo) {
     printf("Se creo el archivo 'analizarLineas.txt'\n");
 
     char linea[1024];
-    // Leer línea por línea
+    // Leer lÃ­nea por lÃ­nea
     while (fgets(linea, sizeof(linea), copia) != NULL) {
 
-        // Buscar el primer espacio en la línea
+        // Buscar el primer espacio en la lÃ­nea
         char *espacio = strchr(linea, ' ');
         
-            // Verificar el siguiente carácter después del espacio
+            // Verificar el siguiente carÃ¡cter despuÃ©s del espacio
             if (*(espacio + 1) == '(' || *(espacio + 1) == '@') {
-                // Si el carácter después del espacio es '(' o '@', no copiamos la línea
+                // Si el carÃ¡cter despuÃ©s del espacio es '(' o '@', no copiamos la lÃ­nea
                 continue;
             }
-        // Si no se cumple la condición, copiamos la línea a copia2
+        // Si no se cumple la condiciÃ³n, copiamos la lÃ­nea a copia2
         fputs(linea, copia2);
     }
     printf("INSTRUCCIONES C EXTRAIDAS\n");
@@ -589,7 +589,7 @@ int organizar_instrucciones(const char* archivoC, int cantidad) {
         memset(nlinea, 0, sizeof(nlinea));
         i = 0;
 
-        // Leer número de línea hasta encontrar un espacio
+        // Leer nÃºmero de lÃ­nea hasta encontrar un espacio
         while (actual != ' ' && actual != EOF) {
             if (i < cantidad - 1) {
                 nlinea[i++] = (char)actual;
@@ -597,13 +597,13 @@ int organizar_instrucciones(const char* archivoC, int cantidad) {
             actual = fgetc(instrucciones);
         }
 
-        // Procesar la instrucción
+        // Procesar la instrucciÃ³n
         int result = tipoDeInstruccion(actual, instrucciones, nlinea);
         if (result != 0) {
             fclose(instrucciones);
             return 1;
         }
-        // Avanzar hasta el comienzo de la próxima línea
+        // Avanzar hasta el comienzo de la prÃ³xima lÃ­nea
         while (actual != EOF && (char)actual != '\n' &&(char)actual != '\0' &&(char)actual != ' ') {
             actual = fgetc(instrucciones);
         }
@@ -626,15 +626,15 @@ int tipoDeInstruccion(int actual, FILE* soloC, char* nlinea) {
         if ((char)actual == 'D' || (char)actual == 'M' || (char)actual == 'A'||(char)actual == '1'||(char)actual == '0') {
         	buffer= (char)actual;
         	buffer2[0] = (char)actual;//guradamos el caracter actual 
-            actual = fgetc(soloC); // siguiente carácter
+            actual = fgetc(soloC); // siguiente carÃ¡cter
              //comprobamos que el siguietne caracter se +, -, | o &
             if ((char)actual == '+' || (char)actual == '-' || (char)actual == '|' || (char)actual == '&') {
-                actual = fgetc(soloC); // siguiente carácter
+                actual = fgetc(soloC); // siguiente carÃ¡cter
                 buffer2[1] = (char)actual;
                 buffer2[2] = '\0';//cerramos correctamente
                 //comprobamos que el siguiente caracter sea A, M, D, 1 o 0
                 if ((char)actual == 'A' || (char)actual == 'D' || (char)actual == 'M' || (char)actual == '1' || (char)actual == '0') {
-                    actual = fgetc(soloC); // siguiente carácter
+                    actual = fgetc(soloC); // siguiente carÃ¡cter
                    
 				   	//excepciones como que A y M no se pueden calcular
 				   	if(buffer2[0] == 'A' && buffer2[1] == 'M' || buffer2[0] == 'M' && buffer2[1] == 'A'){
@@ -656,7 +656,7 @@ int tipoDeInstruccion(int actual, FILE* soloC, char* nlinea) {
                    //comprobamos que el siguiente caracter sea ; o fin de linea
                     else if ((char)actual == '\n' || actual == EOF) {
                     	
-                        return 0; // Solo cálculo
+                        return 0; // Solo cÃ¡lculo
                     } else {
                     	//si no es final de linea entonces comprobamos que sea ;
                         if ((char)actual != ';') {
@@ -671,7 +671,7 @@ int tipoDeInstruccion(int actual, FILE* soloC, char* nlinea) {
                             int h = instruccionSalto(actual, soloC, nlinea);
                             
                             if (h != 0) return 1;
-                            else return 0; // Instrucción completa válida
+                            else return 0; // InstrucciÃ³n completa vÃ¡lida
                         }
                     }
                 }
@@ -694,7 +694,7 @@ int tipoDeInstruccion(int actual, FILE* soloC, char* nlinea) {
             	int h2 = instruccionSalto(actual, soloC, nlinea);
             	
                 if (h2 != 0) return 1;
-                else return 0; // Instrucción completa válida
+                else return 0; // InstrucciÃ³n completa vÃ¡lida
             	
 			}
             //si no ; comprobamos que el caracter anteriro no sea 1 o 0, si es asi hay un error;
@@ -881,15 +881,15 @@ int instruccionCalculo(int actual, FILE *archivo, char* nlinea){
 	// Si comienza con D, M, A, 1 o 0
         if ((char)actual == 'D' || (char)actual == 'M' || (char)actual == 'A'||(char)actual == '1'||(char)actual == '0') {
         	buffer2[0] = (char)actual;
-            actual = fgetc(archivo); // siguiente carácter
+            actual = fgetc(archivo); // siguiente carÃ¡cter
             
             //comprobamos que el siguiente caracter se +, -, | o &
             if ((char)actual == '+' || (char)actual == '-' || (char)actual == '|' || (char)actual == '&') {
-                actual = fgetc(archivo); // siguiente carácter
+                actual = fgetc(archivo); // siguiente carÃ¡cter
                 buffer2[1] = (char)actual;
                  //comprobamos que el siguiente caracter sea A, D, M, 1 o 0
                 if ((char)actual == 'A' || (char)actual == 'D' || (char)actual == 'M' || (char)actual == '1' || (char)actual == '0') {
-                    actual = fgetc(archivo); // siguiente carácter
+                    actual = fgetc(archivo); // siguiente carÃ¡cter
                     
 				   	//excepciones como que A y M no se pueden calcular
 				   	if(buffer2[0] == 'A' && buffer2[1] == 'M' || buffer2[0] == 'M' && buffer2[1] == 'A'){
@@ -909,7 +909,7 @@ int instruccionCalculo(int actual, FILE *archivo, char* nlinea){
                     //vemos si es final de linea
                     else if ((char)actual == '\n' || actual == EOF) {
                     	
-                        return 0; // Solo cálculo
+                        return 0; // Solo cÃ¡lculo
                     }
 					//si no es final de linea vemos si el siguiente caracter es ; 
 					else {
@@ -925,7 +925,7 @@ int instruccionCalculo(int actual, FILE *archivo, char* nlinea){
                             int h = instruccionSalto(actual, archivo, nlinea);
                             
                             if (h != 0) return 1;
-                            else return 0; // Instrucción completa válida
+                            else return 0; // InstrucciÃ³n completa vÃ¡lida
                         }
                     }
                 }
@@ -948,7 +948,7 @@ int instruccionCalculo(int actual, FILE *archivo, char* nlinea){
             	int h2 = instruccionSalto(actual, archivo, nlinea);
             	
                 if (h2 != 0) return 1;
-                else return 0; // Instrucción completa válida
+                else return 0; // InstrucciÃ³n completa vÃ¡lida
             	
 			}
 			//si no hay salto de linea, o ; ni operador
@@ -1265,7 +1265,7 @@ int ArchivoA_txt(const char* nombre_archivo) {
     
     // Verificar si el archivo se pudo abrir correctamente
     if (assembly == NULL) {
-        printf("El archivo '%s' no se encontró.\n", nombre_archivo);
+        printf("El archivo '%s' no se encontrÃ³.\n", nombre_archivo);
         return 1;
     }
     
@@ -1285,7 +1285,7 @@ int ArchivoA_txt(const char* nombre_archivo) {
     // Leer el archivo .asm y escribir en el archivo .txt
     char c;
     while ((c = fgetc(assembly)) != EOF) {
-        fputc(c, txt_file);  // Escribir cada carácter en el archivo .txt
+        fputc(c, txt_file);  // Escribir cada carÃ¡cter en el archivo .txt
     }
     
     // Cerrar ambos archivos
@@ -1314,7 +1314,7 @@ int limpiarLineas(const char *archivo) {
     }
     printf("'temp2.txt' listo para ser editado\n");
      // COMIENZA LO IMPORTANTE
-     char linea[1024]; // buffer para leer líneas
+     char linea[1024]; // buffer para leer lÃ­neas
      //eliminar espacios es en el archivo y guardar el arhcivo editado
     while (fgets(linea, sizeof(linea), archivoPrincipal) != NULL) {
         char *lineaProcesada = eliminarEspaciosPreservarSalto(linea);
@@ -1355,8 +1355,7 @@ int limpiarLineas(const char *archivo) {
      
  // Eliminar los comentarios en bloque de el archivo
     eliminar_comentario_bloque(archivoSinEspacios, temp3); 
-	fclose(archivoSinEspacios);
-	fclose(temp3);
+	
 	
 	if(remove(archivo) == 0) printf("Se elimino el archivo '%s'\n", archivo);
 	else{
@@ -1469,23 +1468,23 @@ char *eliminar_comentario_simple(char *cadena) {
     char *nuevaLinea = linea;  // Apunta al inicio de la cadena
 
     while (*linea != '\0') {
-        // Detectar comentario de una línea (//)
+        // Detectar comentario de una lÃ­nea (//)
         if (*linea == '/') {
             linea++;
             if (*linea == '/') {
-                // Comentario de una sola línea (//)
+                // Comentario de una sola lÃ­nea (//)
                 while (*linea != '\n' && *linea != '\0') {
                     linea++;  // Saltar todo el comentario
                 }
             }
         }
         
-        // Si no es un comentario, copiar el carácter actual a nuevaLinea
+        // Si no es un comentario, copiar el carÃ¡cter actual a nuevaLinea
         if (*linea != '\0') {
             *nuevaLinea = *linea;
             nuevaLinea++;
         }
-        linea++;  // Avanzar al siguiente carácter
+        linea++;  // Avanzar al siguiente carÃ¡cter
     }
     
     *nuevaLinea = '\0';  // Terminamos la cadena
@@ -1501,8 +1500,8 @@ void eliminar_comentario_bloque(FILE *archivoLeer, FILE *archivoEscribir) {
         if (car_actual == '/' && !dentroComentario) {
             actual = fgetc(archivoLeer);
             if (actual == EOF) {
-                // Si el archivo termina abruptamente después de un '/', no hay nada que hacer.
-                fprintf(stderr, "Se llegó al final del archivo inesperadamente.\n");
+                // Si el archivo termina abruptamente despuÃ©s de un '/', no hay nada que hacer.
+                fprintf(stderr, "Se llegÃ³ al final del archivo inesperadamente.\n");
                 fclose(archivoLeer);
                 fclose(archivoEscribir);
                 return;
@@ -1514,7 +1513,7 @@ void eliminar_comentario_bloque(FILE *archivoLeer, FILE *archivoEscribir) {
 				dentroComentario = 1;
                 printf("Es un comentario en bloque\n");
             } else {
-                // Si no es un comentario en bloque, escribe el '/' y el siguiente carácter.
+                // Si no es un comentario en bloque, escribe el '/' y el siguiente carÃ¡cter.
                 fputc(car_actual, archivoEscribir);
             }
         } else if (dentroComentario) {
@@ -1522,7 +1521,7 @@ void eliminar_comentario_bloque(FILE *archivoLeer, FILE *archivoEscribir) {
                   car_actual = (char)actual;
             } 
 			 if (actual == EOF) {
-                fprintf(stderr, "Se llegó al final del archivo dentro de un comentario.\n");
+                fprintf(stderr, "Se llegÃ³ al final del archivo dentro de un comentario.\n");
                 fclose(archivoLeer);
                 fclose(archivoEscribir);
                 return;
@@ -1531,7 +1530,7 @@ void eliminar_comentario_bloque(FILE *archivoLeer, FILE *archivoEscribir) {
             actual = fgetc(archivoLeer);
             car_actual = (char)actual;
         } else {
-            // Si no estamos dentro de un comentario, escribimos el carácter.
+            // Si no estamos dentro de un comentario, escribimos el carÃ¡cter.
             fputc(car_actual, archivoEscribir);
             actual = fgetc(archivoLeer);
         }
@@ -1548,16 +1547,16 @@ char* eliminarLineas_vacias(char* cadena) {
     char *dst = cadena;
     int i = 0;
     while (*src != '\0') {
-        // Buscar fin de línea
+        // Buscar fin de lÃ­nea
         char *line_end = src;
         while (*line_end != '\n' && *line_end != '\0') {
             line_end++;
         }
 
-        // Calcular longitud de la línea
+        // Calcular longitud de la lÃ­nea
         int len = line_end - src;
 
-        // Verificar si la línea no está vacía (más que solo salto de línea)
+        // Verificar si la lÃ­nea no estÃ¡ vacÃ­a (mÃ¡s que solo salto de lÃ­nea)
         int es_vacia = 1;
         for ( i = 0; i < len; i++) {
             if (src[i] != ' ' && src[i] != '\t') {
@@ -1567,7 +1566,7 @@ char* eliminarLineas_vacias(char* cadena) {
         }
 
         if (!es_vacia) {
-            // Copiar la línea completa (incluyendo salto de línea si existe)
+            // Copiar la lÃ­nea completa (incluyendo salto de lÃ­nea si existe)
             for (i = 0; i < len; i++) {
                 *dst++ = src[i];
             }
@@ -1576,7 +1575,7 @@ char* eliminarLineas_vacias(char* cadena) {
             }
         }
 
-        // Avanzar src a la siguiente línea
+        // Avanzar src a la siguiente lÃ­nea
         if (*line_end == '\0') {
             break;
         }
@@ -1607,7 +1606,7 @@ int tablaDeSimbolos() {
    
     int valor[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16384, 24576, 0, 1, 2, 3, 4};
     char clave[] ="R0 R1 R2 R3 R4 R5 R6 R7 R8 R9 R10 R11 R12 R13 R14 R15 SCREEN KBD SP LCL ARG THIS THAT";
-    int n = 23; // Número de elementos
+    int n = 23; // NÃºmero de elementos
     int h = n;
     tablaP *filas = (tablaP *)malloc(n * sizeof(tablaP));
     if (filas == NULL) {
@@ -1652,7 +1651,7 @@ int tablaDeSimbolos() {
 
     // Liberar memoria
     for ( k = 0; k < n; k++) {
-        free(filas[k].claves);  // Liberar las cadenas dinámicas
+        free(filas[k].claves);  // Liberar las cadenas dinÃ¡micas
     }
 
     free(filas);  // Liberar el arreglo de filas
@@ -1750,7 +1749,7 @@ int encontrarEtiquetas(FILE* archivoLeer, FILE* archivoEscribir){
 	    			actual = fgetc(archivoLeer);
 				}				
 				if(actual == EOF){
-					printf("ERROR, se llego a el final de el archivo '%s', y no se cerro la etiqueta\n", archivoLeer);
+					printf("ERROR, se llego a el final de el archivo, y no se cerro la etiqueta\n");
 					fclose(archivoLeer);
 					fclose(archivoEscribir);
 					return 1;
@@ -1782,20 +1781,20 @@ int numerarLineas(const char* archivoLeer) {
     }
     printf("Se creo 'tempo.txt' exitosamente\n");
 
-    char linea[1024]; // Buffer para leer cada línea
-    int numero_linea = 1; // Contador de líneas
+    char linea[1024]; // Buffer para leer cada lÃ­nea
+    int numero_linea = 1; // Contador de lÃ­neas
     
-    // Leer cada línea del archivo
+    // Leer cada lÃ­nea del archivo
     while (fgets(linea, sizeof(linea), entrada) != NULL) {
-        // Verificar si la línea contiene una etiqueta o '('
+        // Verificar si la lÃ­nea contiene una etiqueta o '('
         if (strchr(linea, '(') != NULL) {
             fprintf(temp, "%d %s", numero_linea, linea);
             continue;
         }
         
-        // Escribir el número de línea y la línea en el archivo de salida
+        // Escribir el nÃºmero de lÃ­nea y la lÃ­nea en el archivo de salida
         fprintf(temp, "%d %s", numero_linea, linea);
-        numero_linea++; // Incrementar el número de la línea
+        numero_linea++; // Incrementar el nÃºmero de la lÃ­nea
     }
     fclose(entrada);
     fclose(temp);
@@ -1868,13 +1867,13 @@ int separarEtiquetas(const char* archivo){
 }
 //-----------------------------------------------------------------
 void copiarLineasConEtiqueta(FILE *archivoLeer, FILE *archivoEscribir) {
-    char linea[1024];  // Buffer para almacenar cada línea leída
+    char linea[1024];  // Buffer para almacenar cada lÃ­nea leÃ­da
 
-    // Lee línea por línea
+    // Lee lÃ­nea por lÃ­nea
     while (fgets(linea, sizeof(linea), archivoLeer) != NULL) {
-        // Revisa si hay un '(' en la línea
+        // Revisa si hay un '(' en la lÃ­nea
         if (strchr(linea, '(') != NULL) {
-            // Si encontramos un '(', copiamos la línea al archivo de salida
+            // Si encontramos un '(', copiamos la lÃ­nea al archivo de salida
             fputs(linea, archivoEscribir);
         }
     }
@@ -1951,7 +1950,7 @@ int mas_simbolos(const char* archivo_de_datos){
 
     // Liberar memoria
     for ( k = 0; k < cantidad; k++) {
-        free(cadena[k]);  // Liberar las cadenas dinámicas
+        free(cadena[k]);  // Liberar las cadenas dinÃ¡micas
         free(valoresChar[k]);
     }
     printf("SE AGREEGARON SIMBOLOS A LA TABLA EXITOSAMENTE EN EL ARCHIVO 'tabla.txt'\n");
@@ -1971,7 +1970,7 @@ int cantidadDeLineas(FILE *archivoLeer){
 int separaDigitosdeLetras(FILE* archivoLeer, char** poner_cadenas, char** poner_digitos, int n_lineas){
     int i;
     rewind(archivoLeer); //si ya se habia leido el archivo lo rebobinamos o volvemos a el incio
-    // Asignamos memoria para cada línea (200 caracteres para cadenas, 200 para dígitos)
+    // Asignamos memoria para cada lÃ­nea (200 caracteres para cadenas, 200 para dÃ­gitos)
     for(i = 0; i < n_lineas; i++) {
         poner_cadenas[i] = (char*)malloc(200 * sizeof(char));  // Asigna memoria para las cadenas
         if(poner_cadenas[i] == NULL) {
@@ -1986,7 +1985,7 @@ int separaDigitosdeLetras(FILE* archivoLeer, char** poner_cadenas, char** poner_
             return 1;
         }
 
-        poner_digitos[i] = (char*)malloc(200 * sizeof(char));  // Asigna memoria para los dígitos
+        poner_digitos[i] = (char*)malloc(200 * sizeof(char));  // Asigna memoria para los dÃ­gitos
         if(poner_digitos[i] == NULL) {
             printf("ERROR al asignar memoria para 'digitos[%d]'\n", i);
             // Liberamos memoria previamente asignada
@@ -2003,12 +2002,12 @@ int separaDigitosdeLetras(FILE* archivoLeer, char** poner_cadenas, char** poner_
     char linea[1024];
     i = 0;
     
-    // Leer cada línea
+    // Leer cada lÃ­nea
     while(i < n_lineas && fgets(linea, sizeof(linea), archivoLeer) != NULL) {
         int valor; //varaibel temporal para alamcenar el entero 
         char etiqueta[200]; //variable temporal para alamcenar la cadena o el nobmre de la etiqueta
         
-        /* Extraer valor y etiqueta de la línea
+        /* Extraer valor y etiqueta de la lÃ­nea
         se esacnaea o obtiene de la linea el entero, y una cadena no superior a 200 caracteres, y se ignorarn los saltos de linea
         se verfica si ambos datos se obtuvieron correctamete
         se ponene en los arreglso correspondieten
@@ -2133,7 +2132,7 @@ int separarVariables(const char* archivo){
 		printf("Se renombor el archivo 'tempVar.txt' a: 'variables.txt'\n");
 	}
 	  mas_simbolos("variables.txt");
-	
+	fclose(etiq);
 	return 0;
 }
 //-----------------------------------------------------------------
@@ -2189,27 +2188,27 @@ void encontrarVariables(FILE* archivoLeer, FILE* archivoEscribir) {
 //-----------------------------------------------------------------
 void eliminarDuplicados(FILE *archivoLeer, FILE* archivoEscribir) {
     char line[1024];
-    char **lineasLeidas = NULL; // Array dinámico para almacenar líneas leídas
-    int numLineasLeidas = 0;    // Número de líneas leídas
+    char **lineasLeidas = NULL; // Array dinÃ¡mico para almacenar lÃ­neas leÃ­das
+    int numLineasLeidas = 0;    // NÃºmero de lÃ­neas leÃ­das
     int esDuplicado;
     int i;
-    // Leer línea por línea del archivo
+    // Leer lÃ­nea por lÃ­nea del archivo
     while (fgets(line, sizeof(line), archivoLeer)) {
         esDuplicado = 0;
       
-        // Compara la línea con las líneas previamente leídas
+        // Compara la lÃ­nea con las lÃ­neas previamente leÃ­das
         for (i = 0; i < numLineasLeidas; i++) {
             if (strcmp(lineasLeidas[i], line) == 0) {
-                esDuplicado = 1; // Se encontró una línea duplicada
+                esDuplicado = 1; // Se encontrÃ³ una lÃ­nea duplicada
                 break;
             }
         }
 
-        // Si la línea no es duplicada, escribirla en el archivo de salida
+        // Si la lÃ­nea no es duplicada, escribirla en el archivo de salida
         if (!esDuplicado) {
             fputs(line, archivoEscribir);
 
-            // Almacenar la línea leída para futuras comparaciones
+            // Almacenar la lÃ­nea leÃ­da para futuras comparaciones
             lineasLeidas =(char**)realloc(lineasLeidas, (numLineasLeidas + 1) * sizeof(char*));
             lineasLeidas[numLineasLeidas] = (char*)malloc(strlen(line) + 1);
             strcpy(lineasLeidas[numLineasLeidas], line);
@@ -2217,7 +2216,7 @@ void eliminarDuplicados(FILE *archivoLeer, FILE* archivoEscribir) {
         }
     }
 
-    // Liberar memoria de las líneas leídas
+    // Liberar memoria de las lÃ­neas leÃ­das
     for (i = 0; i < numLineasLeidas; i++) {
         free(lineasLeidas[i]);
     }
@@ -2241,7 +2240,7 @@ int copiarValoresConVariables(FILE *archivoLeer, FILE *archivoEscribir){
     sprintf(buffer, "%d", n);  // Convertir el entero 'n' a una cadena
    	  if((char)actual == '@'){
    	  	     actual = fgetc(archivoLeer);//ir a el siguiente caracter despues de @
-   	  	    // Verifica si el carácter no es un numero
+   	  	    // Verifica si el carÃ¡cter no es un numero
              if( !((char)actual >= '0' && (char)actual <= '9')){
              	fputs(buffer, archivoEscribir);//poner el valor de la variable
              	fputc(' ', archivoEscribir);//separa el nombre de la variable
@@ -2271,7 +2270,7 @@ void excluir(FILE *archivoLeer, FILE *archivoEscribir) {
     char subcadena[] = "R0 R1 R2 R3 R4 R5 R6 R7 R8 R9 R10 R11 R12 R13 R14 R15 SCREEN KBD SP LCL THIS THAT ARG";
     char cadena[10];
     
-    // Preprocesar las subcadenas válidas
+    // Preprocesar las subcadenas vÃ¡lidas
     char *variables[24];
     int total_vars = 0;
     char *token = strtok(subcadena, " ");
@@ -2281,10 +2280,10 @@ void excluir(FILE *archivoLeer, FILE *archivoEscribir) {
         token = strtok(NULL, " ");
     }
     int i;
-    // Procesar cada línea
+    // Procesar cada lÃ­nea
     while (fgets(linea, sizeof(linea), archivoLeer) != NULL) {
         if (linea[0] == '@') {
-            // Extraer cadena después del @
+            // Extraer cadena despuÃ©s del @
             if (sscanf(linea + 1, "%9s", cadena) != 1) {
                 fputs(linea, archivoEscribir);
                 continue;
@@ -2406,7 +2405,7 @@ int limpiartxtPr(const char* archivo) {
     // Abrimos el archivo de entrada en modo lectura
     FILE *archivoP = fopen(archivo, "r");
     if (archivoP == NULL) {
-        printf("No se encontró el archivo '%s'\n", archivo);
+        printf("No se encontrÃ³ el archivo '%s'\n", archivo);
         return 1;
     }
 
@@ -2418,19 +2417,19 @@ int limpiartxtPr(const char* archivo) {
         return 1;
     }
 
-    char linea[1024]; // Buffer para almacenar cada línea leída del archivo
+    char linea[1024]; // Buffer para almacenar cada lÃ­nea leÃ­da del archivo
     while (fgets(linea, sizeof(linea), archivoP) != NULL) {
-        // Buscar el primer espacio en la línea
+        // Buscar el primer espacio en la lÃ­nea
         char *ptrEspacio = strchr(linea, ' ');
         if (ptrEspacio != NULL) {
-            // Si encontramos un espacio, verificamos el siguiente carácter
+            // Si encontramos un espacio, verificamos el siguiente carÃ¡cter
             if (*(ptrEspacio + 1) == '(') {
-                // Si el siguiente carácter es un paréntesis '(', no escribimos la línea en el archivo temporal
+                // Si el siguiente carÃ¡cter es un parÃ©ntesis '(', no escribimos la lÃ­nea en el archivo temporal
                 continue;
             }
         }
 
-        // Si no encontramos un paréntesis después del espacio, escribimos la línea en el archivo temporal
+        // Si no encontramos un parÃ©ntesis despuÃ©s del espacio, escribimos la lÃ­nea en el archivo temporal
         fprintf(temp, "%s", linea);
     }
 
@@ -2440,7 +2439,7 @@ int limpiartxtPr(const char* archivo) {
 
     // Eliminamos el archivo original
     if (remove(archivo) != 0) {
-        printf("No se eliminó el archivo '%s'\n", archivo);
+        printf("No se eliminÃ³ el archivo '%s'\n", archivo);
         return 1;
     }
 
@@ -2506,15 +2505,15 @@ int limpiar_tabla(){
 }
 //-----------------------------------------------------------------
 void eliminarDuplicadosTabla(FILE *archivoLeer, FILE *archivoEscribir){
-    char line[1024];  // Para almacenar cada línea leída
-    char lineCopy[1024]; // Copia de la línea para análisis
-    char **palabrasVistas = NULL; // Arreglo dinámico para almacenar las palabras vistas
+    char line[1024];  // Para almacenar cada lÃ­nea leÃ­da
+    char lineCopy[1024]; // Copia de la lÃ­nea para anÃ¡lisis
+    char **palabrasVistas = NULL; // Arreglo dinÃ¡mico para almacenar las palabras vistas
     int numPalabrasVistas = 0;    // Contador de palabras vistas
     int esDuplicado;
     int i;
 
     while (fgets(line, sizeof(line), archivoLeer)) {
-        strcpy(lineCopy, line);  // Hacemos una copia de la línea original
+        strcpy(lineCopy, line);  // Hacemos una copia de la lÃ­nea original
 
         // Extraer la primera palabra de la copia
         char *primeraPalabra = strtok(lineCopy, " ");
@@ -2534,7 +2533,7 @@ void eliminarDuplicadosTabla(FILE *archivoLeer, FILE *archivoEscribir){
         }
 
         if (!esDuplicado) {
-            fputs(line, archivoEscribir); // Usamos la línea original completa
+            fputs(line, archivoEscribir); // Usamos la lÃ­nea original completa
             // Guardamos la palabra
             palabrasVistas = (char**)realloc(palabrasVistas, (numPalabrasVistas + 1) * sizeof(char*));
             palabrasVistas[numPalabrasVistas] = (char*)malloc(strlen(primeraPalabra) + 1);
@@ -2726,9 +2725,9 @@ int ensamblarA (const char* Ains, int cantidad){
 		 else{
 	    valor = buscarValor(tabla, cadena, cantidad);
 		bin2 = EnteroABin(valor);
-		fputc('0', ensam);//convencion para instrucciones el bit 16 siempre es el opcode(bit que indica que instrucción es si A o C) y para instrucciones A siempre es 0 los otros 15 son de valor
+		fputc('0', ensam);//convencion para instrucciones el bit 16 siempre es el opcode(bit que indica que instrucciÃ³n es si A o C) y para instrucciones A siempre es 0 los otros 15 son de valor
 		fputs(bin2, ensam);//poner el binario
-		fputc('\n', ensam);        // Aquí se añade el salto de línea
+		fputc('\n', ensam);        // AquÃ­ se aÃ±ade el salto de lÃ­nea
 		free(bin2);//liberar la memoria utilizada en la funcion EnteroABin
 	   }
 	}
@@ -2837,7 +2836,7 @@ void IdentificarInstruccion(FILE *insC, FILE *EscribirEnsamblado){
    	     s=calculo(actual, insC);//todas las intrucciones C tienen que tener un calculo y esta funcion integra las otras de destino y salto entonces por eso solo llamamos a calculo y obtenemos la cadena de este
 		fputs(s, EscribirEnsamblado);
 		fputc('\n', EscribirEnsamblado);
-		free(s);  // también liberas el string ensamblado
+		free(s);  // tambiÃ©n liberas el string ensamblado
 		s= NULL;
    }
    fclose(insC);
@@ -3371,7 +3370,7 @@ char* salto(char* actual) {
     else if (strcmp(buffer, "JNE") == 0) valor = 5;
     else if (strcmp(buffer, "JLE") == 0) valor = 6;
     else if (strcmp(buffer, "JMP") == 0) valor = 7;
-    else valor = 0; // sin salto válido
+    else valor = 0; // sin salto vÃ¡lido
 
     // Convertir valor a binario de 3 bits
     jump[0] = (valor & 4) ? '1' : '0';
@@ -3390,7 +3389,7 @@ char* ensamblarFinal(Cins completo) {
     free(instruccion);
     return NULL;
     }
-    // El patrón es: 111accccccdddjjj
+    // El patrÃ³n es: 111accccccdddjjj
     sprintf(instruccion, "111%c%s%s%s", completo.M, completo.comp, completo.destino, completo.jump);
     //liberamos la memoria asginada en las funcionciones dentor de calculo
     free(completo.comp);
@@ -3466,10 +3465,10 @@ int leerYOrdenarYEscribir(FILE* archivo1, FILE* archivo2, FILE* archivoEscribir,
 int archivoHack(const char* ensamblado) {
     FILE *ensam = fopen(ensamblado, "r");
     if (ensam == NULL) {
-        printf("No se encontró el archivo '%s'\n", ensamblado);
+        printf("No se encontrÃ³ el archivo '%s'\n", ensamblado);
         return 1;
     }
-    printf("Se abrió el archivo '%s'\n", ensamblado);
+    printf("Se abriÃ³ el archivo '%s'\n", ensamblado);
 
     FILE *hack = fopen("archivoHack.hack", "w");
     if (hack == NULL) {
@@ -3477,14 +3476,14 @@ int archivoHack(const char* ensamblado) {
         fclose(ensam);
         return 1;
     }
-    printf("Se creó el archivo 'archivoHack.hack'\n");
+    printf("Se creÃ³ el archivo 'archivoHack.hack'\n");
     char linea[1024];
     while (fgets(linea, sizeof(linea), ensam)) {
         // Buscar el primer espacio
         char *despuesDelEspacio = strchr(linea, ' ');
         if (despuesDelEspacio != NULL) {
             despuesDelEspacio++; // Saltar el espacio
-            // Eliminar salto de línea al final si existe
+            // Eliminar salto de lÃ­nea al final si existe
             size_t len = strlen(despuesDelEspacio);
             if (len > 0 && despuesDelEspacio[len - 1] == '\n') {
                 despuesDelEspacio[len - 1] = '\0';
