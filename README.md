@@ -20,7 +20,48 @@
   * `string.h` 
  
  (no necesita instalarlas si ya tiene *Dev C++/C* o un compilador moderno ya que normalmente estan integradas.)
- 
+
+**NOTA IMPORATANTE:** Si utiliza **VSCode debe cambiar** la *función* `copiarValoresConVariables` por este implementación
+~~~
+int copiarValoresConVariables(FILE *archivoLeer, FILE *archivoEscribir){
+	int n= 16;//valor incial de variable y se va incrementando
+   int actual = fgetc(archivoLeer);
+   char buffer[5]; //cadena de caracteres maximo 5 porque el valor maximo de n es de 5 digitos
+   while(actual != EOF){
+   	if(n == 16383){
+   		printf("Se alcanzo el maximo de variables posibles (16383)\n");
+   		fclose(archivoLeer);
+   		fclose(archivoEscribir);
+   		return 1;
+	   }
+    sprintf(buffer, "%d", n);  // Convertir el entero 'n' a una cadena
+   	  if((char)actual == '@'){
+   	  	     actual = fgetc(archivoLeer);//ir a el siguiente caracter despues de @
+   	  	    // Verifica si el carácter no es un numero
+             if( !((char)actual >= '0' && (char)actual <= '9')){
+             	fputs(buffer, archivoEscribir);//poner el valor de la variable
+             	fputc(' ', archivoEscribir);//separa el nombre de la variable
+             	 while(actual != EOF && (char)actual != '\n' && (char)actual != '\0' && (char)actual != ' '){
+             	 	fputc((char)actual, archivoEscribir);
+             	 	actual = fgetc(archivoLeer);
+				  }
+				  if(actual == EOF){
+				  	printf("Se llego a el final de el archivo\n"); //salir de la funcion
+				  	fclose(archivoLeer);
+				  	fclose(archivoEscribir);
+				  	return 1;
+				  }
+				  fputc('\n', archivoEscribir);
+			 }
+		 }
+		 actual = fgetc(archivoLeer);
+		 n++;
+   }
+   fclose(archivoEscribir);	
+   return 0;
+}
+~~~
+
 ## Instalación
 
 ------------------------------------------------------
