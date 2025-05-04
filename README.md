@@ -130,7 +130,9 @@ A=D
   /* /*Esto es un comentario anidado*/D=M
   ~~~
 
-**EXPLICACIÓN:** El **problema** está en que el **código** busca el `*/` despúes de que se indica el inicio de un comentario en bloque (`/*`) entonces en el ejemplo anterior `D=M` se tratara como una instrucción, *aunque no se hayan cerrado el comentario en bloque principal*, es decir el *primer* `/*`
+**EXPLICACIÓN:** El **problema** está en que el **código** busca el `*/` despúes de que se indica el inicio de un comentario en bloque (`/*`) entonces en el ejemplo anterior `D=M` se tratara como una instrucción, *aunque no se hayan cerrado el comentario en bloque principal*, es decir el *primer* `/*`. 
+
+***NOTA:*** Esto se debe a que en *raros casos* sucede esto y es una ***práctica que no se recomienda***, debido a casos como los de el código anterior que **puede presentarse en otros programas no solo en este**
 
 * Antes de revisar el codigo (de la libreria `ensamblando.h` principalmente), se recomienda tener **concimiento de la arquitectura de la *CPU* y la *ALU*** para entender ciertos fragmentos de el codigo como la parte de **ENSAMBLAJE**, esto estara en el [ARQUITECTURA.md](https://github.com/P4bl246/Ensamblador/blob/e50e91bbd4e8a84b83cbad30191bdc36ba5f4548/ARQUITECTURA.md) (*donde también se explicara porque hay ciertas operaciones y restricciones y como podrian integrarse más operaciones*).
 
