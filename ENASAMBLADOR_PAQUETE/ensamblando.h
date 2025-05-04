@@ -2260,6 +2260,7 @@ int copiarValoresConVariables(FILE *archivoLeer, FILE *archivoEscribir){
 		 actual = fgetc(archivoLeer);
 		 n++;
    }
+  fclose(archivoLeer);
    fclose(archivoEscribir);	
    return 0;
 }
