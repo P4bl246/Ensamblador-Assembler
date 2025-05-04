@@ -1,4 +1,4 @@
- README-Ensambaldor Hack en C
+ README-Ensamblador Hack en C
  # COMPILADOR/ENSAMBLADOR HACK EN C
   **Autor:** Pablo Riveros Perea
   
@@ -12,7 +12,7 @@
  ------------------------------------------------------
  Debe tener instalado *Dev C++/C* version 5.11 o posteriores, o un *compilador de C moderno*.
  
- [Instale Dev C++/C](https://sourceforge.net/projects/orwelldevcpp/)
+ [Descargue Dev C++/C](https://sourceforge.net/projects/orwelldevcpp/)
 
  Librerias externas requeridas: 
   * `stdio.h` 
@@ -21,7 +21,7 @@
  
  (no necesita instalarlas si ya tiene *Dev C++/C* o un compilador moderno ya que normalmente estan integradas.)
 
-**NOTA IMPORATANTE:** Si utiliza **VSCode debe cambiar** la *función* `copiarValoresConVariables` por este implementación
+**NOTA IMPORTANTE:** Si utiliza **VSCode debe cambiar** la *función* `copiarValoresConVariables` por este implementación
 ~~~
 int copiarValoresConVariables(FILE *archivoLeer, FILE *archivoEscribir){
 	int n= 16;//valor incial de variable y se va incrementando
@@ -67,17 +67,17 @@ int copiarValoresConVariables(FILE *archivoLeer, FILE *archivoEscribir){
 ------------------------------------------------------
 1. Descargue la libreria `ensamblando.h` y el *ejecutable* `ensamblador.c` en la **misma carpeta** o **ruta** que la de el *compilador*.
 
-2. Ejecute el *ejecutable*, y ingrese el ***nombre completo de su archivo .asm*** para pasarlo como argumento a la función `archivoA_txt` (el archivo debe de estar también en la *misma ruta*)
+2. Compile y ejecute el *ejecutable*, y ingrese el ***nombre completo de su archivo .asm*** para pasarlo como argumento a la función `archivoA_txt` (el archivo debe de estar también en la *misma ruta*)
    
-3. Ejecute el codigo y abra el archivo `archivoHack.hack` donde se encuentra el binario.
+3. Compile y ejecute el codigo y abra el archivo `archivoHack.hack` donde se encuentra el binario.
 
-***NOTA:*** Todos los *archivos temporales*, y el archivo final *archivHack.hack* seran *creados localmente en la ruta*
+***NOTA:*** Todos los *archivos temporales*, y el archivo final `archivHack.hack` seran *creados localmente en la ruta*
 
-**Recomendaciones de intalación**
+**Recomendaciones de instalación**
 
 * Cree una carpeta aparte para el *compilador* donde también va a poner la libreria `ensamblando.h` y su ejecutable `ensamblador.c`.
  
-* Asegurese de **no** tener en la *misma ruta* (carpeta) otros *archivos* ***.txt*** debido a que podrian tener le *mismo nombre* que otros *archivos temporales* de el *ensamblador* y podria *eliminar su contenido* o haber *errores en la ejecución de el programa*
+* asegúrese de **no** tener en la *misma ruta* (carpeta) otros *archivos* ***.txt*** debido a que podrian tener le *mismo nombre* que otros *archivos temporales* de el *ensamblador* y podria *eliminar su contenido* o haber *errores en la ejecución de el programa*
 
 ## Uso
 
@@ -107,7 +107,7 @@ A=D
   
   1+D = 001111
   
-**NOTA IMPORTANTE:** El emulador de *NAND2TETRIS* no acepta 1-M que en realidad seria -M+1 pero como no acepta esta representación binaria (1+(!Y +1) (***la ALU si lo puede procesar pero el emulador no lo reconoce***)) entonces ser refactoriza a M-1 (*no es correcto pero es lo que acepta el emulador entonces cada vez que se ponga algo como 1-M o 1-D o 1-A se refactoriza a M-1, A-1, D-1*) 
+**NOTA IMPORTANTE:** El emulador de *NAND2TETRIS* no acepta 1-M que en realidad seria -M+1 pero como no acepta esta representación binaria (1+(!Y +1) (***la ALU si lo puede procesar pero el emulador no lo reconoce***)) entonces ser refactoriza a M-1 (*no es correcto, pero es lo que acepta el emulador entonces cada vez que se ponga algo como 1-M o 1-D o 1-A se refactoriza a M-1, A-1, D-1*) 
 
 * Puede probar el ensamblador descargando el juego de [prueba Pong](https://github.com/P4bl246/Ensamblador/blob/0205bb4d452f275c46cd718c1aacd121882d91a9/Pong.asm) en la *misma ruta* de el *compilador y ensamblador*
 
@@ -115,13 +115,22 @@ A=D
 ## Recomendaciones, Observaciones y Consideraciones
 
  ------------------------------------------------
-* Asegurese de poner su sistema operativo correcto para evitar problemas en la ejecución de el programa (***soporta Windows, MacOs y Unix/Linux***)
+* asegúrese de poner su sistema operativo correcto para evitar problemas en la ejecución de el programa (***soporta Windows, MacOs y Unix/Linux***)
 
-  **NOTA:** Si su *sistema operativo no es alguno que soporta* asegurese de colocar el **comando** de **limpieza de consola** correcto
+  **NOTA:** Si su *sistema operativo no es alguno que soporta* asegúrese de colocar el **comando** de **limpieza de consola** correcto
 
-* ***Asegurese de que el nombre de el archivo, y de sus variables y etiquetas no exceda los 1023 caracteres debido a que podrian perderse datos, y haber eventos inesperados durante la ejecución de el programa, como reemplzar variables, debido a que solo lee hasta 1023 caracteres***.
+* ***asegúrese de que el nombre de el archivo, y de sus variables y etiquetas no exceda los 1023 carácteres debido a que podrian perderse datos, y haber eventos inesperados durante la ejecución de el programa, como reemplazar variables, debido a que solo lee hasta 1023 carácteres***.
   
 * ***Si por alguna razón hay algún error a el crear o abrir un archivo revise la seguridad de windows y desactive el análisis en tiempo real o permita a el compilador manipular archivos***
+
+* El *único* caso que **no maneja el código** es cuando hay ***comentarios en bloque anidados***
+
+  **EJEMPLO:**
+  ~~~
+  /* /*Esto es un comentario anidado*/D=M
+  ~~~
+
+**EXPLICACIÓN:** El **problema** esta en que el **código** busca solo el `*/` despues de que se indica el inicio de un comentario en bloque (`/*`) entonces en el ejemplo anterior `D=M` se tratara como una instrucción, *aunque no se hayan cerrado el comentario en bloque principal*, es decir el *primer* `/*`
 
 * Antes de revisar el codigo (de la libreria `ensamblando.h` principalmente), se recomienda tener **concimiento de la arquitectura de la *CPU* y la *ALU*** para entender ciertos fragmentos de el codigo como la parte de **ENSAMBLAJE**, esto estara en el [ARQUITECTURA.md](https://github.com/P4bl246/Ensamblador/blob/e50e91bbd4e8a84b83cbad30191bdc36ba5f4548/ARQUITECTURA.md) (*donde también se explicara porque hay ciertas operaciones y restricciones y como podrian integrarse más operaciones*).
 
@@ -131,7 +140,7 @@ A=D
     * Se podria mejorar la busqueda de valores en la tabla de simbolos por medio de *tablas hash*, en lugar de *busqueda lineal*.
     * Se podrian modular muchos bloques de código repetido como a el tomar el numero de linea.
  
-* Este prgrama fue creado como proyecto final de la primera parte de el curso ***NAND2TETRIS*** por lo que para *ejecutar* el archivo *.hack* debe instalar el software de *NAND2TETRIS* o utilizar su *IDE ONLINE*
+* Este programa fue creado como proyecto final de la primera parte de el curso ***NAND2TETRIS*** por lo que para *ejecutar* el archivo `.hack` debe instalar el software de *NAND2TETRIS* o utilizar su *IDE ONLINE*
    [SOFTWARE DE NAND2TETRIS](https://www.nand2tetris.org/software)
   
    * Pasos para ejecutarlo en **Windows**
@@ -150,14 +159,14 @@ A=D
   
      ![image](https://github.com/user-attachments/assets/dd05c2ea-fe7c-45ab-b3a2-a39e5c8c57f9)
 
-  5. Seleccione *Load ROM* o *Cargar Archivo*, y seleccione el archivo .hack y ejecute dando click en *>>* o *>*
+  5. Seleccione *Load ROM* o *Cargar Archivo*, y seleccione el archivo `.hack` y ejecute haciendo click en *>>* o *>*
      
      ![image](https://github.com/user-attachments/assets/49a07fc2-2d1d-4054-a7f1-43fb40156316)
 
 
 **NOTA:** Para MacOs es lo mismo solo que ingresas a **_MACOSX** en lugar de **nand2Tetris**
 
-* Si utiliza el **IDE de NAND2TETRIS ONLINE** ingrese a el **CPU Emulator** y cargue el *.hack* dando en el ícono de carpeta
+* Si utiliza el **IDE de NAND2TETRIS ONLINE** ingrese a el **CPU Emulator** y cargue el `.hack` dando en el ícono de carpeta
   
    ![image](https://github.com/user-attachments/assets/9b18f438-43f0-4db7-8735-98b1a8ef9f93)
 
