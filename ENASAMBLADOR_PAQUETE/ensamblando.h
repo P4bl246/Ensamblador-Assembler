@@ -637,7 +637,7 @@ int tipoDeInstruccion(int actual, FILE* soloC, char* nlinea) {
                     actual = fgetc(soloC); // siguiente carácter
                    
 				   	//excepciones como que A y M no se pueden calcular
-				   	if(buffer2[0] == 'A' && buffer2[1] == 'M' || buffer2[0] == 'M' && buffer2[1] == 'A'){
+				   	if((buffer2[0] == 'A') && (buffer2[1] == 'M' || buffer2[0] == 'M') && buffer2[1] == 'A'){
 				   		printf("ERROR en la linea %s\n", nlinea);
 				   		printf("DETALLES: No se pueden calcular A con M debido a la arquitectura de la CPU\n");
 				   		fclose(soloC);
@@ -892,7 +892,7 @@ int instruccionCalculo(int actual, FILE *archivo, char* nlinea){
                     actual = fgetc(archivo); // siguiente carácter
                     
 				   	//excepciones como que A y M no se pueden calcular
-				   	if(buffer2[0] == 'A' && buffer2[1] == 'M' || buffer2[0] == 'M' && buffer2[1] == 'A'){
+				   	if((buffer2[0] == 'A') && (buffer2[1] == 'M' || buffer2[0] == 'M') && buffer2[1] == 'A'){
 				   		printf("ERROR en la linea %s\n", nlinea);
 				   		printf("DETALLES: No se pueden calcular A con M debido a la arquitectura de la CPU\n");
 				   		fclose(archivo);
@@ -1517,7 +1517,7 @@ void eliminar_comentario_bloque(FILE *archivoLeer, FILE *archivoEscribir) {
                 fputc(car_actual, archivoEscribir);
             }
         } else if (dentroComentario) {
-            while ((actual = fgetc(archivoLeer)) != EOF && car_actual != '*' || (char)actual != '/') {
+            while (((actual = fgetc(archivoLeer)) != EOF) && (car_actual != '*' || (char)actual != '/')) {
                   car_actual = (char)actual;
             } 
 			 if (actual == EOF) {
@@ -2094,7 +2094,7 @@ int separarVariables(const char* archivo){
 	 if(r!= 0) return 1;
 	 printf("SE EXLUYERON LAS ETIQUETAS DE LAS VARIABLES\n");
 	 FILE *varF = fopen("tempVar4.txt", "r");
-	if(var2 == NULL){
+	if(varF == NULL){
 		printf("No se encontro el archivo 'tempVar4.txt'\n");
 		return 1;
 	}
@@ -2106,7 +2106,7 @@ int separarVariables(const char* archivo){
 		return 1;
 	}
 	
-	int result2 = copiarValoresConVariables(var2, tempF);
+	int result2 = copiarValoresConVariables(varF, tempF);
 	if(result2 != 0){
 		return 1;
 	}
@@ -2137,7 +2137,7 @@ int separarVariables(const char* archivo){
 }
 //-----------------------------------------------------------------
 void encontrarVariables(FILE* archivoLeer, FILE* archivoEscribir) {
-    char linea[1024];
+    //char linea[1024];
     int actual;
     char buffer;
     //mientra no se llegue a el final de el archivo
@@ -2260,7 +2260,6 @@ int copiarValoresConVariables(FILE *archivoLeer, FILE *archivoEscribir){
 		 actual = fgetc(archivoLeer);
 		 n++;
    }
-   fclose(archivoLeer);
    fclose(archivoEscribir);	
    return 0;
 }
@@ -2335,7 +2334,7 @@ int verificarVarYEtiq(FILE *archivoLeer, FILE* archivoComparar, FILE *archivoEsc
     while(actual != EOF){
     	memset(cadenaVar2, 0, sizeof(1024));//reestablecr el arreglo a 0
     	memset(cadenaEtiq2, 0, sizeof(1024));//reestablecer el arreglo a 0
-    	int i = 0, r = 0;
+    	int r = 0;
     	
     	if(actual == EOF) break;//salir de el bucle
 		actual = fgetc(archivoLeer); //caracter despues de el @
@@ -2385,7 +2384,7 @@ char *etiq(char *cadena, FILE *etiq){
 			actual = fgetc(etiq);
 		}
 		actual = fgetc(etiq); //caracter despues de el espacio
-		int i = 0;
+		//int i = 0;
 		//obtener la cadena
 		while((char)actual != '\n' && actual != EOF && (char)actual != '\0' && (char)actual != ' '){
 			*cadena= (char)actual;
@@ -2690,7 +2689,7 @@ int ensamblarA (const char* Ains, int cantidad){
 	int valor = 0;//almacena el valor actual como entero
 	//mientras no se llegue a el final de el archivo
 	while((actual=fgetc(Af)) != EOF){
-		memset(cadena, 0,sizeof(cadena));
+		memset(cadena, 0, 1024);
 		char *bin2 = NULL;//almacena la cadena binaria 
 		if(actual == EOF){
 			fclose(Af);
