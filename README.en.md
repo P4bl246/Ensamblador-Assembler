@@ -77,17 +77,17 @@ int copiarValoresConVariables(FILE *archivoLeer, FILE *archivoEscribir){
 ## Installation
 
 -----------------------------------------------------
-1. Download the `assembly.h` library and the `assembler.c` executable to the **same folder** or **path** as the *compiler*.
+1. Download the `Ensamblador.h` library and the `ensamblando.c` executable to the **same folder** or **path** as the *compiler*.
 
-2. Compile and run the *executable*, and enter the ***full name of your .asm file*** as an argument to the `fileA_txt` function (the file must also be in the *same path*).
+2. Compile and run the *executable*, and enter the ***full name of your .asm file*** as an argument to the `archivoA_txt` function (the file must also be in the *same path*).
 
-3. Compile and run the code and open the `hackfile.hack` file where the binary is located.
+3. Compile and run the code and open the `hackarchivo.hack` file where the binary is located.
 
-***NOTE:*** All *temporary files* and the final `hackfile.hack` file will be *created locally in the path*.
+***NOTE:*** All *temporary files* and the final `hackarchivo.hack` file will be *created locally in the path*.
 
 **Installation Recommendations**
 
-* Create a separate folder for the *compiler* where you will also place the `assembly.h` library and your `assembler.c` executable.
+* Create a separate folder for the *compiler* where you will also place the `Ensamblador.h` library and your `ensamblando.c` executable.
 
 * Make sure you **do not** have other ***.txt*** *files* in the *same path* (folder), as they could have the *same name* as other *temporary* assembler files, which could *delete their contents* or cause *errors in the program execution*.
 
