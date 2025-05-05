@@ -81,9 +81,9 @@ int copiarValoresConVariables(FILE *archivoLeer, FILE *archivoEscribir){
 
 2. Compile and run the *executable*, and enter the ***full name of your .asm file*** as an argument to the `archivoA_txt` function (the file must also be in the *same path*).
 
-3. Compile and run the code and open the `hackarchivo.hack` file where the binary is located.
+3. Compile and run the code and open the `archivohack.hack` file where the binary is located.
 
-***NOTE:*** All *temporary files* and the final `hackarchivo.hack` file will be *created locally in the path*.
+***NOTE:*** All *temporary files* and the final `archivohack.hack` file will be *created locally in the path*.
 
 **Installation Recommendations**
 
