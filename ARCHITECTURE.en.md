@@ -97,3 +97,24 @@ In `values`, I add
 `.NAND = 20;`
 
 4. We go to the last case of the `operator` function and enter our new operator with its possible combinations (where we will represent this with the `$` symbol).
+
+~~~
+if(previous == '$'){
+if(*current == 'M' || *current == 'A'){
+return values. NAND + 22;//because it's 110100
+}
+else if(*current == 'D'){
+...
+}
+~~~
+And that's it, in this case, as before, where only this operator should be used and we would have to add the new condition to `syntactical analysis` to prevent it from writing something like A$D (*it's not possible because I made it so that it only has one operator before the operand*)
+
+## RECOMMENDATIONS AND CONSIDERATIONS
+
+------------------------------------------------------------
+
+* It is recommended to take the ***NAND2TETRIS part 1*** course to *fully understand* and thoroughly each part of the **CPU** and the **ALU**, it can be found on Coursera
+
+* In ***syntactical analysis*** there are *restrictions of The maximum number of addresses* that can be entered is due to what we saw earlier about the number of registers in the **ROM** (*which is the maximum number that can be represented by 16 bits*)
+
+[NAND2TETRIS COURSE PART 1](https://www.coursera.org/learn/build-a-computer)
