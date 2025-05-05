@@ -71,12 +71,12 @@ If we look at the image in the operators, there is a pattern. For example, in th
 
 We can also see that depending on how the operator is, that is, if it is before or after the operand, there is a certain pattern. For example, if it is before, only the operand and the negative value, which is 3 (000011), are placed. There are also exceptions, such as in constants (0 and 1).
 
-These are the reasons why the *pattern* values ​​placed in *values* are those (although they can be altered as long as the entire code is adjusted to obtain the desired result), and these are integers, because we don't want to deal with their binary representation, but rather with integers, which is easier to handle. Then we can convert this to binary.
+These are the reasons why the *patrón* values ​​placed in *valores* are those (although they can be altered as long as the entire code is adjusted to obtain the desired result), and these are integers, because we don't want to deal with their binary representation, but rather with integers, which is easier to handle. Then we can convert this to binary.
 
 ## ADDING NEW OPERATORS
 
 --------------------------------------------------------------
-Understanding this, you can now understand how to add *new operators* by defining what their binary is and putting this as an integer in the *pattern* structure and its value in *values*, and then adding it to the end of the `operator function` with which that value is added or what integer to return, and with their different possible cases in which the operator comes before and after, and in the case of constants (all possible cases and their integer representation), and that's it. You could add new operators.
+Understanding this, you can now understand how to add *new operators* by defining what their binary is and putting this as an integer in the *patrón* structure and its value in *valores*, and then adding it to the end of the `operador function` with which that value is added or what integer to return, and with their different possible cases in which the operator comes before and after, and in the case of constants (all possible cases and their integer representation), and that's it. You could add new operators.
 
 **EXAMPLE:**
 
