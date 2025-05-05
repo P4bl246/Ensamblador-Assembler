@@ -121,7 +121,7 @@ D+1 = 001111
 
 **IMPORTANT NOTE:** The *NAND2TETRIS* emulator does not accept 1-M, which would actually be -M+1, but since it does not accept this binary representation (1+(!Y +1) (***the ALU can process it, but the emulator does not recognize it***)), it is refactored to M-1 (*this is not correct, but it is what the emulator accepts, so every time you enter something like 1-M or 1-D or 1-A, it is refactored to M-1, A-1, D-1*)
 
-* You can test the assembler by downloading the [test] game Pong](https://github.com/P4bl246/Ensamblador/blob/0205bb4d452f275c46cd718c1aacd121882d91a9/Pong.asm) in the *same path* as the *compiler and assembler*
+* You can test the assembler by downloading the [test game Pong](https://github.com/P4bl246/Ensamblador/blob/0205bb4d452f275c46cd718c1aacd121882d91a9/Pong.asm) in the *same path* as the *compiler and assembler*
 
   ## Recommendations, Observations, and Considerations
 
