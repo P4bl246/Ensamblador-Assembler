@@ -9,7 +9,7 @@ README - C Assembler Hack
 ------------------------------------------------------
 ## IMPORTANT
 
-***The source code are writing in spanish if you want see that in english can use extensions for translate this.***
+***The source code is written in Spanish if you want see that in english can use extensions for translate this.***
 
 **SOME EXTENSIONS FOR VScode:**
 
