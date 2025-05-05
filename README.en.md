@@ -110,3 +110,72 @@ D+1 = 001111
 **IMPORTANT NOTE:** The *NAND2TETRIS* emulator does not accept 1-M, which would actually be -M+1, but since it does not accept this binary representation (1+(!Y +1) (***the ALU can process it, but the emulator does not recognize it***)), it is refactored to M-1 (*this is not correct, but it is what the emulator accepts, so every time you enter something like 1-M or 1-D or 1-A, it is refactored to M-1, A-1, D-1*)
 
 * You can test the assembler by downloading the [test] game Pong](https://github.com/P4bl246/Ensamblador/blob/0205bb4d452f275c46cd718c1aacd121882d91a9/Pong.asm) in the *same path* as the *compiler and assembler*
+
+  ## Recommendations, Observations, and Considerations
+
+------------------------------------------------
+* Make sure you set your operating system correctly to avoid problems running the program (***supports Windows, macOS, and Unix/Linux***)
+
+**NOTE:** If your *operating system is not supported,* make sure you enter the correct **console** **cleanup** command.
+
+* ***Make sure the file name, variables, and labels do not exceed 1023 characters, as this could lead to data loss and unexpected events, such as replacing variables, since the program only reads up to 1023 characters.***
+
+* ***If for some reason there is an error when creating or opening a file, check Windows security and disable real-time scanning or allow the compiler to manipulate files***
+
+* The *only* case that **the code does not handle** is when there are ***nested block comments***
+
+**EXAMPLE:**
+~~~
+/* /*This is a nested comment*/D=M
+~~~
+
+**EXPLANATION:** The **problem** is that the **code** looks for the `*/` after the start of a block comment (`/*`) is indicated, so in the previous example `D=M` will be treated as an instruction, *even if the main block comment has not been closed*, that is, the *first* `/*`.
+
+**But if we put**
+
+~~~
+/* /*This is a nested comment*/D=M*/
+~~~
+
+***The code would identify it indirectly because the last `*/` identifies it and warns it as a syntax error in the instruction that is taken `D=M` from the previous example as a C instruction***
+
+***NOTE:*** This is because in *rare cases* this happens and it is a ***practice that is not recommended***, due to cases like those in the previous code that **can occur in other programs not just in this one**
+
+* Before reviewing the code (mainly from the `ensamblando.h` library), it is recommended to have **knowledge of the architecture of the *CPU* and the *ALU*** to understand certain fragments of the code such as the **ASSEMBLY** part, this will be in the [ARCHITECTURE.md](https://github.com/P4bl246/Assembler/blob/e50e91bbd4e8a84b83cbad30191bdc36ba5f4548/ARCHITECTURE.md) (*where the reasons for certain operations and restrictions and how more operations could be integrated will also be explained*).
+
+* The design and creation of this program focuses on functionality and scalability rather than optimization (although best practices are used). This is open to anyone who wants to improve the code by optimizing it in many ways.
+
+**Examples:**
+* The search for values ​​in the symbol table could be improved by using *hash tables*, instead of *linear search*.
+* Many blocks of repeated code could be modulated, such as taking the line number.
+
+* This program was created as a final project for the first part of the ***NAND2TETRIS*** course, so to *run* the `.hack` file, you must install the *NAND2TETRIS* software or use its *ONLINE IDE*.
+[NAND2TETRIS SOFTWARE](https://www.nand2tetris.org/software)
+
+* Steps to run it on **Windows**
+
+1. Unzip the .zip file
+
+2. Go to the *nand2Tetris* folder
+
+![image](https://github.com/user-attachments/assets/c79bfabc-fa18-473f-8a2d-430c16a5152c)
+
+3. Go to *tools*
+
+![image](https://github.com/user-attachments/assets/3d02e465-eb4d-4e3c-a30c-56852bfecdab)
+
+4. Open *CPUEmulator.bat*
+
+![image](https://github.com/user-attachments/assets/dd05c2ea-fe7c-45ab-b3a2-a39e5c8c57f9)
+
+5. Select *Load ROM* or *Load File*, select the `.hack` file, and run it by clicking *>>* or *>*
+
+![image](https://github.com/user-attachments/assets/49a07fc2-2d1d-4054-a7f1-43fb40156316)
+
+**NOTE:** For macOS, it's the same. that you enter **_MACOSX** instead of **nand2Tetris**
+
+* If you are using the **NAND2TETRIS ONLINE IDE**, enter the **CPU Emulator** and load the `.hack` by clicking on the folder icon
+
+![image](https://github.com/user-attachments/assets/9b18f438-43f0-4db7-8735-98b1a8ef9f93)
+
+-------------------------------------------------
