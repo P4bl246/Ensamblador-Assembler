@@ -77,7 +77,7 @@ int copiarValoresConVariables(FILE *archivoLeer, FILE *archivoEscribir){
 ## Installation
 
 -----------------------------------------------------
-1. Download the `Ensamblador.h` library and the `ensamblando.c` executable to the **same folder** or **path** as the *compiler*.
+1. Download the `ensamblando.h` library and the `Ensamblador.c` executable to the **same folder** or **path** as the *compiler*.
 
 2. Compile and run the *executable*, and enter the ***full name of your .asm file*** as an argument to the `archivoA_txt` function (the file must also be in the *same path*).
 
@@ -87,7 +87,7 @@ int copiarValoresConVariables(FILE *archivoLeer, FILE *archivoEscribir){
 
 **Installation Recommendations**
 
-* Create a separate folder for the *compiler* where you will also place the `Ensamblador.h` library and your `ensamblando.c` executable.
+* Create a separate folder for the *compiler* where you will also place the `ensamblando.h` library and your `Ensamblador.c` executable.
 
 * Make sure you **do not** have other ***.txt*** *files* in the *same path* (folder), as they could have the *same name* as other *temporary* assembler files, which could *delete their contents* or cause *errors in the program execution*.
 
