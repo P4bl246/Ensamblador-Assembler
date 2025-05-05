@@ -96,7 +96,7 @@ In `values`, I add
 
 `.NAND = 20;`
 
-4. We go to the last case of the `operator` function and enter our new operator with its possible combinations (where we will represent this with the `$` symbol).
+4. We go to the last case of the `operador` function and enter our new operator with its possible combinations (where we will represent this with the `$` symbol).
 
 ~~~
 if(previous == '$'){
@@ -107,7 +107,7 @@ else if(*current == 'D'){
 ...
 }
 ~~~
-And that's it, in this case, as before, where only this operator should be used and we would have to add the new condition to `syntactical analysis` to prevent it from writing something like A$D (*it's not possible because I made it so that it only has one operator before the operand*)
+And that's it, in this case, as before, where only this operator should be used and we would have to add the new condition to `analisis sintáctico` to prevent it from writing something like A$D (*it's not possible because I made it so that it only has one operator before the operand*)
 
 ## RECOMMENDATIONS AND CONSIDERATIONS
 
