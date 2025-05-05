@@ -18,9 +18,10 @@ README - C Assembler Hack
 * [vscode-google-translate](https://marketplace.visualstudio.com/items?itemName=funkyremi.vscode-google-translate)
 
 **NOTE:** If you can't use any extensions for translate in your IDE, you can *make a `codespace` in github* copy this repository or the [source code](https://github.com/P4bl246/Ensamblador-Assembler/tree/7ea584971b6c07b28e98403bac47347a0c5d16a5/ENASAMBLADOR_PAQUETE)
-c## Dependencies
 
 ------------------------------------------------------
+## Dependencies
+
 You must have *Dev C++/C* version 5.11 or later, or a *modern C compiler* installed.
 
 [Download Dev C++/C](https://sourceforge.net/projects/orwelldevcpp/)
