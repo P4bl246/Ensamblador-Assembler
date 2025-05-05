@@ -23,42 +23,42 @@ Required external libraries:
 
 **IMPORTANT NOTE:** If you are using **VSCode, you must replace** the *copyValuesWithVariables* function with this implementation.
 ~~~
-int copyValuesWithVariables(FILE *readFile, FILE *writeFile){
-int n = 16;//initial value of variable, incrementing it
-int current = fgetc(readFile);
-char buffer[5]; //character string maximum 5 because the maximum value of n is 5 digits
-while(actual != EOF){
-if(n == 16383){
-printf("The maximum number of possible variables has been reached (16383)\n");
-fclose(fileRead);
-fclose(fileWrite);
-return 1;
-}
-sprintf(buffer, "%d", n); // Convert the integer 'n' to a string
-if((char)current == '@'){
-current = fgetc(readFile);//go to the next character after @
-// Check if the character is not a number
-if( !((char)current >= '0' && (char)current <= '9')){
-fputs(buffer, writeFile);//put the value of the variable
-fputc(' ', writeFile);//separate the variable name
-while(current != EOF && (char)current != '\n' && (char)current != '\0' && (char)current != ' '){
-fputc((char)current, writeFile);
-current = fgetc(readFile);
-}
-if(current == EOF){
-printf("End of file reached\n"); //exit function
-fclose(fileRead);
-fclose(fileWrite);
-return 1;
-}
-fputc('\n', fileWrite);
-}
-}
-actual = fgetc(fileRead);
-n++;
-}
-fclose(fileWrite);
-return 0;
+int copiarValoresConVariables(FILE *archivoLeer, FILE *archivoEscribir){
+	int n= 16;//valor incial de variable y se va incrementando
+   int actual = fgetc(archivoLeer);
+   char buffer[5]; //cadena de caracteres maximo 5 porque el valor maximo de n es de 5 digitos
+   while(actual != EOF){
+   	if(n == 16383){
+   		printf("Se alcanzo el maximo de variables posibles (16383)\n");
+   		fclose(archivoLeer);
+   		fclose(archivoEscribir);
+   		return 1;
+	   }
+    sprintf(buffer, "%d", n);  // Convertir el entero 'n' a una cadena
+   	  if((char)actual == '@'){
+   	  	     actual = fgetc(archivoLeer);//ir a el siguiente caracter despues de @
+   	  	    // Verifica si el carácter no es un numero
+             if( !((char)actual >= '0' && (char)actual <= '9')){
+             	fputs(buffer, archivoEscribir);//poner el valor de la variable
+             	fputc(' ', archivoEscribir);//separa el nombre de la variable
+             	 while(actual != EOF && (char)actual != '\n' && (char)actual != '\0' && (char)actual != ' '){
+             	 	fputc((char)actual, archivoEscribir);
+             	 	actual = fgetc(archivoLeer);
+				  }
+				  if(actual == EOF){
+				  	printf("Se llego a el final de el archivo\n"); //salir de la funcion
+				  	fclose(archivoLeer);
+				  	fclose(archivoEscribir);
+				  	return 1;
+				  }
+				  fputc('\n', archivoEscribir);
+			 }
+		 }
+		 actual = fgetc(archivoLeer);
+		 n++;
+   }
+   fclose(archivoEscribir);	
+   return 0;
 }
 ~~~
 
