@@ -4,10 +4,21 @@ README - C Assembler Hack
 
 **Project:** Assembler Hack
 
+------------------------------------------------------
 **Profile:** [https://github.com/P4bl246]
 
-------------------------------------------------------
-## Dependencies
+## IMPORTANT
+
+***The source code are writing in spanish if you want see that in english can use extensions for translate this.***
+
+**SOME EXTENSIONS FOR VScode:**
+
+* [Comment Translate](https://marketplace.visualstudio.com/items?itemName=intellsmi.comment-translate)
+  
+* [vscode-google-translate](https://marketplace.visualstudio.com/items?itemName=funkyremi.vscode-google-translate)
+
+**NOTE:** If you can't use any extensions for translate in your IDE, you can *make a `codespace` in github* copy this repository or the [source code]()
+c## Dependencies
 
 ------------------------------------------------------
 You must have *Dev C++/C* version 5.11 or later, or a *modern C compiler* installed.
