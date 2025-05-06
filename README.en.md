@@ -19,6 +19,8 @@ README - C Assembler Hack
 
 **NOTE:** If you can't use any extensions for translate in your IDE, you can *make a `codespace` in github* copy this repository or the [source code](https://github.com/P4bl246/Ensamblador-Assembler/tree/7ea584971b6c07b28e98403bac47347a0c5d16a5/ENASAMBLADOR_PAQUETE)
 
+[Don't know make a `codespace`](https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository)
+
 ------------------------------------------------------
 ## Dependencies
 
