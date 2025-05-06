@@ -17,7 +17,7 @@ README - C Assembler Hack
   
 * [vscode-google-translate](https://marketplace.visualstudio.com/items?itemName=funkyremi.vscode-google-translate)
 
-**NOTE:** If you can't use any extensions for translate in your IDE, you can *make a `codespace` in github* copy this repository or the [source code](https://github.com/P4bl246/Ensamblador-Assembler/tree/7ea584971b6c07b28e98403bac47347a0c5d16a5/ENASAMBLADOR_PAQUETE)
+**NOTE:** If you can't use any extensions for translate in your IDE, you can *make a `codespace` in github* copy this repository or the [source code](ENASAMBLADOR_PARQUETE)
 
 [***Don't know how to create a `codespace`***](https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository)
 
@@ -123,7 +123,7 @@ D+1 = 001111
 
 **IMPORTANT NOTE:** The *NAND2TETRIS* emulator does not accept 1-M, which would actually be -M+1, but since it does not accept this binary representation (1+(!Y +1) (***the ALU can process it, but the emulator does not recognize it***)), it is refactored to M-1 (*this is not correct, but it is what the emulator accepts, so every time you enter something like 1-M or 1-D or 1-A, it is refactored to M-1, A-1, D-1*)
 
-* You can test the assembler by downloading the [test game Pong](https://github.com/P4bl246/Ensamblador/blob/0205bb4d452f275c46cd718c1aacd121882d91a9/Pong.asm) in the *same path* as the *compiler and assembler*
+* You can test the assembler by downloading the [test game Pong](Pong.asm) in the *same path* as the *compiler and assembler*
 
   ## Recommendations, Observations, and Considerations
 
@@ -155,7 +155,7 @@ D+1 = 001111
 
 ***NOTE:*** This is because in *rare cases* this happens and it is a ***practice that is not recommended***, due to cases like those in the previous code that **can occur in other programs not just in this one**
 
-* Before reviewing the code (mainly from the `ensamblando.h` library), it is recommended to have **knowledge of the architecture of the *CPU* and the *ALU*** to understand certain fragments of the code such as the **ASSEMBLY** part, this will be in the [ARCHITECTURE.md](https://github.com/P4bl246/Ensamblador-Assembler/blob/651d476b537a3d3a06f9eec6518d409d879f0156/ARCHITECTURE.en.md) (*where the reasons for certain operations and restrictions and how more operations could be integrated will also be explained*).
+* Before reviewing the code (mainly from the `ensamblando.h` library), it is recommended to have **knowledge of the architecture of the *CPU* and the *ALU*** to understand certain fragments of the code such as the **ASSEMBLY** part, this will be in the [ARCHITECTURE.md](ARCHITECTURE.md) (*where the reasons for certain operations and restrictions and how more operations could be integrated will also be explained*).
 
 * The design and creation of this program focuses on functionality and scalability rather than optimization (although best practices are used). This is open to anyone who wants to improve the code by optimizing it in many ways.
 
