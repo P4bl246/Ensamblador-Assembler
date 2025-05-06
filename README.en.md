@@ -194,5 +194,5 @@ D+1 = 001111
 
 ## License
 
-This project is licensed under the MIT License – see the [LICENSE](https://github.com/P4bl246/Ensamblador-Assembler/tree/b9c3f3c79ff8eb6a1dee0ab9749a9eae5d27a140/LICENCIA-LICENSE/LICENSE.md) file for details.
+This project is licensed under the MIT License – see the [LICENSE](https://github.com/P4bl246/Ensamblador-Assembler/tree/b9c3f3c79ff8eb6a1dee0ab9749a9eae5d27a140/LICENCIA-LICENSE/LICENSE.tst) file for details.
 
