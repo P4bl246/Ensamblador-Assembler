@@ -12,7 +12,7 @@
 
 
 
-**NOTA:** Si no puedes usar ninguna extensión para traducir en tu IDE, puedes *crear un `codespace` en github* copiando este repositorio o el [código fuente](https://github.com/P4bl246/Ensamblador_Paquete)
+**NOTA:** Si no puedes usar ninguna extensión para traducir en tu IDE, puedes *crear un `codespace` en github* copiando este repositorio o el [código fuente](ENASAMBLADOR_PAQUETE)
 
 [***No se crear un `codespace`***](https://docs.github.com/es/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository)
 
