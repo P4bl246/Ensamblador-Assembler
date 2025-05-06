@@ -153,7 +153,7 @@ D+1 = 001111
 
 ***NOTE:*** This is because in *rare cases* this happens and it is a ***practice that is not recommended***, due to cases like those in the previous code that **can occur in other programs not just in this one**
 
-* Before reviewing the code (mainly from the `ensamblando.h` library), it is recommended to have **knowledge of the architecture of the *CPU* and the *ALU*** to understand certain fragments of the code such as the **ASSEMBLY** part, this will be in the [ARCHITECTURE.md](https://github.com/P4bl246/Assembler/blob/e50e91bbd4e8a84b83cbad30191bdc36ba5f4548/ARCHITECTURE.md) (*where the reasons for certain operations and restrictions and how more operations could be integrated will also be explained*).
+* Before reviewing the code (mainly from the `ensamblando.h` library), it is recommended to have **knowledge of the architecture of the *CPU* and the *ALU*** to understand certain fragments of the code such as the **ASSEMBLY** part, this will be in the [ARCHITECTURE.md](https://github.com/P4bl246/Ensamblador-Assembler/blob/651d476b537a3d3a06f9eec6518d409d879f0156/ARCHITECTURE.en.md) (*where the reasons for certain operations and restrictions and how more operations could be integrated will also be explained*).
 
 * The design and creation of this program focuses on functionality and scalability rather than optimization (although best practices are used). This is open to anyone who wants to improve the code by optimizing it in many ways.
 
