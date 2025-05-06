@@ -194,5 +194,5 @@ D+1 = 001111
 
 ## License
 
-This project is licensed under the MIT License – see the [LICENSE](LICENCIA-LICENSE/LICENSE.tst) file for details.
+This project is licensed under the MIT License – see the [LICENSE](LICENCIA-LICENSE/LICENSE) file for details.
 
