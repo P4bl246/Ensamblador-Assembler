@@ -8,7 +8,7 @@
   
   ------------------------------------------------------
 
-**[Don't understand ![English](https://flagcdn.com/w40/gb.png)](https://github.com/P4bl246/Ensamblador-Assembler/blob/dbe696471d0066805f498b63b5bcf82c3b86c34a/README.en.md)**
+**[Don't understand ![English](https://flagcdn.com/w40/gb.png)](README.en.md)**
 
 
 
