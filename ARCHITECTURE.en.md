@@ -92,7 +92,7 @@ Understanding this, you can now understand how to add *new operators* by definin
 
 `NAND;`
 
-In `values`, I add
+In `valores`, I add
 
 `.NAND = 20;`
 
