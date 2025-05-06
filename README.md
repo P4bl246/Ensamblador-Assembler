@@ -187,4 +187,4 @@ A=D
 -------------------------------------------------
 ## Licencia
 
-este proyecto se creo bajo la licencia MIT – puedes ver la [LICENCIA](LICENCIA-LICENSE/LICENCIA.tst) para mas detalles.
+este proyecto se creo bajo la licencia MIT – puedes ver la [LICENCIA](LICENCIA-LICENSE/LICENCIA) para mas detalles.
