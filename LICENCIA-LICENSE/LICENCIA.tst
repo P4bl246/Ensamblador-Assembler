@@ -2,7 +2,7 @@
 
 Copyright (c) 2025 Pablo Riveros Perea
 
-Por la presente, se concede permiso gratuito a cualquier persona que obtenga una copia de este software y los archivos de documentación asociados (el "Ensamblador-Assembler") para operar con el Software sin restricciones, incluyendo, entre otros, los derechos de uso, copia, modificación, fusión, publicación, distribución, sublicencia y/o venta de copias del Software, y para permitir que las personas a quienes se les proporciona el Software lo hagan, sujeto a las siguientes condiciones:
+Por la presente, se concede permiso gratuito a cualquier persona que obtenga una copia de este software y los archivos de documentación asociados (el "Ensamblador") para operar con el Software sin restricciones, incluyendo, entre otros, los derechos de uso, copia, modificación, fusión, publicación, distribución, sublicencia y/o venta de copias del Software, y para permitir que las personas a quienes se les proporciona el Software lo hagan, sujeto a las siguientes condiciones:
 
 El aviso de derechos de autor anterior y este aviso de permiso se incluirán en todas las copias o partes sustanciales del Software.
 
