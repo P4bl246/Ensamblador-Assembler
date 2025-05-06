@@ -118,7 +118,7 @@ A=D
   
 **NOTA IMPORTANTE:** El emulador de *NAND2TETRIS* no acepta 1-M que en realidad seria -M+1 pero como no acepta esta representación binaria (1+(!Y +1) (***la ALU si lo puede procesar pero el emulador no lo reconoce***)) entonces ser refactoriza a M-1 (*no es correcto, pero es lo que acepta el emulador entonces cada vez que se ponga algo como 1-M o 1-D o 1-A se refactoriza a M-1, A-1, D-1*) 
 
-* Puede probar el ensamblador descargando el juego de [prueba Pong](https://github.com/P4bl246/Ensamblador/blob/0205bb4d452f275c46cd718c1aacd121882d91a9/Pong.asm) en la *misma ruta* de el *compilador y ensamblador*
+* Puede probar el ensamblador descargando el juego de [prueba Pong](Pong.asm) en la *misma ruta* de el *compilador y ensamblador*
 
 
 ## Recomendaciones, Observaciones y Consideraciones
@@ -151,7 +151,7 @@ A=D
 
 ***NOTA:*** Esto se debe a que en *raros casos* sucede esto y es una ***práctica que no se recomienda***, debido a casos como los de el código anterior que **puede presentarse en otros programas no solo en este**
 
-* Antes de revisar el codigo (de la libreria `ensamblando.h` principalmente), se recomienda tener **concimiento de la arquitectura de la *CPU* y la *ALU*** para entender ciertos fragmentos de el codigo como la parte de **ENSAMBLAJE**, esto estara en el [ARQUITECTURA.md](https://github.com/P4bl246/Ensamblador/blob/e50e91bbd4e8a84b83cbad30191bdc36ba5f4548/ARQUITECTURA.md) (*donde también se explicara porque hay ciertas operaciones y restricciones y como podrian integrarse más operaciones*).
+* Antes de revisar el codigo (de la libreria `ensamblando.h` principalmente), se recomienda tener **concimiento de la arquitectura de la *CPU* y la *ALU*** para entender ciertos fragmentos de el codigo como la parte de **ENSAMBLAJE**, esto estara en el [ARQUITECTURA.md](ARQUITECTURA.md) (*donde también se explicara porque hay ciertas operaciones y restricciones y como podrian integrarse más operaciones*).
 
 * El diseño y creación de este programa se centra en la funcionalidad y escalabilidad y no tanto en la optimización (aunque se utilizan buenas practicas), esto es abierto a quien quiera mejorar el codigo optimizandolo de muchas maneras.
 
