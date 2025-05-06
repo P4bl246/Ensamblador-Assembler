@@ -17,7 +17,7 @@ README - C Assembler Hack
   
 * [vscode-google-translate](https://marketplace.visualstudio.com/items?itemName=funkyremi.vscode-google-translate)
 
-**NOTE:** If you can't use any extensions for translate in your IDE, you can *make a `codespace` in github* copy this repository or the [source code](ENASAMBLADOR_PARQUETE)
+**NOTE:** If you can't use any extensions for translate in your IDE, you can *make a `codespace` in github* copy this repository or the [source code](ENASAMBLADOR_PAQUETE)
 
 [***Don't know how to create a `codespace`***](https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository)
 
