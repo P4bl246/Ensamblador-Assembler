@@ -187,4 +187,4 @@ A=D
 -------------------------------------------------
 ## Licencia
 
-este proyecto se creo bajo la licencia MIT – puedes ver la [LICENCIA](./LICENSE) para mas detalles.
+este proyecto se creo bajo la licencia MIT – puedes ver la [LICENCIA](https://github.com/P4bl246/Ensamblador-Assembler/tree/b9c3f3c79ff8eb6a1dee0ab9749a9eae5d27a140/LICENCIA-LICENSE) para mas detalles.
