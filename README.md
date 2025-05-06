@@ -8,7 +8,7 @@
   
   ------------------------------------------------------
 
-**[Don't understand]**()
+**[Don't understand]**(https://github.com/P4bl246/Ensamblador-Assembler/blob/dbe696471d0066805f498b63b5bcf82c3b86c34a/README.en.md)
 
  ## Dependencias
 
