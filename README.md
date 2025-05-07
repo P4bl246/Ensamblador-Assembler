@@ -108,7 +108,7 @@ A=D
 
 * Si quiere ver la ***tabla de símbolos*** abra el archivo **tabla.txt**
 
-* Este programa **no** tiene las *mismas restricciones* que NAND2TETRIS en cuanto a la parte de *ensamblaje* de **COMP**(cálculo de las instrucciones C), debido a que puede agregar operaciones como 0+D o D+0, o otras operaciones equivalentes para todos los operadores, debido a que luego esto se ajusta a el binario con su representación binaria.
+* Este programa **no** tiene las *mismas restricciones* que NAND2TETRIS en cuanto a la parte de *ensamblaje* de **COMP**(cálculo de las instrucciones C), debido a que puede agregar operaciones como 0+D o D+0, o otras operaciones equivalentes, esto se aplica para todos los operadores, debido a que luego esto se ajusta a el binario con su representación binaria.
 
   **EJEMPLO:**
   
