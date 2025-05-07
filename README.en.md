@@ -113,7 +113,7 @@ A=D
 
 * If you want to see the ***symbol table***, open the file **table.txt**
 
-* This program does not have the *same restrictions* as NAND2TETRIS regarding the assembly part of **COMP** (calculation of C instructions), because it can add operations like 0+D or D+0, or other reciprocal operations, because this is then adjusted to binary with its binary representation.
+* This program does not have the *same restrictions* as NAND2TETRIS regarding the assembly part of **COMP** (calculation of C instructions), because it can add operations like 0+D or D+0, or other equivalents operations, this aplicated for all operators, because this is then adjusted to binary with its binary representation.
 
 **EXAMPLE:**
 
