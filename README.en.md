@@ -35,7 +35,7 @@ Required external libraries:
 
 (You don't need to install these if you already have *Dev C++/C* or a modern compiler, as they are usually built in.)
 
-**IMPORTANT NOTE:** If you are using **VSCode, you must replace** the *copyValuesWithVariables* function with this implementation.
+**IMPORTANT NOTE:** If you are using **VSCode, you must replace** the *copiarValoresConVariables* function with this implementation.
 ~~~
 int copiarValoresConVariables(FILE *archivoLeer, FILE *archivoEscribir){
 	int n= 16;//valor incial de variable y se va incrementando
