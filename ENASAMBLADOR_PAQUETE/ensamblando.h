@@ -1782,7 +1782,7 @@ int numerarLineas(const char* archivoLeer) {
     printf("Se creo 'tempo.txt' exitosamente\n");
 
     char linea[1024]; // Buffer para leer cada línea
-    int numero_linea = 1; // Contador de líneas
+    int numero_linea = 0; // Contador de líneas
     
     // Leer cada línea del archivo
     while (fgets(linea, sizeof(linea), entrada) != NULL) {
