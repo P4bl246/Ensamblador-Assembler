@@ -128,7 +128,7 @@ D+1 = 001111
   ## Recommendations, Observations, and Considerations
 
 ------------------------------------------------
-* The limit is 32767, this is because it is unsigned, that is, 15 unsigned bits, if you use sign this would be equal to dividing this value into 2 (negative and positive) which do not take into account negatives such as -16383 (which is 32767 because in binary it is 111111111111111), then 32767 = -1 and 16383 (positive) = 011111111111111, and -16383 = 100000000000000), So if you handle sign the negatives always start after 16383 (in 16384)
+* The limit is 32767, this is because it is unsigned, that is, 15 unsigned bits, if you use sign this would be equal to dividing this value into 2 (negative and positive) which do not take into account negatives such as -16383 (which is 32767 because in binary it is 111111111111111), then 32767 = -1 and 16383 (positive) = 011111111111111, and -16384 = 100000000000000), So if you handle sign the negatives always start after 16383 (in 16384, where 16384 = -16384, and 16385 = -16383)
 * 
 * Make sure you set your operating system correctly to avoid problems running the program (***supports Windows, macOS, and Unix/Linux***)
 
