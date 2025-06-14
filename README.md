@@ -124,7 +124,7 @@ A=D
 ## Recomendaciones, Observaciones y Consideraciones
 
  ------------------------------------------------
-* El límite es de 32767, esto se debe a que es sin signo, es decir 15 bits sin signo, si usas signo esto seria igual a dividir este valor en 2 (negativos y positivos) qui no se tienen en cuenta negativos como -16383(que es 32767 porque en binario es 111111111111111), entonces 32767 = -1 y 16383(positivo) = 011111111111111, y -16383 = 100000000000000), entonces si manejas signo los negativos siempre empiezan despues de 16383 (en 16384)
+* El límite es de 32767, esto se debe a que es sin signo, es decir 15 bits sin signo, si usas signo esto seria igual a dividir este valor en 2 (negativos y positivos) aqui no se tienen en cuenta negativos como -16384(que es 32767 porque en binario es 111111111111111), entonces 32767 = -1 y 16383(positivo) = 011111111111111, y -16384 = 100000000000000), entonces si manejas signo los negativos o con signo, siempre empiezan despues de 16383 (en 16384, donde 16384 = -16384 y 16385= -16383)
 
 * asegúrese de poner su sistema operativo correcto para evitar problemas en la ejecución de el programa (***soporta Windows, MacOs y Unix/Linux***)
 
