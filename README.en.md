@@ -55,7 +55,7 @@ int copiarValoresConVariables(FILE *archivoLeer, FILE *archivoEscribir){
              if( !((char)actual >= '0' && (char)actual <= '9')){
              	fputs(buffer, archivoEscribir);//poner el valor de la variable
              	fputc(' ', archivoEscribir);//separa el nombre de la variable
-             	 while(actual != EOF && (char)actual != '\n' && (char)actual != '\0' && (char)actual != ' '){
+             	 while(actual != EOF && (char)actual != '\n' && (char)actual != '\0' && (char)actual != ' ' && actual != '\r'){
              	 	fputc((char)actual, archivoEscribir);
              	 	actual = fgetc(archivoLeer);
 				  }
