@@ -30,7 +30,7 @@
  
  (no necesita instalarlas si ya tiene *Dev C++/C* o un compilador moderno ya que normalmente estan integradas.)
 
-**NOTA IMPORTANTE:** Si utiliza **VSCode debe cambiar** la *función* `copiarValoresConVariables` por este implementación
+**NOTA IMPORTANTE:** Si utiliza **VSCode y tienes problemas con la funcion `copiarValoresConVariables` debe cambiar** la *función* `copiarValoresConVariables` por este implementación
 ~~~
 int copiarValoresConVariables(FILE *archivoLeer, FILE *archivoEscribir){
 	int n= 16;//valor incial de variable y se va incrementando
