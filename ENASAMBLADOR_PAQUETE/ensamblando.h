@@ -368,7 +368,7 @@ int analizar_instrucciones_A(const char* archivo) {
         if(actual == '@') {
             actual = fgetc(copia);
             
-            if(actual == EOF || (char)actual == '\n' || (char)actual == ' ' || (char)actual == '\0') {
+            if(actual == EOF || (char)actual == '\n' || actual == '\r'|| (char)actual == ' ' || (char)actual == '\0') {
                 printf("ERROR en la linea %s\n", n_lineas);
                 printf("DETALLES: Se esperan argumentos despues de el '@'\n");
                 fclose(copia);
@@ -391,7 +391,7 @@ int analizar_instrucciones_A(const char* archivo) {
                     //si se alcanzo el maximo de digitos numericos esperados
                     if(n == 5){
                     	//comprobar si no hay mas digitos o si hay mas mostrar advertencia
-                    	if(actual != EOF && (char)actual != '\n'){
+                    	if(actual != EOF && (char)actual != '\n'  && actual != '\r'){
                     		printf("ADVENTERNCIA: en la linea %s\n", n_lineas);
                     		printf("DETALLES: No se esperan mas de 5 digitos numericos debido a que solo hay 15 bits entonces el numero maximo es 32767 que es de 5 bits\ny no se tendran en cuenta(se ignoraran)despues de los 5 digitos\n");
                     		advertencia = 1;
@@ -420,11 +420,11 @@ int analizar_instrucciones_A(const char* archivo) {
             	printf("DETALLES: El numero de la instruccion A no debe ser mayor a 32767 de lo contrario\n podria haber eventos inseperados duranto el ensamblaje de al instruccion debido a que son solo 15 bits\n");
             	advertencia = 1;
 			}
+			}
         // Avanzar hasta el final de la línea
-        while((char)actual != '\n' && actual != EOF) {
+        while((char)actual != '\n' && actual != '\r' && actual != EOF) {
             actual = fgetc(copia);
         }
-  }
 }
    if(advertencia != 0){
    	printf("\n¿DESEA CONTINUAR CON LA EJECUCION DE EL PROGRAMA?(Y/N)\n");
@@ -603,7 +603,7 @@ int organizar_instrucciones(const char* archivoC, int cantidad) {
             return 1;
         }
         // Avanzar hasta el comienzo de la próxima línea
-        while (actual != EOF && (char)actual != '\n' &&(char)actual != '\0' &&(char)actual != ' ') {
+        while (actual != EOF && (char)actual != '\n' &&(char)actual != ' ') {
             actual = fgetc(instrucciones);
         }
     }
@@ -1103,21 +1103,22 @@ int tratarVariables2(const char *nombre_de_archivo) {
 int encontrarvar2(FILE* archivoLeer, FILE* archivoEscribir){
 	int actual = 0; //caracter actual(fgetc devuelve entero entonces para leer el caracter tenemos que pasarlo a caracter con '(char)actual')
 	while((actual = fgetc(archivoLeer)) !=  EOF){
-		  while((char)actual != ' '){
+		  while((char)actual != ' ' && actual != EOF){
 		  	fputc((char)actual, archivoEscribir);
 		  	actual = fgetc(archivoLeer);
 		  }
+		  if(actual == EOF) break;
           fputc((char)actual, archivoEscribir);//agregamos el espacio
 		  actual = fgetc(archivoLeer);//caracter despues de el espacio
 	    	if((char)actual == '@'){
 	    		fputc((char)actual, archivoEscribir); //ponemos el inicio de la variable para uso posterior
 	    		actual = fgetc(archivoLeer);
-	    		while(actual != EOF && (char)actual != '\n' && (char)actual != '\0'){
+	    		while(actual != EOF && (char)actual != '\n' && (char)actual != '\0' && actual != '\r'){
 	    			//si es una cadena de digitos 
 	    			if((char)actual >= '0' && (char)actual <= '9'){
 	    				int n = 0;
 	    				//solo copiamos los primeros 5
-	    				while(actual != EOF && (char)actual!= '\n' && n <5){
+	    				while(actual != EOF && (char)actual!= '\n' && actual != '\r' && actual != '\0' && n <5){
 	    					fputc((char)actual, archivoEscribir);
 	                        n++;
 	    					actual = fgetc(archivoLeer);
@@ -1126,31 +1127,31 @@ int encontrarvar2(FILE* archivoLeer, FILE* archivoEscribir){
 						if(actual == EOF) break;
 						//si se alcanzo el maximo de caracteres y hay mas los ignoramos
 						if(n == 5){
-							while(actual != EOF && (char)actual != '\n'){
+							while(actual != EOF && (char)actual != '\n' && actual != '\r'&& actual != '\0'){
 								actual = fgetc(archivoLeer);
 							}
-							if((char)actual == '\n') fputc('\n', archivoEscribir);
+							if((char)actual == '\n' || actual == '\r') fputc('\n', archivoEscribir);
 						}
 						break;
 					}
 					//escribir el contenido de la variable completo si no empieza con digito numerico
 					else{
-					while(actual != EOF && (char)actual != '\n'){
+					while(actual != EOF && (char)actual != '\n' && actual != '\0' && actual != '\r'){
 					fputc((char)actual, archivoEscribir);
 					actual = fgetc(archivoLeer);
 				   }
-				   if(actual == '\n') fputc('\n', archivoEscribir);
+				   if(actual == '\n' || actual == '\r') fputc('\n', archivoEscribir);
 				   //si es eof salimos de el bucle
 				   else break;
 				}				
 			}
 	}
 	else{
-	   while(actual != EOF && (char)actual != '\n'){
+	   while(actual != EOF && (char)actual != '\n' && actual != '\r' && actual != '\0'){
 			fputc((char)actual, archivoEscribir);
 			actual = fgetc(archivoLeer);
 			}
-			if(actual == '\n') fputc('\n', archivoEscribir);
+			if(actual == '\n' || actual == '\r') fputc('\n', archivoEscribir);
 			else break;
 	   }
  }
@@ -1241,7 +1242,7 @@ int encontrarvar(FILE* archivoLeer, FILE* archivoEscribir){
 	    		fputc('\n', archivoEscribir);
 	    		fputc(char_actual, archivoEscribir); //ponemos el inicio de la varible para uso posterior
 	    		actual = fgetc(archivoLeer);
-	    		while(actual != EOF && (char)actual != '\n'){
+	    		while(actual != EOF && (char)actual != '\n' && actual != '\r'){
 	    			char_actual = (char)actual;
 	    			fputc(char_actual, archivoEscribir); //escribir el contenido de la variable.
 	    			actual = fgetc(archivoLeer);
@@ -1644,7 +1645,7 @@ int tratarEtiquetas(const char *nombre_de_archivo) {
 		return 1;
 	}
 	printf("Se creo el archivo 'etiquetas2.txt'\n");
-	
+	rewind(archivoP);
 	int result = encontrarEtiquetas(archivoP, tempoEtiquetas);
 	if(result != 0){
 		fclose(archivoP);
