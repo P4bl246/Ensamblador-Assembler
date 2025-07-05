@@ -636,7 +636,7 @@ int tipoDeInstruccion(int actual, FILE* soloC, char* nlinea) {
                     actual = fgetc(soloC); // siguiente carácter
                    
 				   	//excepciones como que A y M no se pueden calcular
-				   	if((buffer2[0] == 'A') && (buffer2[1] == 'M' || buffer2[0] == 'M') && buffer2[1] == 'A'){
+				   	if((buffer2[0] == 'A'&& buffer2[1] == 'M') || (buffer2[0] == 'M' && buffer2[1] == 'A')){
 				   		printf("ERROR en la linea %s\n", nlinea);
 				   		printf("DETALLES: No se pueden calcular A con M debido a la arquitectura de la CPU\n");
 				   		fclose(soloC);
@@ -891,7 +891,7 @@ int instruccionCalculo(int actual, FILE *archivo, char* nlinea){
                     actual = fgetc(archivo); // siguiente carácter
                     
 				   	//excepciones como que A y M no se pueden calcular
-				   	if((buffer2[0] == 'A') && (buffer2[1] == 'M' || buffer2[0] == 'M') && buffer2[1] == 'A'){
+				   	if((buffer2[0] == 'A' && buffer2[1] == 'M' )|| (buffer2[0] == 'M' && buffer2[1] == 'A')){
 				   		printf("ERROR en la linea %s\n", nlinea);
 				   		printf("DETALLES: No se pueden calcular A con M debido a la arquitectura de la CPU\n");
 				   		fclose(archivo);
