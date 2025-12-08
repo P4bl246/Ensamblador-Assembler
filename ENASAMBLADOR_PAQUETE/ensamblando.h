@@ -135,7 +135,23 @@ char* ident() {
     const char *ext = ".asm";
 
     // Buscar el primer punto en el nombre del archivo
-    char *punto = strchr(h, '.');
+    char *punto = NULL;
+    
+    int i = 0;
+    char *h2 = h;
+	
+    while (*h2 != '\0'){
+     i++;
+     h2++;
+    }
+   h2=h;
+   while (i > 4){
+    h2++;
+    i--;	
+   }
+   if (*h2 == '.'){punto = h2;}
+	
+     
     if (punto == NULL) {
         fprintf(stderr, "ERROR: El nombre del archivo no contiene una extension '.asm'\n");
         free(h);
@@ -3475,3 +3491,4 @@ int archivoHack(const char* ensamblado) {
 	}
     return 0;
 }
+
