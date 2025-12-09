@@ -122,7 +122,39 @@ A=D
 
 * Puede probar el ensamblador descargando el juego de [prueba Pong](Pong.asm) en la *misma ruta* de el *compilador y ensamblador*
 
+## Decisiones de Diseño
 
+------------------------------------------------------
+
+### Arquitectura del Código
+
+Este ensamblador está diseñado como un **programa de línea de comandos de propósito único** que procesa archivos secuencialmente a través de múltiples fases. Por simplicidad de despliegue y facilidad de compilación, todas las implementaciones de funciones están incluidas en el archivo header `ensamblando.h`.
+
+**Razón:** Esto permite que los usuarios compilen el proyecto con un solo comando sin necesidad de sistemas de construcción complejos (Makefiles, CMake, etc.). Es ideal para un contexto educativo donde el enfoque debe estar en entender el ensamblador, no en dominar herramientas de construcción de C.
+
+**Nota para desarrolladores:** Si deseas usar este código como biblioteca en otro proyecto, puedes fácilmente separar las implementaciones del header a un archivo `.c` correspondiente. Los encabezados de todas las funciones ya están correctamente declarados.
+
+### Pipeline de Procesamiento Secuencial
+
+El ensamblador procesa archivos en **múltiples fases secuenciales** donde cada fase prepara los datos para la siguiente:
+
+1. **Conversión y Limpieza**: Conversión .asm → .txt, eliminación de espacios, comentarios y líneas vacías
+2. **Análisis Sintáctico**: Validación completa de sintaxis antes de continuar
+3. **Construcción de Tabla de Símbolos**: Identificación y organización de etiquetas y variables
+4. **Ensamblaje**: Conversión a código máquina binario de 16 bits
+
+**Razón:** Esta separación de responsabilidades hace que cada fase sea simple y enfocada. Cada función hace una cosa y la hace bien. No se requiere multithreading porque:
+- Los archivos de ensamblador son pequeños (típicamente <10,000 líneas)
+- El procesamiento es extremadamente rápido (milisegundos en hardware moderno)
+- Las fases son inherentemente secuenciales (no puedes ensamblar antes de construir la tabla de símbolos)
+
+### Manejo de Errores: Advertencias vs Errores Fatales
+
+El ensamblador distingue entre:
+- **Advertencias**: Problemas que no impiden el ensamblaje pero que el usuario debe conocer (ej: truncamiento de números >5 dígitos)
+- **Errores fatales**: Problemas que corromperían la salida (ej: exceder el límite de variables)
+
+**Razón:** Esto permite desarrollo iterativo donde archivos parcialmente correctos pueden ensamblarse para pruebas, similar a cómo los compiladores modernos pueden continuar después de ciertos errores.
 ## Recomendaciones, Observaciones y Consideraciones
 
  ------------------------------------------------
@@ -192,8 +224,111 @@ A=D
 * Si utiliza el **IDE de NAND2TETRIS ONLINE** ingrese a el **CPU Emulator** y cargue el `.hack` dando en el ícono de carpeta
   
    ![image](https://github.com/user-attachments/assets/9b18f438-43f0-4db7-8735-98b1a8ef9f93)
+-----------------------------------------------------------------------------
 
+### Características que Distinguen Este Ensamblador
+-------------------------------------------
+#### 🔧 Flexibilidad en Operaciones
+A diferencia del ensamblador estándar de NAND2TETRIS, este soporta:
+- **Conmutatividad**: `D+1`, `1+D`, `A+1`, `1+A` son todos válidos
+- **Operaciones con cero**: `D+0`, `0+D`, `M-0` funcionan correctamente
+- **Múltiples representaciones**: El ensamblador internamente ajusta todo al binario correcto
 
+#### 📝 Mensajes de Error Detallados
+Cuando hay errores, el ensamblador proporciona:
+- Número de línea exacto donde ocurrió el error
+- Descripción detallada del problema
+- Sugerencias de cómo corregirlo
+- Ejemplos de sintaxis correcta
+
+**Ejemplo de mensaje de error:**
+```
+ERROR en la linea 15
+DETALLES: no se reconoce esta sintaxis de etiqueta, corrijala poniendo solo letras 
+o coloque una letra primero antes del numero
+EJEMPLO: (1234) no se reconoce o (1234h) no se reconoce, (h1234) se reconoce
+```
+
+#### ⚠️ Sistema de Advertencias Inteligente
+- **Truncamiento numérico**: Advierte pero continúa si un número tiene >5 dígitos
+- **Límites de memoria**: Advierte cuando te acercas a los límites arquitectónicos
+- **Opción de continuar**: Pregunta al usuario si desea continuar después de advertencias
+  ## Casos de Prueba y Validación
+
+------------------------------------------------------
+
+Este ensamblador ha sido **exhaustivamente probado** con múltiples casos que incluyen:
+
+### ✅ Casos Básicos Validados
+- Instrucciones A simples: `@0`, `@100`, `@32767`
+- Instrucciones C básicas: `D=A`, `M=D`, `A=M`
+- Etiquetas: `(LOOP)`, `(END)`, `(START)`
+- Variables: `@counter`, `@temp`, `@sum`
+
+### ✅ Casos Avanzados Validados
+- Operaciones complejas: `D=D+A`, `M=M-1`, `D=D&A`, `D=D|M`
+- Saltos condicionales: `D;JGT`, `D;JEQ`, `M;JLE`
+- Instrucciones completas: `AMD=D+1;JMP`
+- Combinación de etiquetas y variables en el mismo archivo
+
+### ✅ Casos Límite y Manejo de Errores
+- ✔️ **Números muy grandes**: `@999999999` → Trunca a 5 dígitos con advertencia
+- ✔️ **Límite de memoria**: `@32767` funciona, `@32768` genera advertencia
+- ✔️ **Máximo de variables**: Detecta cuando se exceden 16,383 variables únicas
+- ✔️ **Nombres largos**: Maneja variables/etiquetas hasta 1023 caracteres
+- ✔️ **Comentarios**: Simples `//`, en bloque `/* */`, mezclados con código
+- ✔️ **Formato flexible**: Espacios extra, tabulaciones, líneas vacías
+
+### ✅ Extensiones sobre NAND2TETRIS Estándar
+- **Operaciones conmutativas**: `D+1` y `1+D` son equivalentes y ambos válidos
+- **Operaciones con cero**: `0+D`, `D+0`, `0-D` se manejan correctamente
+- **Formato flexible**: Tolera espacios inconsistentes y formato variado
+
+### 🎮 Prueba con Programa Real
+El ensamblador ha sido validado con el juego **Pong.asm** completo del curso NAND2TETRIS, produciendo salida binaria idéntica al ensamblador oficial.
+
+**Para probar tú mismo**: Descarga [Pong.asm](Pong.asm) y ensámblalo. Compara el `.hack` generado con el oficial usando el CPU Emulator de NAND2TETRIS.
+## Preguntas Frecuentes (FAQ)
+
+------------------------------------------------------
+
+**P: ¿Por qué aparecen archivos .txt en mi carpeta después de ejecutar?**
+
+R: El ensamblador crea archivos temporales durante el procesamiento (`archivo.txt`, `tabla.txt`, `copia.txt` si hay errores). Si el ensamblaje fue exitoso, la mayoría se eliminan automáticamente. `tabla.txt` se conserva para que puedas inspeccionar la tabla de símbolos.
+
+---
+
+**P: ¿Puedo usar este ensamblador para otros proyectos más allá de NAND2TETRIS?**
+
+R: Sí, siempre que tu arquitectura objetivo sea compatible con HACK (16 bits, misma estructura de instrucciones A y C). Puedes extender los operadores modificando la estructura `patron` en `ensamblando.h`.
+
+---
+
+**P: ¿Por qué necesito la versión alternativa de `copiarValoresConVariables` en VSCode?**
+
+R: Algunos compiladores modernos optimizan el código de manera diferente. La versión alternativa usa `sprintf` en lugar de manipulación directa de buffers, lo cual es más compatible entre diferentes compiladores.
+
+---
+
+**P: ¿Puedo procesar múltiples archivos .asm a la vez?**
+
+R: No directamente, este ensamblador procesa un archivo a la vez. Para procesar múltiples archivos, ejecútalo varias veces o crea un script batch/shell que lo llame iterativamente.
+
+---
+
+**P: ¿Qué hago si obtengo "ERROR al crear archivo"?**
+
+R: Verifica:
+1. Que tienes permisos de escritura en la carpeta
+2. Que no hay archivos .txt abiertos en otros programas
+3. En Windows: Desactiva temporalmente el antivirus o permite la aplicación
+4. Que el disco no está lleno
+
+---
+
+**P: ¿Este ensamblador produce salida idéntica al oficial de NAND2TETRIS?**
+
+R: Sí, el código máquina generado es funcionalmente idéntico. Cualquier diferencia sería solo en el manejo de casos extremos o extensiones (como `1+D` que el oficial no soporta).
 -------------------------------------------------
 ## Licencia
 
