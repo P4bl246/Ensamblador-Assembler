@@ -125,27 +125,64 @@ D+1 = 001111
 
 * You can test the assembler by downloading the [test game Pong](Pong.asm) in the *same path* as the *compiler and assembler*
 
-  ## Recommendations, Observations, and Considerations
+## Design Decisions
+
+------------------------------------------------------
+
+### Code Architecture
+
+This assembler is designed as a **single-purpose command-line program** that processes files sequentially through multiple phases. For ease of deployment and compilation, all function implementations are included in the header file `assembling.h`.
+
+**Reason:** This allows users to compile the project with a single command without the need for complex build systems (Makefiles, CMake, etc.). It is ideal for an educational context where the focus should be on understanding assembler, not mastering C build tools.
+
+**Note for developers:** If you wish to use this code as a library in another project, you can easily separate the implementations from the header into a corresponding `.c` file. All function headers are already correctly declared.
+
+### Sequential Processing Pipeline
+
+The assembler processes files in **multiple sequential phases** where each phase prepares the data for the next:
+
+1. **Conversion and Cleaning**: Conversion from .asm to .txt, removal of spaces, comments, and empty lines
+2. **Syntax Analysis**: Complete syntax validation before proceeding
+3. **Symbol Table Construction**: Identification and organization of labels and variables
+4. **Assembly**: Conversion to 16-bit binary machine code
+
+**Reason:** This separation of responsibilities makes each phase simple and focused. Each function does one thing and does it well. Multithreading is not required because:
+- Assembler files are small (typically <10,000 lines)
+- Processing is extremely fast (milliseconds on modern hardware)
+- Phases are inherently sequential (you cannot assemble before building the symbol table)
+
+### Error Handling: Warnings vs. Fatal Errors
+
+The assembler distinguishes between:
+- **Warnings**: Problems that do not prevent assembly but that the user should be aware of (e.g., truncation of numbers >5 digits)
+- **Fatal Errors**: Problems that would corrupt the output (e.g., exceeding the variable limit)
+
+**Reason:** This allows iterative development where partially correct files can be assembled for testing, similar to how modern compilers can continue after certain errors.
+
+## Recommendations, Observations, and Considerations
 
 ------------------------------------------------
-* The limit is 32767, this is because it is unsigned, that is, 15 unsigned bits, if you use sign this would be equal to dividing this value into 2 (negative and positive) which do not take into account negatives such as -16383 (which is 32767 because in binary it is 111111111111111), then 32767 = -1 and 16383 (positive) = 011111111111111, and -16384 = 100000000000000), So if you handle sign the negatives always start after 16383 (in 16384, where 16384 = -16384, and 16385 = -16383)
-* 
-* Make sure you set your operating system correctly to avoid problems running the program (***supports Windows, macOS, and Unix/Linux***)
+* The limit is 32767. This is because it's unsigned, meaning 15 unsigned bits. If you use a signed value, this would be equivalent to dividing this value into two parts (negative and positive). Negative values ​​like -16384 (which is 32767 because in binary it's 111111111111111) are not considered here. Therefore, 32767 = -1 and 16383 (positive) = 011111111111111, and -16384 = 100000000000000). So, if you use a signed value, negative or signed values ​​always start after 16383 (at 16384, where 16384 = -16384 and 16385 = -16383).
 
-**NOTE:** If your *operating system is not supported,* make sure you enter the correct **console** **cleanup** command.
+* Make sure to specify your operating system. Correct to avoid problems running the program (***supports Windows, macOS, and Unix/Linux***)
 
-* ***Make sure the file name, variables, and labels do not exceed 1023 characters, as this could lead to data loss and unexpected events, such as replacing variables, since the program only reads up to 1023 characters.***
+**NOTE:** If your operating system is not one that supports this, be sure to use the correct console cleanup command.
 
-* ***If for some reason there is an error when creating or opening a file, check Windows security and disable real-time scanning or allow the compiler to manipulate files***
+* ***Make sure the filename, variable names, and labels do not exceed 1023 characters, as data loss and unexpected events such as variable replacement could occur during program execution, since it only reads up to 1023 characters.***
 
-* The *only* case that **the code does not handle** is when there are ***nested block comments***
+* ***If for any reason there is an error creating or opening a file, check Windows security and disable real-time scanning or allow the compiler to manipulate files***
+
+* The *only* case that **the code doesn't handle** is when there are ***nested block comments***
 
 **EXAMPLE:**
+
 ~~~
 /* /*This is a nested comment*/D=M
+
 ~~~
 
-**EXPLANATION:** The **problem** is that the **code** looks for the `*/` after the start of a block comment (`/*`) is indicated, so in the previous example `D=M` will be treated as an instruction, *even if the main block comment has not been closed*, that is, the *first* `/*`.
+**EXPLANATION:** The **problem** is that the **code** looks for the `*/` after the start of a block comment (`/*`). Therefore, in the previous example, `D=M` will be treated as a statement, *even though the main block comment (the *first* `/*`) hasn't been closed.
+
 
 **But if we put**
 
@@ -153,46 +190,11 @@ D+1 = 001111
 /* /*This is a nested comment*/D=M*/
 ~~~
 
-***The code would identify it indirectly because the last `*/` identifies it and warns it as a syntax error in the instruction that is taken `D=M` from the previous example as a C instruction***
+***The code would indirectly identify it because the last `*/` identifies and warns of a syntax error in the instruction that is taken as a C instruction, as `D=M` from the previous example.***
 
-***NOTE:*** This is because in *rare cases* this happens and it is a ***practice that is not recommended***, due to cases like those in the previous code that **can occur in other programs not just in this one**
+***NOTE:*** This is because this happens in *rare cases* and is a ***practice that is not recommended***, due to cases like those in the previous code, which **can occur in other programs, not just this one**.
 
-* Before reviewing the code (mainly from the `ensamblando.h` library), it is recommended to have **knowledge of the architecture of the *CPU* and the *ALU*** to understand certain fragments of the code such as the **ASSEMBLY** part, this will be in the [ARCHITECTURE.md](ARCHITECTURE.md) (*where the reasons for certain operations and restrictions and how more operations could be integrated will also be explained*).
-
-* The design and creation of this program focuses on functionality and scalability rather than optimization (although best practices are used). This is open to anyone who wants to improve the code by optimizing it in many ways.
-
-**Examples:**
-* The search for values ​​in the symbol table could be improved by using *hash tables*, instead of *linear search*.
-* Many blocks of repeated code could be modulated, such as taking the line number.
-
-* This program was created as a final project for the first part of the ***NAND2TETRIS*** course, so to *run* the `.hack` file, you must install the *NAND2TETRIS* software or use its *ONLINE IDE*.
-[NAND2TETRIS SOFTWARE](https://www.nand2tetris.org/software)
-
-* Steps to run it on **Windows**
-
-1. Unzip the .zip file
-
-2. Go to the *nand2Tetris* folder
-
-![image](https://github.com/user-attachments/assets/c79bfabc-fa18-473f-8a2d-430c16a5152c)
-
-3. Go to *tools*
-
-![image](https://github.com/user-attachments/assets/3d02e465-eb4d-4e3c-a30c-56852bfecdab)
-
-4. Open *CPUEmulator.bat*
-
-![image](https://github.com/user-attachments/assets/dd05c2ea-fe7c-45ab-b3a2-a39e5c8c57f9)
-
-5. Select *Load ROM* or *Load File*, select the `.hack` file, and run it by clicking *>>* or *>*
-
-![image](https://github.com/user-attachments/assets/49a07fc2-2d1d-4054-a7f1-43fb40156316)
-
-**NOTE:** For macOS, it's the same. that you enter **_MACOSX** instead of **nand2Tetris**
-
-* If you are using the **NAND2TETRIS ONLINE IDE**, enter the **CPU Emulator** and load the `.hack` by clicking on the folder icon
-
-![image](https://github.com/user-attachments/assets/9b18f438-43f0-4db7-8735-98b1a8ef9f93)
+*Before reviewing the code (mainly from the `assembling.h` library), it is recommended to have **knowledge of the architecture of the *CPU* and the *ALU*** to understand certain parts of the code, such as the **ENSA** section.
 
 -------------------------------------------------
 
