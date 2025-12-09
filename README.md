@@ -155,6 +155,7 @@ El ensamblador distingue entre:
 - **Errores fatales**: Problemas que corromperían la salida (ej: exceder el límite de variables)
 
 **Razón:** Esto permite desarrollo iterativo donde archivos parcialmente correctos pueden ensamblarse para pruebas, similar a cómo los compiladores modernos pueden continuar después de ciertos errores.
+
 ## Recomendaciones, Observaciones y Consideraciones
 
  ------------------------------------------------
