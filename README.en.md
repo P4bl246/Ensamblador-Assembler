@@ -113,7 +113,7 @@ A=D
 
 * If there is an **error** to see where the **error** occurred with your line number, you must open the file ***copy.txt***
 
-* If you want to see the ***symbol table***, open the file **table.txt**
+* If you want to see the ***symbol table***, open the file **tabla.txt**
 
 * This program does not have the *same restrictions* as NAND2TETRIS regarding the assembly part of **COMP** (calculation of C instructions), because it can add operations like 0+D or D+0, or other equivalents operations, this aplicated for all operators, because this is then adjusted to binary with its binary representation.
 
@@ -133,7 +133,7 @@ D+1 = 001111
 
 ### Code Architecture
 
-This assembler is designed as a **single-purpose command-line program** that processes files sequentially through multiple phases. For ease of deployment and compilation, all function implementations are included in the header file `assembling.h`.
+This assembler is designed as a **single-purpose command-line program** that processes files sequentially through multiple phases. For ease of deployment and compilation, all function implementations are included in the header file `ensamblando.h`.
 
 **Reason:** This allows users to compile the project with a single command without the need for complex build systems (Makefiles, CMake, etc.). It is ideal for an educational context where the focus should be on understanding assembler, not mastering C build tools.
 
@@ -199,7 +199,7 @@ The assembler distinguishes between:
 
 ***NOTE:*** This is because this happens in *rare cases* and is a ***practice that is not recommended***, due to cases like those in the previous code, which **can occur in other programs, not just this one**.
 
-*Before reviewing the code (mainly from the `assembly.h` library), it is recommended to have **knowledge of the *CPU* and *ALU* architecture*** to understand certain code fragments, such as the **ASSEMBLY** section. This will be in [ARCHITECTURE.md](ARCHITECTURE.md) (*where it will also be explained why there are certain operations and restrictions and how More operations could be integrated*).
+*Before reviewing the code (mainly from the `ensamblando.h` library), it is recommended to have **knowledge of the *CPU* and *ALU* architecture*** to understand certain code fragments, such as the **ASSEMBLY** section. This will be in [ARCHITECTURE.md](ARCHITECTURE.md) (*where it will also be explained why there are certain operations and restrictions and how More operations could be integrated*).
 
 * The design and creation of this program focuses on functionality and scalability rather than optimization (although best practices are used). This is open to anyone who wants to improve the code by optimizing it in many ways.
 
@@ -311,17 +311,17 @@ The The assembler has been validated with the complete **Pong.asm** game from th
 
 **Q: Why do .txt files appear in my folder after running the assembler?**
 
-A: The assembler creates temporary files during processing (`file.txt`, `table.txt`, `copy.txt` if there are errors). If the assembly was successful, most of these are automatically deleted. `table.txt` is retained so you can inspect the symbol table.
+A: The assembler creates temporary files during processing (`archivo.txt`, `tabla.txt`, `copua.txt` if there are errors). If the assembly was successful, most of these are automatically deleted. `tabla.txt` is retained so you can inspect the symbol table.
 
 ---
 
 **Q: Can I use this assembler for projects other than NAND2TETRIS?**
 
-A: Yes, as long as your target architecture is HACK-compatible (16-bit, same instruction set A and C). You can extend the operators by modifying the `pattern` structure in `assembling.h`.
+A: Yes, as long as your target architecture is HACK-compatible (16-bit, same instruction set A and C). You can extend the operators by modifying the `patron` structure in `ensamblando.h`.
 
 --
 
-**Q: Why do I need the alternative version of `copyValuesWithVariables` in VSCode?**
+**Q: Why do I need the alternative version of `copiarValoresConVariables` in VSCode?**
 
 A: Some modern compilers optimize code differently. The alternative version uses `sprintf` instead of direct buffer manipulation, which is more cross-compiler compatible.
 
