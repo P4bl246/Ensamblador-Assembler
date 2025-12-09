@@ -162,6 +162,9 @@ The assembler distinguishes between:
 ## Recommendations, Observations, and Considerations
 
 ------------------------------------------------
+## Recommendations, Observations, and Considerations
+
+------------------------------------------------
 * The limit is 32767. This is because it's unsigned, meaning 15 unsigned bits. If you use a signed value, this would be equivalent to dividing this value into two parts (negative and positive). Negative values ​​like -16384 (which is 32767 because in binary it's 111111111111111) are not considered here. Therefore, 32767 = -1 and 16383 (positive) = 011111111111111, and -16384 = 100000000000000). So, if you use a signed value, negative or signed values ​​always start after 16383 (at 16384, where 16384 = -16384 and 16385 = -16383).
 
 * Make sure to specify your operating system. Correct to avoid problems running the program (***supports Windows, macOS, and Unix/Linux***)
@@ -190,12 +193,50 @@ The assembler distinguishes between:
 /* /*This is a nested comment*/D=M*/
 ~~~
 
-***The code would indirectly identify it because the last `*/` identifies and warns of a syntax error in the instruction that is taken as a C instruction, as `D=M` from the previous example.***
+***The code would indirectly identify it because the last `*/` identifies and warns of a syntax error in the instruction that is taken as a C instruction, `D=M` from the previous example.***
 
 ***NOTE:*** This is because this happens in *rare cases* and is a ***practice that is not recommended***, due to cases like those in the previous code, which **can occur in other programs, not just this one**.
 
-*Before reviewing the code (mainly from the `assembling.h` library), it is recommended to have **knowledge of the architecture of the *CPU* and the *ALU*** to understand certain parts of the code, such as the **ENSA** section.
+*Before reviewing the code (mainly from the `assembly.h` library), it is recommended to have **knowledge of the *CPU* and *ALU* architecture*** to understand certain code fragments, such as the **ASSEMBLY** section. This will be in [ARCHITECTURE.md](ARCHITECTURE.md) (*where it will also be explained why there are certain operations and restrictions and how More operations could be integrated*).
 
+* The design and creation of this program focuses on functionality and scalability rather than optimization (although best practices are used). This is open to anyone who wants to improve the code by optimizing it in many ways.
+
+**Examples:**
+
+* The search for values ​​in the symbol table could be improved using *hash tables* instead of *linear search*.
+
+* Many blocks of repeated code could be modularized, such as by retrieving the line number.
+
+
+* This program was created as the final project for the first part of the ***NAND2TETRIS*** course. Therefore, to run the `.hack` file, you must install the *NAND2TETRIS* software or use its *ONLINE IDE*.
+
+[NAND2TETRIS SOFTWARE](https://www.nand2tetris.org/software)
+
+* Steps to run it on **Windows**
+
+1. Unzip the .zip file
+
+2. Go to the *nand2Tetris* folder
+
+![image](https://github.com/user-attachments/assets/c79bfabc-fa18-473f-8a2d-430c16a5152c)
+
+3. Go to *tools*
+
+![image](https://github.com/user-attachments/assets/3d02e465-eb4d-4e3c-a30c-56852bfecdab)
+
+4. Open *CPUEmulator.bat*
+
+![image](https://github.com/user-attachments/assets/dd05c2ea-fe7c-45ab-b3a2-a39e5c8c57f9)
+
+5. Select *Load ROM* or *Load File*, select the `.hack` file, and run it by clicking *>>* or *>*
+
+![image](https://github.com/user-attachments/assets/49a07fc2-2d1d-4054-a7f1-43fb40156316)
+
+**NOTE:** The process is the same for macOS, just... You're accessing **_MACOSX** instead of **nand2Tetris**.
+
+* If you're using the **NAND2TETRIS ONLINE IDE**, access the **CPU Emulator** and load the `.hack` file by clicking the folder icon.
+
+![image](https://github.com/user-attachments/assets/9b18f438-43f0-4db7-8735-98b1a8ef9f93)
 -------------------------------------------------
 ### Features That Distinguish This Assembler
 -------------------------------------------
