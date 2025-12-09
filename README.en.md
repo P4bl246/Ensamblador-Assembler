@@ -197,6 +197,112 @@ The assembler distinguishes between:
 *Before reviewing the code (mainly from the `assembling.h` library), it is recommended to have **knowledge of the architecture of the *CPU* and the *ALU*** to understand certain parts of the code, such as the **ENSA** section.
 
 -------------------------------------------------
+### Features That Distinguish This Assembler
+-------------------------------------------
+#### 🔧 Flexibility in Operations
+Unlike the standard NAND2TETRIS assembler, this one supports:
+- **Commutativity**: `D+1`, `1+D`, `A+1`, `1+A` are all valid
+- **Operations with Zero**: `D+0`, `0+D`, `M-0` work correctly
+- **Multiple Representations**: The assembler internally adjusts everything to the correct binary
+
+#### 📝 Detailed Error Messages
+When errors occur, the assembler provides:
+- Exact line number where the error occurred
+- Detailed description of the problem
+- Suggestions on how to correct it
+- Examples of correct syntax
+
+**Example of an error message:**
+```
+ERROR on line 15
+DETAILS: This tag syntax is not recognized, please correct it Using only letters
+
+Or place a letter before the number
+EXAMPLE: (1234) is not recognized or (1234h) is not recognized, (h1234) is recognized
+```
+
+#### ⚠️ Intelligent Warning System
+- **Numeric Truncation**: Warns but continues if a number has >5 digits
+- **Memory Limits**: Warns when you approach architectural limits
+- **Continue Option**: Asks the user if they want to continue after warnings
+
+## Test Cases and Validation
+
+------------------------------------------------------
+
+This assembler has been **exhaustively tested** with multiple cases including:
+
+### ✅ Validated Basic Cases
+- Simple A instructions: `@0`, `@100`, `@32767`
+- Basic C instructions: `D=A`, `M=D`, `A=M`
+- Labels: `(LOOP)`, `(END)`, `(START)`
+- Variables: `@counter`, `@temp`, `@sum`
+
+### ✅ Validated Advanced Cases
+- Complex operations: `D=D+A`, `M=M-1`, `D=D&A`, `D=D|M`
+- Conditional jumps: `D;JGT`, `D;JEQ`, `M;JLE`
+- Complete instructions: `AMD=D+1;JMP`
+- Combining labels and variables in the same file
+
+### ✅ Boundary Cases and Error Handling
+- ✔️ **Very large numbers**: `@999999999` → Truncates to 5 digits with a warning
+- ✔️ **Memory limit**: `@32767` works, `@32768` generates a warning
+- ✔️ **Maximum number of variables**: Detects when 16,383 unique variables are exceeded
+- ✔️ **Long names**: Handles variables/labels up to 1023 characters
+- ✔️ **Comments**: Simple `//`, block `/* */`, mixed with code
+- ✔️ **Flexible formatting**: Extra spaces, tabs, blank lines
+
+### ✅ Extensions on Standard NAND2TETRIS
+- **Commutative operations**: `D+1` and `1+D` are equivalent and both valid
+- **Operations with zero**: `0+D`, `D+0`, `0-D` are handled correctly
+- **Flexible formatting**: Tolerates inconsistent spacing and varied formatting
+
+### 🎮 Test with a Real Program
+The The assembler has been validated with the complete **Pong.asm** game from the NAND2TETRIS course, producing binary output identical to the official assembler.
+
+**To try it yourself:** Download [Pong.asm](Pong.asm) and assemble it. Compare the generated `.hack` file with the official one using the NAND2TETRIS CPU Emulator.
+
+## Frequently Asked Questions (FAQ)
+
+------------------------------------------------------
+
+**Q: Why do .txt files appear in my folder after running the assembler?**
+
+A: The assembler creates temporary files during processing (`file.txt`, `table.txt`, `copy.txt` if there are errors). If the assembly was successful, most of these are automatically deleted. `table.txt` is retained so you can inspect the symbol table.
+
+---
+
+**Q: Can I use this assembler for projects other than NAND2TETRIS?**
+
+A: Yes, as long as your target architecture is HACK-compatible (16-bit, same instruction set A and C). You can extend the operators by modifying the `pattern` structure in `assembling.h`.
+
+--
+
+**Q: Why do I need the alternative version of `copyValuesWithVariables` in VSCode?**
+
+A: Some modern compilers optimize code differently. The alternative version uses `sprintf` instead of direct buffer manipulation, which is more cross-compiler compatible.
+
+--
+
+**Q: Can I process multiple .asm files at once?**
+
+A: Not directly; this assembler processes one file at a time. To process multiple files, run it multiple times or create a batch/shell script that calls it iteratively.
+
+---
+
+**Q: What do I do if I get "ERROR creating file"?**
+
+A: Check:
+1. That you have write permissions to the folder
+2. That no .txt files are open in other programs
+3. On Windows: Temporarily disable your antivirus or allow the application
+4. That the disk is not full
+
+---
+
+**Q: Does this assembler produce identical output to the official NAND2TETRIS assembler?**
+
+A: Yes, the generated machine code is functionally identical. Any differences would only be in the handling of edge cases or extensions (such as `1+D`, which the official assembler does not support).
 
 ## License
 
