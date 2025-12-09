@@ -74,6 +74,8 @@ int copiarValoresConVariables(FILE *archivoLeer, FILE *archivoEscribir){
 ## Instalación
 
 ------------------------------------------------------
+[Guía rápida](https://youtu.be/4FLMwUyRqTg)
+
 1. Descargue la libreria `ensamblando.h` y el *ejecutable* `ensamblador.c` en la **misma carpeta** o **ruta** que la de el *compilador*.
 
 2. Compile y ejecute el *ejecutable*, y ingrese el ***nombre completo de su archivo .asm*** para pasarlo como argumento a la función `archivoA_txt` (el archivo debe de estar también en la *misma ruta*)
