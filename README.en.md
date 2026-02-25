@@ -79,7 +79,7 @@ int copiarValoresConVariables(FILE *archivoLeer, FILE *archivoEscribir){
 ## Installation
 
 -----------------------------------------------------
-[Quick guide](https://youtu.be/nR7-zJ1Uw_U)
+[Quick guide](https://youtu.be/-9550PUd-7Y)
 
 1. Download the `ensamblando.h` library and the `Ensamblador.c` executable to the **same folder** or **path** as the *compiler*.
 
